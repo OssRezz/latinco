@@ -5,10 +5,10 @@
         </button>
         <!-- Drop -->
         <div class="div d-flex justify-content-end g-3 align-items-center">
-            <img src="assets/images/builder.png" alt="" class="avatar" />
+            <img src="{{ asset('assets/images/builder.png') }}" alt="" class="avatar" />
             <div class="dropdown px-1">
-                <button class="btn btn-outline-danger border-0 dropdown-toggle" type="button"
-                    id="dropOutCard" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-outline-danger border-0 dropdown-toggle" type="button" id="dropOutCard"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     Administracion
                     <i class="fas fa-caret-down"></i>
                 </button>

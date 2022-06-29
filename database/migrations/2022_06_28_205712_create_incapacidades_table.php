@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('fkEmpleado');
             $table->unsignedBigInteger('fkTipo');
-            $table->tinyInteger('prorroga');
             $table->date('fechaInicio');
             $table->date('fechaFin');
             $table->integer('totalDias');

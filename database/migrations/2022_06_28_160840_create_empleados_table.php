@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('fechaRetiro');
             $table->tinyInteger('estado');
             $table->integer('salario');
+            $table->string('eps', 150);
             $table->unsignedBigInteger('fkCo');
             $table->unsignedBigInteger('fkCargo');
             $table->timestamps();

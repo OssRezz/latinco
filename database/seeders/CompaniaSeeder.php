@@ -15,9 +15,15 @@ class CompaniaSeeder extends Seeder
      */
     public function run()
     {
+        $latinco = new Compania();
+        $latinco->nombre = "LATINCO";
+        $latinco->tipoCompania = 1;
+        $latinco->save();
+
+
         $comapania = new Compania();
-        $comapania->nombre = "Latinco";
-        $comapania->tipoCompania = 1;
+        $comapania->nombre = "CONSORCIO ANDINO";
+        $comapania->tipoCompania = 0;
         $comapania->save();
     }
 }

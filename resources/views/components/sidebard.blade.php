@@ -47,13 +47,13 @@
                         <i class="fas fa-heartbeat"></i>
                         Incapacidades
                     </div>
-                    <i class="fas fa-caret-{{ Request::is('incapacidad') ? 'down' : 'left' }}"></i>
+                    <i class="fas fa-caret-{{ Request::is('admin/incapacidad') ? 'down' : 'left' }}"></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('incapacidad') ? 'show' : '' }}" id="incapacidadesMenu">
+            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') ? 'show' : '' }}" id="incapacidadesMenu">
                 <li class="py-1">
-                    <a href="{{ route('incapacidad') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('incapacidad') ? 'active' : '' }}">
+                    <a href="{{ url('admin/incapacidad') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidad') ? 'active' : '' }}">
                         <i class="far fa-plus-square"></i> Incapacidad
                     </a>
                 </li>
