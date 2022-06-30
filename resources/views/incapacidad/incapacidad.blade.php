@@ -1,63 +1,65 @@
 @extends('layouts.layout')
 @section('title', 'Incapacidad')
 @section('content')
-        <div class="row d-flex align-items-center justify-content-center mb-4">
-            <div class="col-12 col-lg-2 m-5 d-flex  justify-content-center">
-                    <img src="{{ asset('assets/images/trabajador.png') }}" alt="" class="bg-white rounded-pill mb-1 shadow-sm" height="230px">
-                    <br>
-                    <div class="text-center">
-                        <span class="badge bg-dark" id="cargo"></span>
-                    </div>
+    <div class="row d-flex align-items-center justify-content-center mb-4">
+        <div class="col-12 col-lg-2 m-5 ">
+            <div class="col d-flex  justify-content-center">
+                <img src="{{ asset('assets/images/trabajador.png') }}" alt=""
+                    class="bg-white rounded-pill mb-1 shadow-sm" height="230px">
             </div>
-            <div class="col px-4">
-                <div class="card border-0 bg-light">
-                    <div class="card-body bg-light">
-                        <div class="row d-flex justify-content-start">
-                            <div class="col-12 col-lg-6">
-                                <ul class="list-group list-group-flush bg-light">
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">Nombre: </b>
-                                        <div id="nombre" class="mx-1"></div>
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">Empresa: </b>
-                                        <div id="empresa" class="mx-1"></div>
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">Centro Operacion: </b>
-                                        <div id="centroOperacion" class="mx-1"></div>
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
-                                        <b class="text-vinotinto">Eps: </b>
-                                        <div id="eps" class="mx-1"></div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <ul class="list-group list-group-flush bg-light d-flex justify-content-start">
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">Cedula: </b>
-                                        <div id="cedula" class="mx-1"></div>
+            <div class="col d-flex  justify-content-center">
+                <span class="badge bg-dark" id="cargo"></span>
+            </div>
+        </div>
+        <div class="col px-4">
+            <div class="card border-0 bg-light">
+                <div class="card-body bg-light">
+                    <div class="row d-flex justify-content-start">
+                        <div class="col-12 col-lg-6">
+                            <ul class="list-group list-group-flush bg-light">
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">Nombre: </b>
+                                    <div id="nombre" class="mx-1"></div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">Empresa: </b>
+                                    <div id="empresa" class="mx-1"></div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">Centro Operacion: </b>
+                                    <div id="centroOperacion" class="mx-1"></div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
+                                    <b class="text-vinotinto">Eps: </b>
+                                    <div id="eps" class="mx-1"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <ul class="list-group list-group-flush bg-light d-flex justify-content-start">
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">Cedula: </b>
+                                    <div id="cedula" class="mx-1"></div>
 
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">Fecha ingreso: </b>
-                                        <div id="fecha" class="mx-1"></div>
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
-                                        <b class="text-vinotinto">ID Co: </b>
-                                        <div id="co" class="mx-1"></div>
-                                    </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
-                                        <b class="text-vinotinto">Salario: </b>
-                                        <div id="salario" class="mx-1"></div>
-                                    </li>
-                                </ul>
-                            </div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">Fecha ingreso: </b>
+                                    <div id="fecha" class="mx-1"></div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <b class="text-vinotinto">ID Co: </b>
+                                    <div id="co" class="mx-1"></div>
+                                </li>
+                                <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
+                                    <b class="text-vinotinto">Salario: </b>
+                                    <div id="salario" class="mx-1"></div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         <div class="row d-flex justify-content-center">
             <div class="col">
