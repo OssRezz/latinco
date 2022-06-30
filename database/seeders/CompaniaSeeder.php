@@ -17,13 +17,13 @@ class CompaniaSeeder extends Seeder
     {
         $latinco = new Compania();
         $latinco->nombre = "LATINCO";
-        $latinco->tipoCompania = 1;
+        $latinco->tipo_compania = 1;
         $latinco->save();
 
 
         $comapania = new Compania();
         $comapania->nombre = "CONSORCIO ANDINO";
-        $comapania->tipoCompania = 0;
+        $comapania->tipo_compania = 0;
         $comapania->save();
     }
 }

@@ -15,17 +15,17 @@ class CoSeeder extends Seeder
     public function run()
     {
 
-        $oficinaPrincipal = new Co();
-        $oficinaPrincipal->fkCompania = 1;
+        $oficinaPrincipal = new Co();        
         $oficinaPrincipal->codigo = "113";
         $oficinaPrincipal->nombre = "PUENTE BERMUDEZ -  CHACHAGUI";
+        $oficinaPrincipal->compania_id = 1;
         $oficinaPrincipal->save();
 
 
-        $bodega = new Co();
-        $bodega->fkCompania = 2;
+        $bodega = new Co();        
         $bodega->codigo = "129";
         $bodega->nombre = "PUENTE ZULIA EN CUCUTA-N.SANTANDER";
+        $bodega->compania_id = 2;
         $bodega->save();
     }
 }
