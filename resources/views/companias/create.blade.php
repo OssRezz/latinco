@@ -22,8 +22,8 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select name="tipo_compania" id="" class="form-select">
-                            <option value="1">Tipo 1</option>
-                            <option value="2">Tipo 2</option>
+                            <option value="1">Master</option>
+                            <option value="2">Estandar</option>
                         </select>
                         <label for="profesor">Tipo de Compañía <b class="text-rosado">*</b></label>
                     </div>

@@ -31,7 +31,13 @@
                                 </tr>
                                 <tr>
                                     <th>Tipo</th>
-                                    <td>{{ $compania['tipo_compania'] }}</td>
+                                    <td>
+                                    @if ($compania->tipo_compania == 1)
+                                        Master
+                                    @else
+                                        Estandar
+                                    @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Fecha de creación</th>

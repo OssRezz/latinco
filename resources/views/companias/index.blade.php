@@ -36,7 +36,13 @@
                                         <tr>
                                             <td>{{ $compania->id }}</td>
                                             <td>{{ $compania->nombre }}</td>
-                                            <td>{{ $compania->tipo_compania }}</td>
+                                            <td>
+                                                @if ($compania->tipo_compania == 1)
+                                                    Master
+                                                @else
+                                                    Estandar
+                                                @endif
+                                            </td>
                                             <td class="text-center">
 
                                                 <a class="btn btn-outline-danger btn-table border-0 btn-sm"
