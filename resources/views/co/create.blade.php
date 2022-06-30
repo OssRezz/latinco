@@ -17,11 +17,11 @@
             <form method="POST" action="{{ route('admin.co.store') }}">
                 @csrf
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" placeholder="Nombre" name="nombre" />
+                    <input type="text" class="form-control" placeholder="Nombre" name="nombre"  value="{{ old('nombre', '')}}" />
                     <label for="profesor">Nombre <b class="text-rosado">*</b></label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo"  value="{{ old('codigo', '')}}" />
                     <label for="profesor">Código <b class="text-rosado">*</b></label>
                 </div>
                 <div class="form-floating mb-3">

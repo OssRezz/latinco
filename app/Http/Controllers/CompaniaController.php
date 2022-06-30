@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCompaniaRequest;
 use App\Http\Requests\UpdateCompaniaRequest;
 use App\Models\Compania;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CompaniaController extends Controller
         return view('companias.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateCompaniaRequest $request)
     {
 
         Compania::create($request->all());
