@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empleado extends Model
 {
+    protected $fillable = [
+        'cedula',
+        'nombre',
+        'fechaIngreso',
+        'fechaRetiro',
+        'estado',
+        'salario',
+        'eps',
+        'fkCo',
+        'fkCargo',
+    ];
     use HasFactory;
     protected $table = 'empleados';
-
 }

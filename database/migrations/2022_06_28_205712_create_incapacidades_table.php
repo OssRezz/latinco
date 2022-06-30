@@ -17,14 +17,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('fkEmpleado');
             $table->unsignedBigInteger('fkTipo');
-            $table->tinyInteger('prorroga');
             $table->date('fechaInicio');
             $table->date('fechaFin');
             $table->integer('totalDias');
             $table->integer('diasEmpresa');
             $table->integer('diasEps');
+            $table->string('prorroga');
+            $table->tinyInteger('observacion');
+            $table->string('transcrita');
+            $table->string('estado');
             $table->timestamps();
-
         });
     }
 
