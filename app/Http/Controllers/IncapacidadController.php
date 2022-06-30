@@ -98,7 +98,7 @@ class IncapacidadController extends Controller
     {
         $empleado = Empleado::join('cargos', 'cargos.id', '=', 'empleados.fkCargo')
             ->join('co', 'co.id', '=', 'empleados.fkCo')
-            ->join('companias', 'companias.id', '=', 'co.fkCompania')
+            ->join('companias', 'companias.id', '=', 'co.compania_id')
             ->select('empleados.*', 'co.nombre as centro_operaciones', 'co.codigo', 'companias.nombre as empresa', 'cargos.cargo')
             ->where('cedula', $cedula)->get();
 
