@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Co;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CoSeeder extends Seeder
@@ -15,6 +14,7 @@ class CoSeeder extends Seeder
      */
     public function run()
     {
+
         $oficinaPrincipal = new Co();
         $oficinaPrincipal->fkCompania = 1;
         $oficinaPrincipal->codigo = "113";

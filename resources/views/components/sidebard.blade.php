@@ -81,5 +81,17 @@
                 <i class="fas fa-user-tie"></i> Usuarios
             </a>
         </li>
+        <li class="py-1">
+            <a href="{{ route('admin.compania.index') }}"
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is("admin/compania") || request()->is("admin/compania/*") ? "active" : "" }}">
+                <i class="fa-solid fa-industry"></i> Compañia
+            </a>
+        </li>
+        <li class="py-1">
+            <a href="{{ route('admin.co.index') }}"
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is("admin/co") || request()->is("admin/co/*") ? "active" : "" }}">
+                <i class="fas fa-info-circle"></i> CO
+            </a>
+        </li>
     </ul>
 </nav>
