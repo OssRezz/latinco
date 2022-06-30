@@ -47,10 +47,12 @@
                         <i class="fas fa-heartbeat"></i>
                         Incapacidades
                     </div>
-                    <i class="fas fa-caret-{{ Request::is('admin/incapacidad') ? 'down' : 'left' }}"></i>
+                    <i
+                        class="fas fa-caret-{{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') ? 'show' : '' }}" id="incapacidadesMenu">
+            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') ? 'show' : '' }}"
+                id="incapacidadesMenu">
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidad') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidad') ? 'active' : '' }}">
@@ -58,15 +60,17 @@
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="#" class="btn btn-outline-danger rounded-0 text-start border-0">
-                        <i class="fas fa-h-square"></i> Transcripción
+                    <a href="{{ url('admin/incapacidades') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidades') ? 'active' : '' }}">
+                        <i class="fas fa-h-square"></i> Incapacidades registradas
                     </a>
                 </li>
             </ul>
         </li>
 
         <li class="py-1">
-            <a href="{{ route('empleados') }}" class="btn btn-outline-danger text-start border-0 rounded-0  {{ Request::is('empleados') ? 'active' : '' }}">
+            <a href="{{ route('empleados') }}"
+                class="btn btn-outline-danger text-start border-0 rounded-0  {{ Request::is('empleados') ? 'active' : '' }}">
                 <i class="fas fa-hard-hat"></i> Empleados
             </a>
         </li>

@@ -22,8 +22,11 @@ return new class extends Migration
             $table->integer('totalDias');
             $table->integer('diasEmpresa');
             $table->integer('diasEps');
+            $table->string('prorroga');
+            $table->tinyInteger('observacion');
+            $table->string('transcrita');
+            $table->string('estado');
             $table->timestamps();
-
         });
     }
 

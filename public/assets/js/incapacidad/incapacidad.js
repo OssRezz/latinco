@@ -34,7 +34,6 @@ fechaFin.addEventListener('change', e => {
 });
 
 cedula.addEventListener('input', (e) => {
-    // console.log(e.target.value);
     cargarEmpleado(e.target.value);
 });
 
@@ -72,8 +71,6 @@ function cargarEmpleado(cedula) {
 frmIncapacidad.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(frmIncapacidad);
-
-    console.log(formData);
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -95,15 +92,15 @@ frmIncapacidad.addEventListener('submit', e => {
 
 
 function limpiarEmpleado() {
-    vaciarCarrito("#cedula");
-    vaciarCarrito("#nombre");
-    vaciarCarrito("#empresa");
-    vaciarCarrito("#fecha");
-    vaciarCarrito("#cargo");
-    vaciarCarrito("#centroOperacion");
-    vaciarCarrito("#co");
-    vaciarCarrito("#salario");
-    vaciarCarrito("#eps");
+    clean("#cedula");
+    clean("#nombre");
+    clean("#empresa");
+    clean("#fecha");
+    clean("#cargo");
+    clean("#centroOperacion");
+    clean("#co");
+    clean("#salario");
+    clean("#eps");
 }
 
 function calcularFecha(fechaInicial, fechaFinalizacion) {
@@ -119,7 +116,7 @@ function calcularFecha(fechaInicial, fechaFinalizacion) {
 }
 
 
-function vaciarCarrito(deleteContent) {
+function clean(deleteContent) {
     const aux = document.querySelector(deleteContent)
     while (aux.firstChild) {
         aux.removeChild(aux.firstChild);

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     //Incapacidad
     Route::resource('incapacidad', IncapacidadController::class);
+    Route::resource('incapacidades', IncapacidadesController::class);
 });
 
 Route::get('/', function () {

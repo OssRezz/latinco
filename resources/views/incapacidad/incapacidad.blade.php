@@ -74,7 +74,7 @@
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Cedula" name="cedula"
                                             id="cedulaInput">
-                                        <label for="">Cedula</label>
+                                        <label for="">Cedula <b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
@@ -84,19 +84,38 @@
                                                 <option value="{{ $item->id }}">{{ $item->tipo }}</option>
                                             @endforeach
                                         </select>
-                                        <label for="">Tipo de incapacidad</label>
+                                        <label for="">Tipo de incapacidad <b class="text-danger">*</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-floating">
+                                        <select name="medios" class="form-select">
+                                            <option value="Eps" selected>Eps</option>
+                                            <option value="Sura">Sura</option>
+                                            <option value="Paterniad/Maternidad">Paterniad/Maternidad</option>
+                                        </select>
+                                        <label for="">Medios <b class="text-danger">*</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-floating">
+                                        <select name="prorroga" class="form-select">
+                                            <option value="No" selected>No</option>
+                                            <option value="Si">Si</option>
+                                        </select>
+                                        <label for="">Prorroga <b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
                                         <input type="date" id="fechaInicio" name="fechaInicio" class="form-control">
-                                        <label for="">Fecha de inicio</label>
+                                        <label for="">Fecha de inicio <b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
                                     <div class="form-floating">
                                         <input type="date" id="fechaFinal" name="fechaFinal" class="form-control">
-                                        <label for="">Fecha final</label>
+                                        <label for="">Fecha final <b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 ">

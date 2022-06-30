@@ -15,8 +15,22 @@ class TipoIncapacidadSeeder extends Seeder
      */
     public function run()
     {
-        $tipo = new TipoIncapacidad();
-        $tipo->tipo = 'Incapacidad general';
-        $tipo->save();
+        $enfermedad = new TipoIncapacidad();
+        $enfermedad->tipo = 'Enfermedad general';
+        $enfermedad->save();
+
+        $accidente = new TipoIncapacidad();
+        $accidente->tipo = 'Aciddente de trabajo';
+        $accidente->save();
+
+
+        $maternidad = new TipoIncapacidad();
+        $maternidad->tipo = 'Maternidad';
+        $maternidad->save();
+
+
+        $paternidad = new TipoIncapacidad();
+        $paternidad->tipo = 'Paternidad';
+        $paternidad->save();
     }
 }
