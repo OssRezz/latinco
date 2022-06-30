@@ -1,18 +1,15 @@
 @extends('layouts.layout')
 @section('title', 'Incapacidad')
 @section('content')
-    <div class="row">
-        <div class="row d-flex align-items-center mb-4">
-            <div class="col-12 col-lg-4 d-flex justify-content-center">
-                <div class="">
-                    <img src="{{ asset('assets/images/trabajador.png') }}" alt="" class="mb-1" height="300px">
+        <div class="row d-flex align-items-center justify-content-center mb-4">
+            <div class="col-12 col-lg-2 m-5 d-flex  justify-content-center">
+                    <img src="{{ asset('assets/images/trabajador.png') }}" alt="" class="bg-white rounded-pill mb-1 shadow-sm" height="230px">
                     <br>
                     <div class="text-center">
                         <span class="badge bg-dark" id="cargo"></span>
                     </div>
-                </div>
             </div>
-            <div class="col">
+            <div class="col px-4">
                 <div class="card border-0 bg-light">
                     <div class="card-body bg-light">
                         <div class="row d-flex justify-content-start">
@@ -30,13 +27,13 @@
                                         <b class="text-vinotinto">Centro Operacion: </b>
                                         <div id="centroOperacion" class="mx-1"></div>
                                     </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
                                         <b class="text-vinotinto">Eps: </b>
                                         <div id="eps" class="mx-1"></div>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-12 col-lg-5">
+                            <div class="col-12 col-lg-6">
                                 <ul class="list-group list-group-flush bg-light d-flex justify-content-start">
                                     <li class="list-group-item  bg-light d-flex justify-content-start">
                                         <b class="text-vinotinto">Cedula: </b>
@@ -51,7 +48,7 @@
                                         <b class="text-vinotinto">ID Co: </b>
                                         <div id="co" class="mx-1"></div>
                                     </li>
-                                    <li class="list-group-item  bg-light d-flex justify-content-start">
+                                    <li class="list-group-item  bg-light d-flex justify-content-start border-bottom">
                                         <b class="text-vinotinto">Salario: </b>
                                         <div id="salario" class="mx-1"></div>
                                     </li>
@@ -62,10 +59,8 @@
                 </div>
             </div>
 
-        </div>
-
         <div class="row d-flex justify-content-center">
-            <div class="col-11">
+            <div class="col">
                 <div class="card bg-light border-0">
                     <div class="card-body">
                         <form id="frm-incapacidad">
