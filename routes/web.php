@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome'); 
 })->name('/');
 
 Route::get('usuarios', function () {
@@ -28,3 +28,15 @@ Route::get('incapacidad', function () {
 Route::get('empleados', function () {
     return view('empleados.empleado');
 })->name('empleados');;
+
+
+Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){
+
+    //Compania
+    Route::resource('compania',CompaniaController::class);
+
+    //Co
+    Route::resource('co',CoController::class);
+
+
+});

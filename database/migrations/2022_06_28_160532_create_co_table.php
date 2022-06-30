@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('co', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('fkCompania');
+            $table->id();            
             $table->string('nombre');
             $table->string('codigo');
+            $table->unsignedBigInteger('compania_id');
             $table->timestamps();
         });
     }

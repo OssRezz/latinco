@@ -9,8 +9,15 @@ class Co extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'fkCompania', 'nombre', 'codigo'
+        'nombre', 
+        'codigo',
+        'compania_id',
     ];
     protected $table = 'co';
+
+    public function compania()
+    {
+        return $this->belongsTo(Compania::class, 'compania_id');
+    }
 
 }
