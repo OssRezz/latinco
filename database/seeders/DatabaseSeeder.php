@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cargo;
+use App\Models\Empleado;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CompaniaSeeder::class);
         $this->call(CoSeeder::class);
+        $this->call(CargoSeeder::class);
         $this->call(TipoIncapacidadSeeder::class);
+        Empleado::factory(1000)->create();
     }
 }

@@ -17,15 +17,15 @@ class CoSeeder extends Seeder
 
         $oficinaPrincipal = new Co();
         $oficinaPrincipal->fkCompania = 1;
-        $oficinaPrincipal->codigo = "001";
-        $oficinaPrincipal->nombre = "Oficina princial";
+        $oficinaPrincipal->codigo = "113";
+        $oficinaPrincipal->nombre = "PUENTE BERMUDEZ -  CHACHAGUI";
         $oficinaPrincipal->save();
 
 
         $bodega = new Co();
-        $bodega->fkCompania = 1;
-        $bodega->codigo = "002";
-        $bodega->nombre = "Bodega Medellin";
+        $bodega->fkCompania = 2;
+        $bodega->codigo = "129";
+        $bodega->nombre = "PUENTE ZULIA EN CUCUTA-N.SANTANDER";
         $bodega->save();
     }
 }

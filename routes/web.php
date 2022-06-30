@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    //Incapacidad
+    Route::resource('incapacidad', IncapacidadController::class);
+    Route::resource('incapacidades', IncapacidadesController::class);
+    
+    //Compania
+    Route::resource('compania',CompaniaController::class);
+
+    //Co
+    Route::resource('co',CoController::class);
+});
+
 Route::get('/', function () {
     return view('welcome'); 
 })->name('/');
@@ -21,22 +33,6 @@ Route::get('usuarios', function () {
     return view('usuarios.usuarios');
 })->name('usuarios');
 
-Route::get('incapacidad', function () {
-    return view('incapacidad.incapacidad');
-})->name('incapacidad');
-
 Route::get('empleados', function () {
     return view('empleados.empleado');
-})->name('empleados');;
-
-
-Route::group(['prefix'=>'admin', 'as' => 'admin.'], function(){
-
-    //Compania
-    Route::resource('compania',CompaniaController::class);
-
-    //Co
-    Route::resource('co',CoController::class);
-
-
-});
+})->name('empleados');
