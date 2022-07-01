@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,8 +14,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::redirect('/', '/login');
+
+Route::get('/', function () {
+    return view('auth/login'); 
+})->name('/');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    
     //Incapacidad
     Route::resource('incapacidad', IncapacidadController::class);
     Route::resource('incapacidades', IncapacidadesController::class);
@@ -23,15 +32,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     //Co
     Route::resource('co',CoController::class);
+
+    // Users
+    Route::resource('usuario', UserController::class);
+
 });
 
-Route::get('/', function () {
-    return view('welcome'); 
-})->name('/');
-
-Route::get('usuarios', function () {
-    return view('usuarios.usuarios');
-})->name('usuarios');
 
 Route::get('empleados', function () {
     return view('empleados.empleado');

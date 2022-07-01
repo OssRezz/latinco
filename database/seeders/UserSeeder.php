@@ -17,11 +17,13 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->name = 'Latinco Administrador';
+        $user->nombres = 'Latinco';
+        $user->apellidos = 'Administrador';
         $user->email = 'latinco@latinco.com';
         $user->email_verified_at = now();
         $user->password = '$2a$12$n8DFuRU4BrU8bls6AAcsfua0qkEijpThCdPv2rjmQyJsCV3hDv50a'; //Password: 1234
-        $user->fkRol = 1;
+        $user->estado;
+        $user->rol_id = 1;
         $user->remember_token = Str::random(10);
         $user->save();
     }

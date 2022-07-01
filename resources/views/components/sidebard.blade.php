@@ -76,8 +76,8 @@
         </li>
 
         <li class="py-1">
-            <a href="{{ route('usuarios') }}"
-                class="btn btn-outline-danger text-start border-0 rounded-0 {{ Request::is('usuarios') ? 'active' : '' }} ">
+            <a href="{{ route('admin.usuario.index') }}"
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is("admin/usuario") || request()->is("admin/usuario/*") ? 'active' : '' }} ">
                 <i class="fas fa-user-tie"></i> Usuarios
             </a>
         </li>
