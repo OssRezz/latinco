@@ -67,10 +67,6 @@ class IncapacidadController extends Controller
             $diasEps = 0;
             $diasEmpresa = $totalDias->days;
         }
-        //1 = Ingresada al sistema
-        //2 = Transcrita
-        //3 = Pagada
-        //4 = Dar de baja
 
         $incapacidad->fkEmpleado = $empleado[0]['id'];
         $incapacidad->fkTipo = $request->tipoIncapacidad;
@@ -80,9 +76,9 @@ class IncapacidadController extends Controller
         $incapacidad->diasEmpresa = $diasEmpresa;
         $incapacidad->diasEps = $diasEps;
         $incapacidad->prorroga = $request->prorroga;
-        $incapacidad->observacion = 1;
+        $incapacidad->observacion_id = 1;
         $incapacidad->transcrita = "No";
-        $incapacidad->estado = "Pendiente de pago";
+        $incapacidad->estado_id = 1;
         $incapacidad->save();
 
         return ["modal" => $modal->modalAlerta('vinotinto', 'Informacion', 'Incapacidad creada exitosamente.'), "status" => 201];

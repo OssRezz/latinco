@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('incapacidades', function (Blueprint $table) {
-            $table->foreign('fkTipo')->references('id')->on('tipo_incapacidades');
+        Schema::create('estado_incapacidades', function (Blueprint $table) {
+            $table->id();
+            $table->string('estado');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints('incapacidades', function (Blueprint $table) {
-            $table->dropForeign('tipo_incapacidades_fkTipo_foreign');
-        });
+        Schema::dropIfExists('estado_incapacidades');
     }
 };

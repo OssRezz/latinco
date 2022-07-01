@@ -23,9 +23,9 @@ return new class extends Migration
             $table->integer('diasEmpresa');
             $table->integer('diasEps');
             $table->string('prorroga');
-            $table->tinyInteger('observacion');
+            $table->unsignedBigInteger('observacion_id');
+            $table->unsignedBigInteger('estado_id');
             $table->string('transcrita');
-            $table->string('estado');
             $table->timestamps();
         });
     }
