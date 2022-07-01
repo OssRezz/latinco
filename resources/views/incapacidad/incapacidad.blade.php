@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Incapacidad')
+@section('title', 'Incapacidades')
 @section('content')
     <div class="row d-flex align-items-center justify-content-center mb-4">
         <div class="col-12 col-lg-2 m-5 ">

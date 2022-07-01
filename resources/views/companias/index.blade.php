@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Incapacidad')
+@section('title', 'Compania')
 @section('content')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
