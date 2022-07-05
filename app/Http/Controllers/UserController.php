@@ -7,19 +7,14 @@ use App\Http\Requests\UpdateUsuarioRequest;
 use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    
+
     public function index()
     {
-        $usuarios = User::select(
-            'id',
-            'nombres',
-            'apellidos',
-            'email',
-            'rol_id',
-        )->get();
+        $usuarios = User::all();
 
         return view('usuarios.index', compact('usuarios'));
     }
@@ -33,7 +28,17 @@ class UserController extends Controller
 
     public function store(CreateUsuarioRequest $request)
     {
-        User::create($request->all());
+
+        return User::create([
+            'nombres' => $request['nombres'],
+            'apellidos' => $request['apellidos'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'rol_id' =>  $request['rol_id'],
+            'remember_token'     => null,
+            'created_at'         => now(),
+            'updated_at'         => now(),
+        ]);
 
         return redirect()->route('admin.usuario.index');
     }
@@ -48,23 +53,15 @@ class UserController extends Controller
     public function edit($id)
     {
         $usuario = User::find($id);
-        $roles = Rol::select('id','rol')->get();
+        $roles = Rol::select('id', 'rol')->get();
 
-        return view('usuarios.edit', compact('usuario','roles'));
+        return view('usuarios.edit', compact('usuario', 'roles'));
     }
 
     public function update(UpdateUsuarioRequest $request, User $usuario)
     {
 
-        $usuario->where("id", $request->id)->update(
-            [
-                'nombres' => $request['nombres'],
-                'apellidos' => $request['apellidos'],
-                'email' => $request['email'],
-                'rol_id' => $request['rol_id'],
-            ]
-        );
-
+        $usuario->update($request->validated());
         return redirect()->route('admin.usuario.index');
     }
 

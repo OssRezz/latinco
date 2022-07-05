@@ -24,9 +24,9 @@ class CreateUsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombres' => 'required|alpha',
-            'apellidos' => 'required|alpha',
-            'email' => 'required|email:rfc,dns',
+            'nombres' => ['required', 'string', 'max:255'],
+            'apellidos' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => 'required',
             'rol_id' => 'numeric',
         ];

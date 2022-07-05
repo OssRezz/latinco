@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('auth/login'); 
 })->name('/');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
     
     //Incapacidad
     Route::resource('incapacidad', IncapacidadController::class);

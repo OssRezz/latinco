@@ -13,29 +13,21 @@ class CoController extends Controller
 
     public function index()
     {
-        $cos = Co::select(
-            'id',
-            'nombre',
-            'codigo',
-            'compania_id',
-        )->get();
+        $cos = Co::all();
 
         return view('co.index', compact('cos'));
     }
 
     public function create()
     {
-        $companias = Compania::select(
-            'id',
-            'nombre',
-        )->get();
+        $companias = Compania::all();
 
         return view('co.create',compact('companias'));
     }
 
     public function store(CreateCoRequest $request)
     {        
-        Co::create($request->all());
+        Co::create($request->validated());
 
         return redirect()->route('admin.co.index');
     }
@@ -50,20 +42,15 @@ class CoController extends Controller
     public function edit($id)
     {
         $co = Co::find($id);
-        $companias = Compania::select('id','nombre')->get();
+        $companias = Compania::all();
 
         return view('co.edit', compact('co','companias'));
     }
 
     public function update(UpdateCoRequest $request,Co $co)
     {
-        $co->where("id", $request->id)->update(
-            [
-                'nombre' => $request['nombre'],
-                'codigo' => $request['codigo'],
-                'compania_id' => $request['compania_id'],
-            ]
-        );
+
+        $co->update($request->validated());
 
         return redirect()->route('admin.co.index');
     }

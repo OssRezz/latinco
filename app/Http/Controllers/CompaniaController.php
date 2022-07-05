@@ -12,11 +12,7 @@ class CompaniaController extends Controller
 
     public function index()
     {
-        $companias = Compania::select(
-            'id',
-            'nombre',
-            'tipo_compania',
-        )->get();
+        $companias = Compania::all();
 
         return view('companias.index', compact('companias'));
     }
@@ -29,7 +25,7 @@ class CompaniaController extends Controller
     public function store(CreateCompaniaRequest $request)
     {
 
-        Compania::create($request->all());
+        Compania::create($request->validated());
 
         return redirect()->route('admin.compania.index');
     }
@@ -48,12 +44,7 @@ class CompaniaController extends Controller
 
     public function update(UpdateCompaniaRequest $request, Compania $compania)
     {
-        $compania->where("id", $request->id)->update(
-            [
-                'nombre' => $request['nombre'],
-                'tipo_compania' => $request['tipo_compania'],
-            ]
-        );
+        $compania->update($request->validated());
 
         return redirect()->route('admin.compania.index');
     }

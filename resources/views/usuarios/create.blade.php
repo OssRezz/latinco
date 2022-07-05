@@ -20,7 +20,7 @@
                     <form method="POST" action="{{ route('admin.usuario.store') }}">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" placeholder="Nombres" name="nombres" {{ $errors->has('nombres') ? 'is-invalid' : '' }} />
+                            <input type="text" class="form-control" placeholder="Nombres" name="nombres" {{ $errors->has('nombres') ? 'is-invalid' : '' }} value="{{ old('nombres', '') }}"/>
                             <label>Nombre <b class="text-rosado">*</b></label>
                             @if ($errors->has('nombres'))
                                 <small class="text-danger">{{ $errors->first('nombres') }}</small>
