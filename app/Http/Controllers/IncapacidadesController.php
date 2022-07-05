@@ -358,17 +358,22 @@ class IncapacidadesController extends Controller
             return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
         }
 
-        $transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
-        $transcripcion = Transcripcion::find($transcripcion[0]['id']);
-        $transcripcion->fechaTranscripcion = $request->fechaTranscripcion;
-        $transcripcion->numeroIncapacidad = $request->numeroIncapacidad;
-        $transcripcion->fechaPago = $request->fechaPago;
-        $transcripcion->quincenasNomina = $request->quincenasNomina;
-        $transcripcion->valorRecuperado = $request->valorRecuperado;
-        $transcripcion->valorPendiente = $request->valorPendiente;
-        if (!$transcripcion->update()) {
-            return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
+        $incapacidadTranscrita = Incapacidad::where('id', $id)->get();
+        if ($incapacidadTranscrita[0]['transcrita'] == "Si") {
+            
+            $transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
+            $transcripcion = Transcripcion::find($transcripcion[0]['id']);
+            $transcripcion->fechaTranscripcion = $request->fechaTranscripcion;
+            $transcripcion->numeroIncapacidad = $request->numeroIncapacidad;
+            $transcripcion->fechaPago = $request->fechaPago;
+            $transcripcion->quincenasNomina = $request->quincenasNomina;
+            $transcripcion->valorRecuperado = $request->valorRecuperado;
+            $transcripcion->valorPendiente = $request->valorPendiente;
+            if (!$transcripcion->update()) {
+                return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
+            }
         }
+
 
         return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Incapacidad actualizada exitosamente.');
     }

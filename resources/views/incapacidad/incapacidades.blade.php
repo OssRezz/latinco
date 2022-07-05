@@ -11,33 +11,50 @@
                             id="tablaIncapacidad">
                             <thead>
                                 <tr>
-                                    <th>Empleado</th>
-                                    <th class="text-center">Cedula</th>
-                                    <th class="text-center">Fecha Inico</th>
-                                    <th class="text-center">Fecha Fin</th>
-                                    <th class="text-center">Total Dias</th>
-                                    <th class="text-center">Observacion</th>
-                                    <th class="text-center">Transcrita</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Accion</th>
+                                    <th class="bg-info text-white"><b>Empleado</b></th>
+                                    <th class="text-center bg-info text-white"><b>Cedula</b></th>
+                                    <th class="text-center bg-info text-white"><b>Fecha Inicio</b></th>
+                                    <th class="text-center bg-info text-white"><b>Fecha Fin</b></th>
+                                    <th class="text-center bg-info text-white"><b>Total Dias</b></th>
+                                    <th class="text-center bg-info text-white"><b>Prorroga</b></th>
+                                    <th class="text-center bg-info text-white"><b>Observacion</b></th>
+                                    <th class="text-center bg-info text-white"><b>Estado</b></th>
+                                    <th class="text-center bg-info text-white"><b>Accion</b></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($listaIncapacidades as $item)
-                                    <tr>
+                                    @php
+                                        $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($item->fechaInicio)));
+                                        $fechaActual = new DateTime(date('Y-m-d'));
+                                        $intvl = $fechaActual->diff($fechaIncapacidad);
+                                        if ($intvl->days < 90 && $item->estado_id == 1) {
+                                            $backgroundColor = '';
+                                            $textColor = '';
+                                        } elseif ($intvl->days < 120 && $item->estado_id == 1) {
+                                            $backgroundColor = 'bg-warning';
+                                            $textColor = 'text-white';
+                                        } else {
+                                            $backgroundColor = 'bg-danger';
+                                            $textColor = 'text-white';
+                                        }
+                                        
+                                    @endphp
+                                    <tr class="<?php echo $backgroundColor; ?> <?php echo $textColor; ?> ">
                                         <td>{{ $item->nombre }}</td>
                                         <td class="text-center">{{ $item->cedula }}</td>
                                         <td class="text-center">{{ $item->fechaInicio }}</td>
                                         <td class="text-center">{{ $item->fechaFin }}</td>
                                         <td class="text-center">{{ $item->totalDias }}</td>
+                                        <td class="text-center">{{ $item->prorroga }}</td>
                                         <td class="text-center">
-                                            <span class="badge bg-dark">{{ $item->observacion }}</span>
+                                            <span
+                                                class="badge bg-white text-dark border border-info">{{ $item->observacion }}</span>
                                         </td>
+
                                         <td class="text-center">
-                                            <span class="badge bg-dark">{{ $item->transcrita }}</span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge bg-dark">{{ $item->estado }}</span>
+                                            <span
+                                                class="badge bg-white text-dark border border-info">{{ $item->estado }}</span>
                                         </td>
                                         <td class="text-center">
                                             <?php if($item->transcrita == "No"){ ?>

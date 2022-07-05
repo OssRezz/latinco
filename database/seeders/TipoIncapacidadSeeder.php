@@ -20,7 +20,7 @@ class TipoIncapacidadSeeder extends Seeder
         $enfermedad->save();
 
         $accidente = new TipoIncapacidad();
-        $accidente->tipo = 'Aciddente de trabajo';
+        $accidente->tipo = 'Accidente de trabajo';
         $accidente->save();
 
 

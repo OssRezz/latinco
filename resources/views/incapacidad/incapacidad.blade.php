@@ -87,8 +87,8 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
                                         <select name="medios" class="form-select">
-                                            <option value="Eps" selected>Eps</option>
-                                            <option value="Sura">Sura</option>
+                                            <option value="Eps" selected>EPS</option>
+                                            <option value="ARL">ARL</option>
                                             <option value="Paterniad/Maternidad">Paterniad/Maternidad</option>
                                         </select>
                                         <label for="">Medios <b class="text-danger">*</b></label>
@@ -118,7 +118,7 @@
                                 <div class="col-12 col-lg-4 ">
                                     <ul class="list-group list-group-flush ">
                                         <li class="list-group-item d-flex justify-content-center bg-light">
-                                            <b class="text-vinotinto">Total dias:</b>
+                                            <b class="text-vinotinto">Total días:</b>
                                             <span class="badge bg-dark mx-1 d-flex align-items-center"
                                                 id="totalDias">N/A</span>
                                             {{-- <div class="mx-1" id="totalDias">0</div> --}}
@@ -129,7 +129,7 @@
                                 <div class="col-12 col-lg-4 ">
                                     <ul class="list-group list-group-flush ">
                                         <li class="list-group-item d-flex justify-content-center bg-light">
-                                            <b class="text-vinotinto">Dias empresa:</b>
+                                            <b class="text-vinotinto">Días empresa:</b>
                                             <span class="badge bg-dark mx-1 d-flex align-items-center"
                                                 id="diasEmpresa">N/A</span>
 
@@ -141,7 +141,7 @@
                                 <div class="col-12 col-lg-4 mb-3">
                                     <ul class="list-group list-group-flush ">
                                         <li class="list-group-item d-flex justify-content-center bg-light">
-                                            <b class="text-vinotinto">Dias eps:</b>
+                                            <b class="text-vinotinto">Días eps:</b>
                                             <span class="badge bg-dark mx-1 d-flex align-items-center"
                                                 id="diasEps">N/A</span>
 
