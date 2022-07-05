@@ -13,19 +13,20 @@ class CoSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {        
+        $cos = [
+            [      
+                'codigo'        => "113",
+                'nombre'        => "PUENTE BERMUDEZ -  CHACHAGUI",
+                'compania_id'   => 1,
+            ],
+            [      
+                'codigo'         => "129",
+                'nombre'         => "PUENTE ZULIA EN CUCUTA-N.SANTANDER",
+                'compania_id'    => 2,
+            ],
+        ];
 
-        $oficinaPrincipal = new Co();        
-        $oficinaPrincipal->codigo = "113";
-        $oficinaPrincipal->nombre = "PUENTE BERMUDEZ -  CHACHAGUI";
-        $oficinaPrincipal->compania_id = 1;
-        $oficinaPrincipal->save();
-
-
-        $bodega = new Co();        
-        $bodega->codigo = "129";
-        $bodega->nombre = "PUENTE ZULIA EN CUCUTA-N.SANTANDER";
-        $bodega->compania_id = 2;
-        $bodega->save();
+        Co::insert($cos);
     }
 }

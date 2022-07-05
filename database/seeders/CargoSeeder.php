@@ -15,16 +15,20 @@ class CargoSeeder extends Seeder
      */
     public function run()
     {
-        $cargo = new Cargo();
-        $cargo->cargo = "MONTADOR DE ESTRUCTURA A";
-        $cargo->grupoAnalisis = "Cargo de prueba";
-        $cargo->grupoCosto = "Cargo de prueba";
-        $cargo->save();
 
-        $supervisor = new Cargo();
-        $supervisor->cargo = "SUPERVISOR DE MONTAJE II";
-        $supervisor->grupoAnalisis = "Cargo de prueba";
-        $supervisor->grupoCosto = "Cargo de prueba";
-        $supervisor->save();
+        $cargos = [
+            [      
+                'cargo'             => 'MONTADOR DE ESTRUCTURA A',
+                'grupoAnalisis'     => 'Cargo de prueba',
+                'grupoCosto'        => 'Cargo de prueba',
+            ],
+            [      
+                'cargo'             => 'SUPERVISOR DE MONTAJE II',
+                'grupoAnalisis'     => 'Cargo de prueba',
+                'grupoCosto'        => 'Cargo de prueba',
+            ],
+        ];
+
+        Cargo::insert($cargos);
     }
 }

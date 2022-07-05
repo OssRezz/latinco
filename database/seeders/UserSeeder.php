@@ -15,14 +15,37 @@ class UserSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $user = new User();
-        $user->name = 'Latinco Administrador';
-        $user->email = 'latinco@latinco.com';
-        $user->email_verified_at = now();
-        $user->password = '$2a$12$n8DFuRU4BrU8bls6AAcsfua0qkEijpThCdPv2rjmQyJsCV3hDv50a'; //Password: 1234
-        $user->fkRol = 1;
-        $user->remember_token = Str::random(10);
-        $user->save();
+    {      
+
+        $users = [
+            [      
+                'nombres'            => 'Latinco',
+                'apellidos'          => 'Administrador',
+                'email'              => 'latinco@admin.com',
+                'email_verified_at'  => now(),
+                'password'           => bcrypt('1234'),
+                'estado'             => '1',
+                'rol_id'             => '1',
+                'remember_token'     => null,
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+            [      
+                'nombres'            => 'Latinco',
+                'apellidos'          => 'User',
+                'email'              => 'latinco@user.com',
+                'email_verified_at'  => now(),
+                'password'           => bcrypt('1234'),
+                'estado'             => '1',
+                'rol_id'             => '2',
+                'remember_token'     => null,
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+
+        ];
+
+        User::insert($users);
     }
 }

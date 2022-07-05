@@ -14,8 +14,11 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropOutCard">
                     <li>
-                        <a class="dropdown-item text-danger text-white" href="#" id="btn-salir">Cerrar
+                        <a class="dropdown-item text-danger text-white" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="btn-salir">Cerrar
                             sesion <i class="fas fa-sign-out-alt"></i></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
