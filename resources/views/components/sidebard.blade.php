@@ -6,8 +6,9 @@
     <ul class="list-unstyled components">
         <li class="py-1">
             <a href="{{ route('/') }}"
-                class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('/') ? 'active' : '' }}"><i
-                    class="fas fa-home"></i> Inicio
+                class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('/') ? 'active' : '' }}">
+                <i class="bi bi-building fa-xl" style="height: 26px !important;width: 26px !important;"></i>
+                Inicio
             </a>
         </li>
         {{-- Recursos humanos --}}
@@ -43,7 +44,7 @@
                 data-bs-toggle="collapse" aria-expanded="false" aria-controls="flujoDeCaja">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <i class=""></i>
+                        <i class="fas fa-cash-register fa-xl"></i>
                         Flujo de caja
                     </div>
                     <i class="fas fa-caret-{{ Request::is('') || Request::is('') ? 'down' : 'left' }}  "></i>
@@ -54,7 +55,7 @@
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidad') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
-                        <i class=""></i> Proveedores
+                        <i class="fas fa-box-open fa-xl"></i> Proveedores
                     </a>
                 </li>
             </ul>
@@ -66,7 +67,7 @@
                 data-bs-toggle="collapse" aria-expanded="false" aria-controls="costoLaboralMenu">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <i class=""></i>
+                        <i class="fas fa-file-invoice-dollar fa-xl"></i>
                         Costo laboral
                     </div>
                     <i class="fas fa-caret-{{ Request::is('') || Request::is('') ? 'down' : 'left' }}  "></i>
@@ -77,13 +78,13 @@
                 <li class="py-1">
                     <a href="{{ url('') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
-                        <i class=""></i> Conceptos
+                        <i class="fas fa-clipboard-list fa-xl"></i> Conceptos
                     </a>
                 </li>
                 <li class="py-1">
                     <a href="{{ url('') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
-                        <i class=""></i> Responsables
+                        <i class="fas fa-user-shield fa-xl"></i> Responsables
                     </a>
                 </li>
             </ul>
@@ -94,7 +95,7 @@
                 data-bs-toggle="collapse" aria-expanded="false" aria-controls="incapacidadesMenu">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <i class="fas fa-heartbeat"></i>
+                        <i class="fas fa-user-injured fa-xl"></i>
                         Incapacidades
                     </div>
                     <i
@@ -106,13 +107,13 @@
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidad') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidad') ? 'active' : '' }}">
-                        <i class="far fa-plus-square"></i> Incapacidad
+                        <i class="far fa-plus-square fa-xl"></i> Incapacidad
                     </a>
                 </li>
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidades') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidades') ? 'active' : '' }}">
-                        <i class="fas fa-h-square"></i> Incapacidades registradas
+                        <i class="fas fa-h-square fa-xl"></i> Incapacidades registradas
                     </a>
                 </li>
             </ul>
@@ -121,26 +122,26 @@
         <li class="py-1">
             <a href="{{ route('empleados') }}"
                 class="btn btn-outline-danger text-start border-0 rounded-0  {{ Request::is('empleados') ? 'active' : '' }}">
-                <i class="fas fa-hard-hat"></i> Empleados
+                <i class="fas fa-hard-hat fa-xl"></i> Empleados
             </a>
         </li>
 
         <li class="py-1">
             <a href="{{ route('admin.usuario.index') }}"
-                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is("admin/usuario") || request()->is("admin/usuario/*") ? 'active' : '' }} ">
-                <i class="fas fa-user-tie"></i> Usuarios
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin/usuario') || request()->is('admin/usuario/*') ? 'active' : '' }} ">
+                <i class="fas fa-user-tie fa-xl"></i> Usuarios
             </a>
         </li>
         <li class="py-1">
             <a href="{{ route('admin.compania.index') }}"
                 class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin/compania') || request()->is('admin/compania/*') ? 'active' : '' }}">
-                <i class="fa-solid fa-industry"></i> Compañia
+                <i class="fa-solid fa-industry fa-xl"></i> Compañia
             </a>
         </li>
         <li class="py-1">
             <a href="{{ route('admin.co.index') }}"
                 class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin/co') || request()->is('admin/co/*') ? 'active' : '' }}">
-                <i class="fas fa-info-circle"></i> CO
+                <i class="fas fa-info-circle fa-xl"></i> CO
             </a>
         </li>
     </ul>

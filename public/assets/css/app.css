@@ -97,6 +97,11 @@ input:focus {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
 }
 
+select.form-select:focus{ 
+  border-color: #601c14 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
+}
+
 .colorRed {
   border: 1px solid #601c14 !important;
 }

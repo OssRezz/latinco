@@ -4,24 +4,21 @@
             <i class="fas fa-bars" id="iconHb"></i>
         </button>
         <!-- Drop -->
-        <div class="div d-flex justify-content-end g-3 align-items-center">
-            <img src="{{ asset('assets/images/builder.png') }}" alt="" class="avatar" />
-            <div class="dropdown px-1">
-                <button class="btn btn-outline-danger border-0 dropdown-toggle" type="button" id="dropOutCard"
+        <div class="ml-auto">
+            <a class="btn btn-outline-danger border-0" href="{{ route('logout') }}"
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="btn-salir">Cerrar
+                sesion <i class="fas fa-sign-out-alt"></i></a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+            {{-- <button class="btn btn-outline-danger border-0 dropdown-toggle" type="button" id="dropOutCard"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Administracion
                     <i class="fas fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropOutCard">
-                    <li>
-                        <a class="dropdown-item text-danger text-white" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="btn-salir">Cerrar
-                            sesion <i class="fas fa-sign-out-alt"></i></a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </div>
+
+                </ul> --}}
         </div>
     </div>
 </nav>
