@@ -23,6 +23,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
     
+
+    //Dashboard
+    Route::get('dashboard',  [HomeController::class ,'index'])->name('dashboard');
+
     //Incapacidad
     Route::resource('incapacidad', IncapacidadController::class);
     Route::resource('incapacidades', IncapacidadesController::class);

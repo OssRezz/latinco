@@ -13,7 +13,9 @@
     <div class="row">
         <div class="col-12 col-lg-6 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header text-rosado"><i class="fas fa-user text-rosado"></i> <b>Formulario de usuarios</b>
+                <div class="card-header text-white fs-5">
+                    <i class="fas fa-user-plus text-white"></i> 
+                    Crear nuevo usuario
                 </div>
                 <div class="card-body">
 
@@ -21,7 +23,7 @@
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Nombres" name="nombres" {{ $errors->has('nombres') ? 'is-invalid' : '' }} value="{{ old('nombres', '') }}"/>
-                            <label>Nombre <b class="text-rosado">*</b></label>
+                            <label>Nombre <b class="text-latinco">*</b></label>
                             @if ($errors->has('nombres'))
                                 <small class="text-danger">{{ $errors->first('nombres') }}</small>
                             @endif
@@ -29,7 +31,7 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Apellidos" name="apellidos" {{ $errors->has('apellidos') ? 'is-invalid' : '' }} />
-                            <label>Apellidos <b class="text-rosado">*</b></label>
+                            <label>Apellidos <b class="text-latinco">*</b></label>
                             @if ($errors->has('apellidos'))
                                 <small class="text-danger">{{ $errors->first('apellidos') }}</small>
                             @endif
@@ -37,7 +39,7 @@
 
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" placeholder="Email" name="email" {{ $errors->has('email') ? 'is-invalid' : '' }}  />
-                            <label>Email <b class="text-rosado">*</b></label>
+                            <label>Email <b class="text-latinco">*</b></label>
                             @if ($errors->has('email'))
                                 <small class="text-danger">{{ $errors->first('email') }}</small>
                             @endif
@@ -45,7 +47,7 @@
 
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" placeholder="Password" name="password" {{ $errors->has('password') ? 'is-invalid' : '' }}/>
-                            <label>Password <b class="text-rosado">*</b></label>
+                            <label>Password <b class="text-latinco">*</b></label>
                             @if ($errors->has('password'))
                                 <small class="text-danger">{{ $errors->first('password') }}</small>
                             @endif
@@ -57,7 +59,7 @@
                                     <option value="{{ $rol->id }}">{{ $rol->rol }}</option>
                                 @endforeach
                             </select>
-                            <label>Rol <b class="text-rosado">*</b></label>
+                            <label>Rol <b class="text-latinco">*</b></label>
                         </div>
 
                         <div class="d-grid">

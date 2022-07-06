@@ -13,10 +13,13 @@
 
         <div class="col-12 col-lg-7 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header text-rosado"><i class="fas fa-info-circle text-rosado"></i> <b>Información del usuario</b></div>
+                <div class="card-header text-white fs-5">
+                    <i class="fas fa-info-circle text-white "></i> 
+                    Información del usuario
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered nowrap table-hover" style="width: 100%" id="tablaClase">
+                        <table class="table table-bordered nowrap table-hover text-latinco" style="width: 100%" id="tablaClase">
                             <thead>
                                 <tr>
                                     <th>Nombre completo</th>
