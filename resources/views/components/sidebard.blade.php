@@ -5,7 +5,7 @@
 
     <ul class="list-unstyled components">
         <li class="py-1">
-            <a href="{{ route('/') }}"
+            <a href="{{ url('admin/dashboard') }}"
                 class="btn btn-outline-danger rounded-0 text-start border-0 {{ request()->is('admin/dashboard') || request()->is('admin/dashboard/*') ? 'active' : '' }}">
                 <i class="bi bi-building fa-xl" style="height: 26px !important;width: 26px !important;"></i>
                 Inicio
