@@ -12,13 +12,17 @@
 
     <div class="col-12 col-lg-5 mb-3">
         <div class="card shadow-sm">
-            <div class="card-header text-rosado"><i class="fas fa-pen-square text-rosado"></i> <b>Editar compañia</b>
+            <div class="card-header text-white fs-5">
+                <i class="fas fa-pen-square text-white"></i> 
+                Editar Centro de operaciones
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.co.update', $co['id']) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id" value="{{ $co['id'] }}">
+
+                    
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" placeholder="Nombre" name="nombre"
                             value="{{ $co['nombre'] }}" />
@@ -46,7 +50,7 @@
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-outline-danger colorRed" id="btn-add-class">Actualizar
-                            compañía</button>
+                            Centro de operaciones</button>
                     </div>
                 </form>
             </div>

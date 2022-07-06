@@ -72,6 +72,10 @@
   }
 }
 
+bg-latinco{
+  background:#601c14;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

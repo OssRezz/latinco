@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Co')
+@section('title', 'Companía')
 @section('content')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -11,7 +11,9 @@
 
     <div class="col-12 col-lg-5 mb-3">
         <div class="card shadow-sm">
-            <div class="card-header text-rosado"><i class="fas fa-user text-rosado"></i> <b>Formulario de compañias</b>
+            <div class="card-header text-white fs-5">
+                <i class="fas fa-industry text-white"></i> 
+                Agregar compañía
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.compania.store') }}">

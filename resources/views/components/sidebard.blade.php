@@ -6,7 +6,7 @@
     <ul class="list-unstyled components">
         <li class="py-1">
             <a href="{{ route('/') }}"
-                class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('/') ? 'active' : '' }}">
+                class="btn btn-outline-danger rounded-0 text-start border-0 {{ request()->is('admin/dashboard') || request()->is('admin/dashboard/*') ? 'active' : '' }}">
                 <i class="bi bi-building fa-xl" style="height: 26px !important;width: 26px !important;"></i>
                 Inicio
             </a>
@@ -135,13 +135,13 @@
         <li class="py-1">
             <a href="{{ route('admin.compania.index') }}"
                 class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin/compania') || request()->is('admin/compania/*') ? 'active' : '' }}">
-                <i class="fa-solid fa-industry fa-xl"></i> Compañia
+                <i class="fa-solid fa-industry fa-xl"></i> Compañía
             </a>
         </li>
         <li class="py-1">
             <a href="{{ route('admin.co.index') }}"
                 class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin/co') || request()->is('admin/co/*') ? 'active' : '' }}">
-                <i class="fas fa-info-circle fa-xl"></i> CO
+                <i class="far fa-dot-circle fa-xl"></i> Centro de operaciones
             </a>
         </li>
     </ul>

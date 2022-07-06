@@ -3,9 +3,55 @@
 ----------------------------------------------------- */
 @import "https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap";
 
+.bg-latinco {
+    background-color: #601c14;
+}
+.bg-latinco-blue {
+    background-color: #68b7ee;
+}
+.text-latinco {
+    color: #601c14 !important;
+}
+
+.card-header {
+    background: rgb(96, 28, 20);
+    background: linear-gradient(
+        90deg,
+        rgba(96, 28, 20, 1) 0%,
+        rgba(104, 183, 238, 1) 100%
+    );
+    border: none;
+}
+
+.latinco-bg-gradient{
+  background: rgb(96, 28, 20);
+    background: linear-gradient(
+        90deg,
+        rgba(96, 28, 20, 1) 0%,
+        rgba(104, 183, 238, 1) 100%
+    );
+}
+
+.triangulo {
+    width: 0; 
+    height: 0; 
+    border-left: 100px solid #f0ad4e;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent; 
+}
+
+.text-latinco-blue {
+    color: #68b7ee;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
 body {
-  font-family: "Roboto", sans-serif;
-  background: #fafafa;
+    font-family: "Roboto", sans-serif;
+    background: #fafafa;
 }
 /* ---------------------------------------------------
     Font
@@ -15,18 +61,18 @@ body {
     Scroll bar 
 ----------------------------------------------------- */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 5px;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #343a40;
-  border: black;
+    border-radius: 10px;
+    background-color: #343a40;
+    border: black;
 }
 /* ---------------------------------------------------
   Scroll bar 
@@ -44,129 +90,131 @@ Termina Colores corporativos
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
-  width: 100%;
-  /* padding: 20px; */
-  min-height: 100vh;
-  transition: all 0.3s;
+    width: 100%;
+    /* padding: 20px; */
+    min-height: 100vh;
+    transition: all 0.3s;
 }
 
 html,
 body.scrolly {
-  max-width: 100%;
-  overflow-x: hidden;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 a,
 a:hover,
 a:focus {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s;
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
 p {
-  font-family: "Roboto", sans-serif;
-  font-size: 1.1em;
-  font-weight: 300;
-  line-height: 1.7em;
-  color: #999;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
 }
 .navbar-btn {
-  box-shadow: none;
-  outline: none !important;
-  border: none;
+    box-shadow: none;
+    outline: none !important;
+    border: none;
 }
 
 .line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
 }
 
 .text-rosado {
-  color: #601c14 !important;
+    color: #601c14 !important;
 }
 
 .bg-rosado {
-  background-color: #601c14 !important;
+    background-color: #601c14 !important;
 }
 
 input:focus {
-  border-color: #601c14 !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
+    border-color: #601c14 !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+        0 0 8px rgba(255, 0, 0, 0.6) !important;
 }
 
-select.form-select:focus{ 
-  border-color: #601c14 !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
+select.form-select:focus {
+    border-color: #601c14 !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+        0 0 8px rgba(255, 0, 0, 0.6) !important;
 }
 
 .colorRed {
-  border: 1px solid #601c14 !important;
+    border: 1px solid #601c14 !important;
 }
 
 a.active {
-  background-color: #601c14 !important;
-  color: white !important;
+    background-color: #601c14 !important;
+    color: white !important;
 }
 
 .red-bg {
-  background-color: #601c14 !important;
-  color: white !important;
+    background-color: #601c14 !important;
+    color: white !important;
 }
 
 .text-vinotinto {
-  /* background-color: #f61b55 !important; */
-  /* border: 1px solid #601c14 !important; */
-  color: #601c14 !important;
+    /* background-color: #f61b55 !important; */
+    /* border: 1px solid #601c14 !important; */
+    color: #601c14 !important;
 }
 
 .btn-danger {
-  /* background-color: #f61b55 !important; */
-  /* border: 1px solid #601c14 !important; */
-  background-color: #601c14 !important;
-  border-color: #601c14 !important;
-  color: #fff !important;
+    /* background-color: #f61b55 !important; */
+    /* border: 1px solid #601c14 !important; */
+    background-color: #601c14 !important;
+    border-color: #601c14 !important;
+    color: #fff !important;
 }
 
 .btn-outline-danger {
-  /* background-color: #f61b55 !important; */
-  /* border: 1px solid #601c14 !important; */
-  color: #601c14 !important;
+    /* background-color: #f61b55 !important; */
+    /* border: 1px solid #601c14 !important; */
+    color: #601c14 !important;
 }
 
 .btn-outline-danger:hover {
-  background-color: #601c14 !important;
-  color: white !important;
+    background-color: #601c14 !important;
+    color: white !important;
 }
 
 .btn-outline-danger:focus {
-  outline: none !important;
-  box-shadow: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* ---------------------------------------------------
     NAVBAR
 ----------------------------------------------------- */
 .navbar {
-  padding: 15px 10px;
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  margin-bottom: 25px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 25px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 .avatar {
-  vertical-align: middle;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 #dropOutCard::after {
-  content: none !important;
-  border: none !important;
+    content: none !important;
+    border: none !important;
 }
 
 /* ---------------------------------------------------
@@ -174,91 +222,91 @@ a.active {
 ----------------------------------------------------- */
 
 .wrapper {
-  display: flex;
-  width: 100%;
-  align-items: stretch;
+    display: flex;
+    width: 100%;
+    align-items: stretch;
 }
 
 #sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  background: #fff;
-  color: #ffff;
-  transition: all 0.3s;
+    min-width: 250px;
+    max-width: 250px;
+    background: #fff;
+    color: #ffff;
+    transition: all 0.3s;
 }
 
 #sidebar.active {
-  margin-left: -250px;
+    margin-left: -250px;
 }
 
 #sidebar .sidebar-header {
-  background: #fff;
+    background: #fff;
 }
 
 #sidebar ul.components {
-  padding: 20px 0;
+    padding: 20px 0;
 }
 
 #sidebar ul p {
-  color: #fff;
-  padding: 10px;
+    color: #fff;
+    padding: 10px;
 }
 
 #sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
 }
 
 #sidebar ul li a:hover {
-  color: black;
-  background: white;
+    color: black;
+    background: white;
 }
 
 #sidebar ul li.active > a,
 a[aria-expanded="true"] {
-  color: black;
-  background: white;
+    color: black;
+    background: white;
 }
 
 a[data-toggle="collapse"] {
-  position: relative;
+    position: relative;
 }
 
 .dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
 }
 
 @media (max-width: 768px) {
-  #sidebar {
-    margin-left: -250px;
-  }
+    #sidebar {
+        margin-left: -250px;
+    }
 
-  #sidebar.active {
-    margin-left: 0;
-  }
+    #sidebar.active {
+        margin-left: 0;
+    }
 
-  #sidebarCollapse span {
-    display: none;
-  }
+    #sidebarCollapse span {
+        display: none;
+    }
 
-  .wrapperChart {
-    position: relative;
-    margin: auto;
-    height: 40vh;
-    width: 50vh;
-  }
+    .wrapperChart {
+        position: relative;
+        margin: auto;
+        height: 40vh;
+        width: 50vh;
+    }
 }
 
 ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: white;
-  color: black;
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: white;
+    color: black;
 }
 
 /* ---------------------------------------------------
