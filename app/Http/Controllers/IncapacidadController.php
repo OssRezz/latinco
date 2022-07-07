@@ -53,9 +53,25 @@ class IncapacidadController extends Controller
         if ($validator->fails()) {
             return ["modal" => $modal->modalAlerta('vinotinto', 'Informacion', 'Todos los campos son requeridos.'), "status" => 404];
         }
+        $empleado = Empleado::where('cedula', $request->cedula)->take(1)->get();
+        $acumulado = $request->totalDias;
+        if ($request->prorroga == "Si") {
+            $acumulado = 0;
+            $prorrogaIncapacidad = Incapacidad::where('fkEmpleado', $empleado[0]['id'])
+                ->where('numero_incapacidad', $request->incapacidad_prorroga)
+                ->where('prorroga', "No")->take(1)->get();
+
+            if (count($prorrogaIncapacidad) == 0) {
+                return ["modal" => $modal->modalAlerta('vinotinto', 'Informacion', 'No existe una prorroga con este numero de incapacidad'), "status" => 404];
+            }
+
+            $total = $prorrogaIncapacidad[0]['acumulado_prorroga'] + $request->totalDias;
+            $prorrogaIncapacidad = Incapacidad::find($prorrogaIncapacidad[0]['id']);
+            $prorrogaIncapacidad->acumulado_prorroga = $total;
+            $prorrogaIncapacidad->update();
+        }
 
         //Id empleado
-        $empleado = Empleado::where('cedula', $request->cedula)->take(1)->get();
         $incapacidad->fkEmpleado = $empleado[0]['id'];
         $incapacidad->fkTipo = $request->tipoIncapacidad;
         $incapacidad->fechaInicio = $request->fechaInicio;
@@ -65,6 +81,7 @@ class IncapacidadController extends Controller
         $incapacidad->diasEps = $request->diasMedio;
         $incapacidad->prorroga = $request->prorroga;
         $incapacidad->incapacidad_prorroga = $request->incapacidad_prorroga;
+        $incapacidad->acumulado_prorroga = $acumulado;
         $incapacidad->numero_incapacidad = $request->numero_incapacidad;
         $incapacidad->quincenas_nomina = $request->quincena_nominas;
         $incapacidad->observacion_id = 1;

@@ -47,15 +47,28 @@
                         <i class="fas fa-cash-register fa-xl"></i>
                         Flujo de caja
                     </div>
-                    <i class="fas fa-caret-{{ Request::is('') || Request::is('') ? 'down' : 'left' }}  "></i>
+                    <i
+                        class="fas fa-caret-{{ Request::is('bancos') || Request::is('proveedores') || Request::is('conceptocaja') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('') || Request::is('') ? 'show' : '' }}"
+            <ul class="collapse list-unstyled {{ Request::is('bancos') || Request::is('proveedores') || Request::is('conceptocaja') ? 'show' : '' }}"
                 id="flujoDeCaja">
                 <li class="py-1">
-                    <a href="{{ url('admin/incapacidad') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
+                    <a href="{{ route('proveedores') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('proveedores') ? 'active' : '' }}">
                         <i class="fas fa-box-open fa-xl"></i> Proveedores
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="{{ route('bancos') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('bancos') ? 'active' : '' }}">
+                        <i class="fas fa-money-check-alt fa-xl"></i> Bancos
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="{{ route('conceptocaja') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('conceptocaja') ? 'active' : '' }}">
+                        <i class="fas fa-clipboard-list fa-xl"></i> Conceptos
                     </a>
                 </li>
             </ul>
@@ -70,20 +83,21 @@
                         <i class="fas fa-file-invoice-dollar fa-xl"></i>
                         Costo laboral
                     </div>
-                    <i class="fas fa-caret-{{ Request::is('') || Request::is('') ? 'down' : 'left' }}  "></i>
+                    <i
+                        class="fas fa-caret-{{ Request::is('conceptos') || Request::is('responsables') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('') || Request::is('') ? 'show' : '' }}"
+            <ul class="collapse list-unstyled {{ Request::is('conceptos') || Request::is('responsables') ? 'show' : '' }}"
                 id="costoLaboralMenu">
                 <li class="py-1">
-                    <a href="{{ url('') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
+                    <a href="{{ url('conceptos') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('conceptos') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list fa-xl"></i> Conceptos
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="{{ url('') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('') ? 'active' : '' }}">
+                    <a href="{{ url('responsables') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('responsables') ? 'active' : '' }}">
                         <i class="fas fa-user-shield fa-xl"></i> Responsables
                     </a>
                 </li>
@@ -99,10 +113,10 @@
                         Incapacidades
                     </div>
                     <i
-                        class="fas fa-caret-{{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') ? 'down' : 'left' }}  "></i>
+                        class="fas fa-caret-{{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/ReportesIncapacidad') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') ? 'show' : '' }}"
+            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/ReportesIncapacidad') ? 'show' : '' }}"
                 id="incapacidadesMenu">
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidad') }}"
@@ -114,6 +128,12 @@
                     <a href="{{ url('admin/incapacidades') }}"
                         class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/incapacidades') ? 'active' : '' }}">
                         <i class="fas fa-h-square fa-xl"></i> Incapacidades registradas
+                    </a>
+                </li>
+                <li class="py-1">
+                    <a href="{{ url('admin/ReportesIncapacidad') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/ReportesIncapacidad') ? 'active' : '' }}">
+                        <i class="fas fa-tachometer-alt fa-xl"></i> Reportes
                     </a>
                 </li>
             </ul>
