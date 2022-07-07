@@ -41,17 +41,17 @@
                                         }
                                         
                                         if ($item->estado_id == 1) {
-                                            $color = 'bg-danger';
+                                            $color = 'bg-latinco';
                                         } elseif ($item->estado_id == 4) {
-                                            $color = 'bg-white text-dark border border-info';
+                                            $color = 'bg-info';
                                         } elseif ($item->estado_id == 7) {
                                             $color = 'bg-success';
                                         } elseif ($item->estado_id == 8) {
-                                            $color = 'bg-white text-dark border border-info';
+                                            $color = 'bg-info';
                                         } elseif ($item->estado_id == 9) {
-                                            $color = 'bg-white text-dark border border-info';
+                                            $color = 'bg-info';
                                         } else {
-                                            $color = 'bg-white text-dark border border-info';
+                                            $color = 'bg-warning';
                                         }
                                     @endphp
                                     <tr class="<?php echo $backgroundColor; ?>">
@@ -64,7 +64,7 @@
                                         <td class="text-center">{{ $item->prorroga }}</td>
                                         <td class="text-center">
                                             <span
-                                                class="badge bg-white text-dark border border-info">{{ $item->observacion }}</span>
+                                                class="badge bg-white text-dark border border-info border-2">{{ $item->observacion }}</span>
                                         </td>
 
                                         <td class="text-center">
