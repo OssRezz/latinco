@@ -48,9 +48,9 @@
                 @yield('content')
 
 
-                <footer class="bg-light text-latinco text-center text-lg-center d-flex justify-content-center">
+                <footer class="bg-light text-latinco text-center text-lg-center d-flex justify-content-center" style="z-index: -10">
                     <!-- Copyright -->
-                    <div class="text-center p-3" style="">
+                    <div class="text-center p-3" >
                         © 2022 Latinco  - Diseñado & Desarrollado por 
                       <a class="fw-bold" href="https://clasedeexcel.com" target="_BLANK"> Clase De Excel S.A.S</a>
                     </div>
