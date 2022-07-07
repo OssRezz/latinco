@@ -16,14 +16,11 @@ return new class extends Migration
         Schema::create('transcripciones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('incapacidad_id');
-            $table->date('fechaTranscripcion');
-            $table->string('numeroIncapacidad')->nullable();
+            $table->date('fechaActualizacion');
             $table->date('fechaPago')->nullable();
-            $table->string('quincenasNomina')->nullable();
             $table->integer('valorRecuperado')->nullable();
-            $table->integer('valorPendiente')->nullable();
+            $table->integer('valorPendiente');
             $table->timestamps();
-
             $table->foreign('incapacidad_id')
                 ->references('id')->on('incapacidades');
             // ->onDelete('cascade');

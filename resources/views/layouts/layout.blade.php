@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
-
+    {{-- Animted Css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- Datatables-->
     <link rel="stylesheet" type="text/css"
@@ -33,6 +34,7 @@
 </head>
 
 <body class="scrolly">
+    <div class="container toasts" id="toats"></div>
     <div id="respuesta"></div>
     <div class="wrapper">
         <!-- Sidebar  -->

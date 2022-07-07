@@ -23,6 +23,9 @@ return new class extends Migration
             $table->integer('diasEmpresa');
             $table->integer('diasEps');
             $table->string('prorroga');
+            $table->string('incapacidad_prorroga')->nullable();
+            $table->string('numero_incapacidad');
+            $table->string('quincenas_nomina');
             $table->unsignedBigInteger('observacion_id');
             $table->unsignedBigInteger('estado_id');
             $table->string('transcrita');

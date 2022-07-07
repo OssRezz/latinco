@@ -22,7 +22,7 @@ class EmpleadoFactory extends Factory
     {
         return [
             'cedula' => $this->faker->unique()->numerify('###########'),
-            'nombre' => $this->faker->firstname(),
+            'nombre' => $this->faker->name(),
             'fechaIngreso' => $this->faker->date(),
             'fechaRetiro' => $this->faker->date(),
             'estado' => $this->faker->randomElement(['1', '2']),

@@ -13,6 +13,7 @@
                                 <tr>
                                     <th class="bg-info text-white"><b>Empleado</b></th>
                                     <th class="text-center bg-info text-white"><b>Cedula</b></th>
+                                    <th class="text-center bg-info text-white"><b>EPS</b></th>
                                     <th class="text-center bg-info text-white"><b>Fecha Inicio</b></th>
                                     <th class="text-center bg-info text-white"><b>Fecha Fin</b></th>
                                     <th class="text-center bg-info text-white"><b>Total Dias</b></th>
@@ -28,21 +29,31 @@
                                         $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($item->fechaInicio)));
                                         $fechaActual = new DateTime(date('Y-m-d'));
                                         $intvl = $fechaActual->diff($fechaIncapacidad);
+                                        $backgroundColor = '';
                                         if ($intvl->days < 90 && $item->estado_id == 1) {
                                             $backgroundColor = '';
-                                            $textColor = '';
                                         } elseif ($intvl->days < 120 && $item->estado_id == 1) {
-                                            $backgroundColor = 'bg-warning';
-                                            $textColor = 'text-white';
-                                        } else {
-                                            $backgroundColor = 'bg-danger';
-                                            $textColor = 'text-white';
+                                            $backgroundColor = 'bg-amarillo';
                                         }
                                         
+                                        if ($item->estado_id == 1) {
+                                            $color = 'bg-danger';
+                                        } elseif ($item->estado_id == 4) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } elseif ($item->estado_id == 7) {
+                                            $color = 'bg-success';
+                                        } elseif ($item->estado_id == 8) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } elseif ($item->estado_id == 9) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } else {
+                                            $color = 'bg-white text-dark border border-info';
+                                        }
                                     @endphp
-                                    <tr class="<?php echo $backgroundColor; ?> <?php echo $textColor; ?> ">
+                                    <tr class="<?php echo $backgroundColor; ?>">
                                         <td>{{ $item->nombre }}</td>
                                         <td class="text-center">{{ $item->cedula }}</td>
+                                        <td class="text-center">{{ $item->eps }}</td>
                                         <td class="text-center">{{ $item->fechaInicio }}</td>
                                         <td class="text-center">{{ $item->fechaFin }}</td>
                                         <td class="text-center">{{ $item->totalDias }}</td>
@@ -53,14 +64,13 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <span
-                                                class="badge bg-white text-dark border border-info">{{ $item->estado }}</span>
+                                            <span class="badge <?php echo $color; ?>">{{ $item->estado }}</span>
                                         </td>
                                         <td class="text-center">
                                             <?php if($item->transcrita == "No"){ ?>
                                             <button class="btn btn-danger btn-sm" value="{{ $item->id }}"
                                                 onclick="modalTranscribir(this)">
-                                                <i class="fas fa-h-square"></i>
+                                                <i class="fas fa-dollar-sign"></i>
                                             </button>
                                             <?php } ?>
                                             <button class="btn btn-danger btn-sm" hidden>

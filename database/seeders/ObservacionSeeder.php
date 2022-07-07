@@ -15,10 +15,6 @@ class ObservacionSeeder extends Seeder
      */
     public function run()
     {
-        $radicada = new Observacion();
-        $radicada->observacion = 'Radicada';
-        $radicada->save();
-
         $transcrita = new Observacion();
         $transcrita->observacion = 'Transcrita';
         $transcrita->save();

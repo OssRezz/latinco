@@ -59,19 +59,20 @@ function actualizarIncapacidad(buttonEvent) {
         type: "PUT",
         data: {
             tipo: $('#tipo').val(),
+            numeroIncapacidad: $('#numeroIncapacidad').val(),
             fechaInicio: $('#fechaInicio').val(),
             fechaFin: $('#fechaFin').val(),
             totalDias: $('#totalDias').val(),
             diasEmpresa: $('#diasEmpresa').val(),
             diasEps: $('#diasEps').val(),
+            quincenas_nomina: $('#quincenas_nomina').val(),
             prorroga: $('#prorroga').val(),
-            fechaTranscripcion: $('#fechaTranscripcion').val(),
-            numeroIncapacidad: $('#numeroIncapacidad').val(),
+            incapacidad_prorroga: $('#incapacidad_prorroga').val(),
+            estado: $('#estado').val(),
+
             fechaPago: $('#fechaPago').val(),
-            quincenasNomina: $('#quincenasNomina').val(),
             valorRecuperado: $('#valorRecuperado').val(),
             valorPendiente: $('#valorPendiente').val(),
-            estado: $('#estado').val(),
         },
         success: function (result) {
             $("#respuesta").html(result);

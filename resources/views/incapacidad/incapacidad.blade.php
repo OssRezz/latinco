@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <form id="frm-incapacidad">
                             <div class="row g-3">
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Cedula" name="cedula"
                                             id="cedulaInput">
@@ -76,7 +76,9 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
-                                        <select name="tipoIncapacidad" class="form-select">
+                                        <select name="tipoIncapacidad" id="tipoIncapacidadInput" class="form-select">
+                                            <option value="" disabled selected>Seleccione una opcion</option>
+
                                             @foreach ($listaTipoIncapacidad as $item)
                                                 <option value="{{ $item->id }}">{{ $item->tipo }}</option>
                                             @endforeach
@@ -86,21 +88,36 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
-                                        <select name="medios" class="form-select">
-                                            <option value="Eps" selected>EPS</option>
-                                            <option value="ARL">ARL</option>
-                                            <option value="Paterniad/Maternidad">Paterniad/Maternidad</option>
-                                        </select>
-                                        <label for="">Medios <b class="text-danger">*</b></label>
+                                        <input type="number" class="form-control" placeholder="#"
+                                            name="numero_incapacidad">
+                                        <label for="">Numero de incapacidad <b class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
-                                        <select name="prorroga" class="form-select">
-                                            <option value="No" selected>No</option>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Cedula"
+                                                name="quincena_nominas">
+                                            <label for="">Quincena <b class="text-danger">*</b></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-floating">
+                                        <select name="prorroga" id="prorrogaSelect" class="form-select">
+                                            <option value="" disabled selected>Seleccione una opcion</option>
+                                            <option value="No">No</option>
                                             <option value="Si">Si</option>
                                         </select>
                                         <label for="">Prorroga <b class="text-danger">*</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-12" id="colProrroga" hidden>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="#"
+                                            name="incapacidad_prorroga">
+                                        <label for=""># de la incapacidad que prorroga <b
+                                                class="text-danger">*</b></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
@@ -141,9 +158,10 @@
                                 <div class="col-12 col-lg-4 mb-3">
                                     <ul class="list-group list-group-flush ">
                                         <li class="list-group-item d-flex justify-content-center bg-light">
-                                            <b class="text-vinotinto">Días eps:</b>
+                                            <b class="text-vinotinto" id="medioText" hidden>
+                                            </b>
                                             <span class="badge bg-dark mx-1 d-flex align-items-center"
-                                                id="diasEps">N/A</span>
+                                                id="diasMedio">N/A</span>
 
                                             {{-- <div class="mx-1" id="diasEps">0</div> --}}
                                         </li>
