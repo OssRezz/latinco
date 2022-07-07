@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Compania')
+@section('title', 'Companía')
 @section('content')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -13,7 +13,10 @@
 
         <div class="col-12 col-lg-7 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header text-rosado"><i class="fas fa-list text-rosado"></i> <b>Lista de compañías</b></div>
+                <div class="card-header text-white fs-5">
+                    <i class="fas fa-list text-white"></i> 
+                    Lista de compañías
+                </div>
                 <div class="card-body">
                     @if ($companias->isEmpty())
                         <p class="text-center">No hay compañias registradas actualmente. </p>

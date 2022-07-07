@@ -64,4 +64,16 @@
         </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-center">
+<footer class="bg-light text-center text-lg-start ">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="">
+        © 2022 Latinco  - Diseñado & Desarrollado por 
+      <a class="text-latinco fw-bold" href="https://clasedeexcel.com" target="_BLANK"> Clase De Excel S.A.S</a>
+    </div>
+    <!-- Copy
+</div>
+right -->
+  </footer>
 @endsection

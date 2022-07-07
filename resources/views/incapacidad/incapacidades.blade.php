@@ -4,23 +4,27 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header"><i class="fas fa-list text-vinotinto"></i> <b>Lista incapacidades</b></div>
+                <div class="card-header text-white fs-5">
+                    <i class="fas fa-list text-white"></i> 
+                    Lista incapacidades
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered nowrap table-hover table-sm" style="width:100%"
                             id="tablaIncapacidad">
                             <thead>
-                                <tr>
-                                    <th class="bg-info text-white"><b>Empleado</b></th>
-                                    <th class="text-center bg-info text-white"><b>Cedula</b></th>
-                                    <th class="text-center bg-info text-white"><b>EPS</b></th>
-                                    <th class="text-center bg-info text-white"><b>Fecha Inicio</b></th>
-                                    <th class="text-center bg-info text-white"><b>Fecha Fin</b></th>
-                                    <th class="text-center bg-info text-white"><b>Total Dias</b></th>
-                                    <th class="text-center bg-info text-white"><b>Prorroga</b></th>
-                                    <th class="text-center bg-info text-white"><b>Observacion</b></th>
-                                    <th class="text-center bg-info text-white"><b>Estado</b></th>
-                                    <th class="text-center bg-info text-white"><b>Accion</b></th>
+                                <tr bg-latinco>
+                                    <th class="text-white fw-light"><b>Empleado</b></th>
+                                    <th class="text-center text-white fw-light"><b>Cedula</b></th>
+                                    <th class="text-center text-white fw-light"><b>EPS</b></th>
+                                    <th class="text-center text-white fw-light"><b>Fecha Inicio</b></th>
+                                    <th class="text-center text-white fw-light"><b>Fecha Fin</b></th>
+                                    <th class="text-center text-white fw-light"><b>Total Dias</b></th>
+                                    <th class="text-center text-white fw-light"><b>Prorroga</b></th>
+                                    <th class="text-center text-white fw-light"><b>Observacion</b></th>
+                                    <th class="text-center text-white fw-light"><b>Estado</b></th>
+                                    <th class="text-center text-white fw-light"><b>Accion</b></th>
+
                                 </tr>
                             </thead>
                             <tbody>

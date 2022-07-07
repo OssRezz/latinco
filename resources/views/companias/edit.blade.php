@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Compania')
+@section('title', 'Companía')
 @section('content')
 
     <div style="margin-bottom: 10px;" class="row">
@@ -12,7 +12,9 @@
 
     <div class="col-12 col-lg-5 mb-3">
         <div class="card shadow-sm">
-            <div class="card-header text-rosado"><i class="fas fa-pen-square text-rosado"></i> <b>Editar compañia</b>
+            <div class="card-header text-white fs-5">
+                <i class="fas fa-pen-square text-white"></i> 
+                Editar compañia
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.compania.update',$compania['id']) }}">
@@ -21,7 +23,7 @@
                     <input type="hidden" name="id" value="{{$compania['id']}}">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{$compania['nombre']}}" />
-                        <label for="profesor">Nombre <b class="text-rosado">*</b></label>
+                        <label for="profesor">Nombre <b class="text-latinco">*</b></label>
                     </div>
                     <div class="form-floating mb-3">
                         <select name="tipo_compania" id="" class="form-select">
@@ -36,7 +38,7 @@
                             
                             
                         </select>
-                        <label for="profesor">Tipo de Compañía <b class="text-rosado">*</b></label>
+                        <label for="profesor">Tipo de Compañía <b class="text-latinco">*</b></label>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-outline-danger colorRed" id="btn-add-class">Actualizar

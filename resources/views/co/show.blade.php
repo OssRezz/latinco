@@ -13,7 +13,10 @@
 
     <div class="col-12 col-lg-7 mb-3">
         <div class="card shadow-sm">
-            <div class="card-header text-rosado"><i class="fas fa-info-circle text-rosado"></i> <b>Información del centro de operaciones</b></div>
+            <div class="card-header text-white fs-5">
+                <i class="fas fa-info-circle text-white"></i>
+                Información del centro de operaciones
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered nowrap table-hover" style="width: 100%" id="tablaClase">

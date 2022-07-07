@@ -47,9 +47,24 @@
             <div class="container-fluid px-4">
                 @yield('content')
 
+
+                <footer class="bg-light text-latinco text-center text-lg-center d-flex justify-content-center">
+                    <!-- Copyright -->
+                    <div class="text-center p-3" style="">
+                        © 2022 Latinco  - Diseñado & Desarrollado por 
+                      <a class="fw-bold" href="https://clasedeexcel.com" target="_BLANK"> Clase De Excel S.A.S</a>
+                    </div>
+                    <!-- Copyright -->
+                  </footer>
+                
             </div>
+
+            
         </div>
+        
     </div>
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/hbMenu.js') }}"></script>
 </body>
