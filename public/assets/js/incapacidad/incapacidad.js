@@ -1,15 +1,46 @@
 const fechaInicio = document.querySelector('#fechaInicio');
-const fechaFin = document.querySelector('#fechaFinal');
+let fechaFin = document.querySelector('#fechaFinal');
 const totalDias = document.querySelector('#totalDias');
 const diasEmpresa = document.querySelector('#diasEmpresa');
-const diasEps = document.querySelector('#diasEps');
+const diasMedio = document.querySelector('#diasMedio');
 const cedula = document.querySelector('#cedulaInput');
 const buttonIngresar = document.querySelector('#btn-ingresar-incapacidad');
 const frmIncapacidad = document.querySelector('#frm-incapacidad');
-
+const medioHtml = document.querySelector('#medioText');
+const tipoIncapacidad = document.querySelector('#tipoIncapacidadInput');
+const prorroga = document.querySelector('#prorrogaSelect');
+const colProrroga = document.querySelector('#colProrroga');
+let total;
+let empresa;
+let medioValor;
+let medio;
 
 fechaFin.setAttribute('disabled', true);
-totalDias.setAttribute('disabled', true);
+fechaInicio.setAttribute('disabled', true);
+
+tipoIncapacidad.addEventListener('change', () => {
+    medio = "Maternidad/Paternidad";
+    if (tipoIncapacidad.value == 1) {
+        medio = "EPS";
+    } else if (tipoIncapacidad.value == 2) {
+        medio = "ARL";
+    }
+    fechaInicio.removeAttribute('disabled');
+    medioHtml.removeAttribute("hidden");
+    if (medio == "Maternidad/Paternidad") {
+        return medioHtml.textContent = "Días EPS :";
+    }
+
+    medioHtml.textContent = "Días " + medio + " :";
+});
+
+prorroga.addEventListener('change', (e) => {
+    if (prorroga.value == "No") {
+        colProrroga.setAttribute('hidden', true);
+    } else {
+        colProrroga.removeAttribute('hidden');
+    }
+});
 
 fechaInicio.addEventListener('change', e => {
     fechaFin.removeAttribute('disabled');
@@ -17,20 +48,32 @@ fechaInicio.addEventListener('change', e => {
 });
 
 fechaFin.addEventListener('change', e => {
-    const total = calcularFecha(fechaInicio.value, fechaFin.value);
-    let empresa = 2;
-    let eps = total - empresa;
-    if (total == 0) {
-        eps = 0;
-        empresa = 0;
-    } else if (total == 1) {
-        eps = 0;
+    total = calcularFecha(fechaInicio.value, fechaFin.value);
+    empresa;
+    medioValor;
+
+    if (medio == "EPS") {
         empresa = total;
+        medioValor = 0;
+        if (total > 2) {
+            empresa = 2;
+            medioValor = total - empresa;
+        }
+    } else if (medio == "ARL") {
+        empresa = total;
+        medioValor = 0;
+        if (total > 1) {
+            empresa = 1;
+            medioValor = total - empresa;
+        }
+    } else if (medio == "Maternidad/Paternidad") {
+        empresa = 0;
+        medioValor = total;
     }
 
     totalDias.textContent = total;
     diasEmpresa.textContent = empresa;
-    diasEps.textContent = eps;
+    diasMedio.textContent = medioValor;
 });
 
 cedula.addEventListener('input', (e) => {
@@ -67,10 +110,12 @@ function cargarEmpleado(cedula) {
     });
 }
 
-
 frmIncapacidad.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(frmIncapacidad);
+    formData.append('totalDias', total);
+    formData.append('diasEmpresa', empresa);
+    formData.append('diasMedio', medioValor);
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -84,12 +129,15 @@ frmIncapacidad.addEventListener('submit', e => {
             if (result.status == 201) {
                 frmIncapacidad.reset();
                 limpiarEmpleado();
+                totalDias.textContent = "N/A";
+                diasEmpresa.textContent = "N/A";
+                diasMedio.textContent = "N/A";
+                buttonIngresar.setAttribute('disabled', true);
             }
             $("#respuesta").html(result.modal);
         },
     });
 });
-
 
 function limpiarEmpleado() {
     clean("#cedula");
@@ -108,13 +156,12 @@ function calcularFecha(fechaInicial, fechaFinalizacion) {
     const fechaFinal = new Date(fechaFinalizacion).getTime();
 
     const diff = fechaFinal - fechaInicio;
-    const dias = diff / (1000 * 60 * 60 * 24);
+    let dias = diff / (1000 * 60 * 60 * 24);
     if (dias < 0) {
         dias = 0;
     }
     return dias;
 }
-
 
 function clean(deleteContent) {
     const aux = document.querySelector(deleteContent)

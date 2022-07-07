@@ -46,36 +46,27 @@ class IncapacidadController extends Controller
             'fechaInicio' => 'required',
             'fechaFinal' => 'required',
             'prorroga' => 'required',
+            'numero_incapacidad' => 'required',
+            'quincena_nominas' => 'required',
         ]);
 
         if ($validator->fails()) {
             return ["modal" => $modal->modalAlerta('vinotinto', 'Informacion', 'Todos los campos son requeridos.'), "status" => 404];
         }
+
         //Id empleado
         $empleado = Empleado::where('cedula', $request->cedula)->take(1)->get();
-
-        //Calculo dias de pago totaldias, dias de empresa, dias eps
-        $firstDate  = new DateTime($request->fechaInicio);
-        $secondDate = new DateTime($request->fechaFinal);
-        $totalDias = $firstDate->diff($secondDate);
-        $diasEmpresa = 2;
-        $diasEps = $totalDias->days - $diasEmpresa;
-        if ($totalDias->days == 0) {
-            $diasEps = 0;
-            $diasEmpresa = 0;
-        } else if ($totalDias->days == 1) {
-            $diasEps = 0;
-            $diasEmpresa = $totalDias->days;
-        }
-
         $incapacidad->fkEmpleado = $empleado[0]['id'];
         $incapacidad->fkTipo = $request->tipoIncapacidad;
         $incapacidad->fechaInicio = $request->fechaInicio;
         $incapacidad->fechaFin = $request->fechaFinal;
-        $incapacidad->totalDias = $totalDias->days;
-        $incapacidad->diasEmpresa = $diasEmpresa;
-        $incapacidad->diasEps = $diasEps;
+        $incapacidad->totalDias = $request->totalDias;
+        $incapacidad->diasEmpresa = $request->diasEmpresa;
+        $incapacidad->diasEps = $request->diasMedio;
         $incapacidad->prorroga = $request->prorroga;
+        $incapacidad->incapacidad_prorroga = $request->incapacidad_prorroga;
+        $incapacidad->numero_incapacidad = $request->numero_incapacidad;
+        $incapacidad->quincenas_nomina = $request->quincena_nominas;
         $incapacidad->observacion_id = 1;
         $incapacidad->transcrita = "No";
         $incapacidad->estado_id = 1;

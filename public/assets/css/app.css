@@ -194,6 +194,11 @@ a.active {
     box-shadow: none !important;
 }
 
+.bg-amarillo {
+  background-color: #ffe9a8!important;
+  color: #002229!important;
+}
+
 /* ---------------------------------------------------
     NAVBAR
 ----------------------------------------------------- */

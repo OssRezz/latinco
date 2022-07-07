@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Custom\Modal;
+use App\Models\Empleado;
 use App\Models\EstadoIncapacidad;
 use App\Models\Incapacidad;
 use App\Models\TipoIncapacidad;
@@ -24,7 +25,7 @@ class IncapacidadesController extends Controller
         $listaIncapacidades = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.fkEmpleado')
             ->join('observaciones', 'observaciones.id', '=', 'incapacidades.observacion_id')
             ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_id')
-            ->select('incapacidades.*', 'empleados.nombre', 'empleados.cedula', 'observaciones.observacion', 'estado_incapacidades.estado')->get();
+            ->select('incapacidades.*', 'empleados.nombre', 'empleados.cedula', 'empleados.eps', 'observaciones.observacion', 'estado_incapacidades.estado')->get();
         return view('incapacidad.incapacidades', compact('listaIncapacidades'));
     }
 
@@ -35,23 +36,16 @@ class IncapacidadesController extends Controller
      */
     public function create(Modal $modal, Request $request)
     {
+        $incapacidad = Incapacidad::where('id', $request->id)->get();
+        $empleado = Empleado::where('id', $incapacidad[0]['fkEmpleado'])->get();
+        if ($incapacidad[0]['fkTipo'] == 1) {
+            $valorPorRecuperar = number_format((($empleado[0]['salario'] / 30) * $incapacidad[0]['diasEps']) * 0.6667);
+        } else {
+            $valorPorRecuperar = number_format(($empleado[0]['salario'] / 30) * $incapacidad[0]['diasEps']);
+        }
         $listaEstado = EstadoIncapacidad::all();
         $contenidoModal =  "<form id='frmTranscripcion'>";
         $contenidoModal .=  "<div class='row g-3'>";
-        //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-        $contenidoModal .= "        <div class='form-floating'>";
-        $contenidoModal .= "            <input  name='fechaTranscripcion' type='date' class='form-control' placeholder='Fecha de la transcripcion'>";
-        $contenidoModal .= "            <label for='fechaTranscripcion'>Fecha de la transcripcion <b class='text-danger'>*</b></label>";
-        $contenidoModal .= "        </div>";
-        $contenidoModal .= "    </div>";
-        //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-        $contenidoModal .= "        <div class='form-floating'>";
-        $contenidoModal .= "            <input  name='numeroIncapacidad' type='text' class='form-control'  placeholder='Numero de la incapacidad'>";
-        $contenidoModal .= "            <label for='numeroIncapacidad'>Numero de la incapacidad</label>";
-        $contenidoModal .= "        </div>";
-        $contenidoModal .= "    </div>";
         //
         $contenidoModal .= "    <div class='col-12 col-lg-6'>";
         $contenidoModal .= "        <div class='form-floating'>";
@@ -62,22 +56,15 @@ class IncapacidadesController extends Controller
         //
         $contenidoModal .= "    <div class='col-12 col-lg-6'>";
         $contenidoModal .= "        <div class='form-floating'>";
-        $contenidoModal .= "            <input  name='quincenasNomina' type='text' class='form-control' placeholder='Quincenas nomina'>";
-        $contenidoModal .= "            <label for='quincenasNomina'>Quincenas nomina</label>";
-        $contenidoModal .= "        </div>";
-        $contenidoModal .= "    </div>";
-        //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-        $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <input name='valorRecuperado' type='number' class='form-control' placeholder='Valor recuperado'>";
         $contenidoModal .= "            <label for='valorRecuperado'>Valor recuperado</label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "    <div class='col-12 col-lg-12'>";
         $contenidoModal .= "        <div class='form-floating'>";
-        $contenidoModal .= "            <input name='valorPendiente' type='number' class='form-control' placeholder='Restante por recuperar'>";
-        $contenidoModal .= "            <label for='valorPendiente'>Restante por recuperar</label>";
+        $contenidoModal .= "            <input name='valorPendiente' value='$valorPorRecuperar' type='text' class='form-control' placeholder='Restante por recuperar'>";
+        $contenidoModal .= "            <label for='valorPendiente'>Restante por recuperar <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
@@ -96,12 +83,12 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "    </div>";
         //
         $contenidoModal .= "    <div class='d-grid mt-3'>";
-        $contenidoModal .= "        <button class='btn btn-danger' id='btn-update-class' value='$request->id' onclick='ingresarTranscripcion(this)'>Transcribir</button>";
+        $contenidoModal .= "        <button class='btn btn-danger' id='btn-update-class' value='$request->id' onclick='ingresarTranscripcion(this)'>Recaudar</button>";
         $contenidoModal .= "    </div>";
         $contenidoModal .= "</div>";
         $contenidoModal .= "</form>";
 
-        return $modal->modalAlerta("vinotinto", "Transcibir incapacidad", $contenidoModal);
+        return $modal->modalAlerta("vinotinto", "Recaudar incapacidad", $contenidoModal);
     }
 
     /**
@@ -112,28 +99,33 @@ class IncapacidadesController extends Controller
      */
     public function store(Request $request, Modal $modal, Transcripcion $transcripcion)
     {
-        $validator = Validator::make($request->all(), [
-            'fechaTranscripcion' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Todos los campos son requeridos.');
+        if ($request->estado == 1) {
+            $oberservacion = 1;
+        } else if ($request->estado == 4) {
+            $oberservacion = 1;
+        } else if ($request->estado == 7) {
+            $oberservacion = 2;
+        } else if ($request->estado == 8) {
+            $oberservacion = 1;
+        } else if ($request->estado == 9) {
+            $oberservacion = 1;
+        } else {
+            $oberservacion = 3;
         }
 
         $incapacidad = Incapacidad::find($request->id);
         $incapacidad->transcrita = "Si";
-        $incapacidad->observacion_id = 2;
+        $incapacidad->observacion_id = $oberservacion;
         $incapacidad->estado_id = $request->estado;
         if (!$incapacidad->update()) {
             return  $modal->modalAlertaReaload('vinotinto', 'Informacion', 'No se puede transcribir esta incapacidad.');
         }
-
+        $fechaActual = date('Y-m-d');
         $transcripcion->incapacidad_id = $request->id;
-        $transcripcion->fechaTranscripcion = $request->fechaTranscripcion;
-        $transcripcion->numeroIncapacidad = $request->numeroIncapacidad;
+        $transcripcion->fechaActualizacion = $fechaActual;
         $transcripcion->fechaPago = $request->fechaPago;
-        $transcripcion->quincenasNomina = $request->quincenasNomina;
         $transcripcion->valorRecuperado = $request->valorRecuperado;
-        $transcripcion->valorPendiente = $request->valorPendiente;
+        $transcripcion->valorPendiente = intval(str_replace(',', '', $request->valorPendiente));
 
         if ($transcripcion->save()) {
             return  $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Incapacidad transcripta.');
@@ -151,7 +143,11 @@ class IncapacidadesController extends Controller
         $tipoIncapacidades = TipoIncapacidad::all();
         $listaEstado = EstadoIncapacidad::all();
         $Transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
-        $Incapacidad = Incapacidad::where('id', $id)->get();
+        $Incapacidad = Incapacidad::join('tipo_incapacidades', 'tipo_incapacidades.id', '=', 'incapacidades.fkTipo')
+            ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_id')
+            ->select('incapacidades.*', 'tipo_incapacidades.tipo', 'estado_incapacidades.estado')
+            ->where('incapacidades.id', $id)->get();
+
         foreach ($Incapacidad as $Incapacidad) {
             $fechaInicio = $Incapacidad['fechaInicio'];
             $fechaFin = $Incapacidad['fechaFin'];
@@ -160,31 +156,49 @@ class IncapacidadesController extends Controller
             $diasEps = $Incapacidad['diasEps'];
             $prorroga = $Incapacidad['prorroga'];
             $transcrita = $Incapacidad['transcrita'];
+            $numeroIncapacidad = $Incapacidad['numero_incapacidad'];
+            $quincenas_nomina = $Incapacidad['quincenas_nomina'];
+            $fkTipo = $Incapacidad['fkTipo'];
+            $tipo = $Incapacidad['tipo'];
+            $incapacidad_prorroga = $Incapacidad['incapacidad_prorroga'];
+            $estado_id = $Incapacidad['estado_id'];
+            $estadoIncapacidad = $Incapacidad['estado'];
+        }
+        if ($fkTipo == 2) {
+            $medio = "ARL";
+        } else {
+            $medio = "EPS";
         }
 
-        foreach ($Transcripcion as $Transcripcion) {
-            $fechaTranscripcion = $Transcripcion['fechaTranscripcion'];
-            $numeroIncapacidad = $Transcripcion['numeroIncapacidad'];
-            $fechaPago = $Transcripcion['fechaPago'];
-            $quincenasNomina = $Transcripcion['quincenasNomina'];
-            $valorRecuperado = $Transcripcion['fechaPago'];
-            $valorPendiente = $Transcripcion['valorPendiente'];
+        foreach ($Transcripcion as $recaudo) {
+            $fechaPago = $recaudo['fechaPago'];
+            $valorRecuperado = $recaudo['valorRecuperado'];
+            $valorPendiente = $recaudo['valorPendiente'];
         }
 
         $contenidoModal =  "<div class='row g-3'>";
         $contenidoModal .=  "<div><p class='m-0 p-0'><em>Incapacidad</em></p></div>";
         //
-        $contenidoModal .= "    <div class='col-12'>";
+        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <select class='form-select' id='tipo'>";
+        $contenidoModal .= "            <option value='$fkTipo' selected>$tipo</option>";
         foreach ($tipoIncapacidades as $tipo) {
             $idTipo = $tipo['id'];
             $tipoIncapacidad = $tipo['tipo'];
-
-            $contenidoModal .= "                <option value='$idTipo'>$tipoIncapacidad</option>";
+            if ($idTipo != $fkTipo) {
+                $contenidoModal .= "                <option value='$idTipo'>$tipoIncapacidad</option>";
+            }
         }
         $contenidoModal .= "            </select>";
-        $contenidoModal .= "            <label for=''>Estado <b class='text-danger'>*</b></label>";
+        $contenidoModal .= "            <label for=''>Tipo de incapacidad <b class='text-danger'>*</b></label>";
+        $contenidoModal .= "        </div>";
+        $contenidoModal .= "    </div>";
+        //
+        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "        <div class='form-floating'>";
+        $contenidoModal .= "            <input  id='numeroIncapacidad' type='number' value='$numeroIncapacidad' class='form-control' placeholder='Fecha inicio'>";
+        $contenidoModal .= "            <label for='numeroIncapacidad'>Numero incapacidad <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
@@ -202,24 +216,31 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "    <div class='col-12 col-lg-4'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <input  id='totalDias' type='number' value='$totalDias' class='form-control' placeholder='Total dias'>";
         $contenidoModal .= "            <label for='totalDias'>Total dias <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "    <div class='col-12 col-lg-4'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <input  id='diasEmpresa' type='number' value='$diasEmpresa' class='form-control' placeholder='Total empresa'>";
         $contenidoModal .= "            <label for='diasEmpresa'>Total empresa <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
-        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "    <div class='col-12 col-lg-4'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <input  id='diasEps' type='number' value='$diasEps' class='form-control' placeholder='Total eps'>";
-        $contenidoModal .= "            <label for='diasEps'>Total eps <b class='text-danger'>*</b></label>";
+        $contenidoModal .= "            <label for='diasEps'>Total $medio <b class='text-danger'>*</b></label>";
+        $contenidoModal .= "        </div>";
+        $contenidoModal .= "    </div>";
+        //
+        $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+        $contenidoModal .= "        <div class='form-floating'>";
+        $contenidoModal .= "            <input  id='quincenas_nomina' type='text' value='$quincenas_nomina' class='form-control' placeholder='Total eps'>";
+        $contenidoModal .= "            <label for='quincenas_nomina'>Quincena <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
@@ -238,35 +259,26 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
+        if ($prorroga == "Si") {
+            $hidden = "";
+        } else {
+            $hidden = "hidden";
+        }
+        $contenidoModal .= "    <div class='col-12' $hidden>";
+        $contenidoModal .= "        <div class='form-floating'>";
+        $contenidoModal .= "            <input  id='incapacidad_prorroga' type='text' value='$incapacidad_prorroga' class='form-control' placeholder='Total eps'>";
+        $contenidoModal .= "            <label for='incapacidad_prorroga'>Incapacidad que prorroga <b class='text-danger'>*</b></label>";
+        $contenidoModal .= "        </div>";
+        $contenidoModal .= "    </div>";
+        //
         if ($transcrita == "Si") {
             $contenidoModal .= "    <hr>";
-            $contenidoModal .=  "<div class='mt-0 pt-0'><p class='m-0 p-0'><em>Transcripcion</em></p></div>";
+            $contenidoModal .=  "<div class='mt-0 pt-0'><p class='m-0 p-0'><em>Recaudo</em></p></div>";
             //
-            $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-            $contenidoModal .= "        <div class='form-floating'>";
-            $contenidoModal .= "            <input  id='fechaTranscripcion' type='date' value='$fechaTranscripcion' class='form-control' placeholder='Fecha de la transcripcion'>";
-            $contenidoModal .= "            <label for='fechaTranscripcion'>Fecha de la transcripcion <b class='text-danger'>*</b></label>";
-            $contenidoModal .= "        </div>";
-            $contenidoModal .= "    </div>";
-            //
-            $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-            $contenidoModal .= "        <div class='form-floating'>";
-            $contenidoModal .= "            <input  id='numeroIncapacidad' type='text' value='$numeroIncapacidad' class='form-control'  placeholder='Numero de la incapacidad'>";
-            $contenidoModal .= "            <label for='numeroIncapacidad'>Numero de la incapacidad</label>";
-            $contenidoModal .= "        </div>";
-            $contenidoModal .= "    </div>";
-            //
-            $contenidoModal .= "    <div class='col-12 col-lg-6'>";
+            $contenidoModal .= "    <div class='col-12'>";
             $contenidoModal .= "        <div class='form-floating'>";
             $contenidoModal .= "            <input  id='fechaPago' type='date' value='$fechaPago' class='form-control' placeholder='Fecha del pago'>";
             $contenidoModal .= "            <label for='fechaPago'>Fecha del pago</label>";
-            $contenidoModal .= "        </div>";
-            $contenidoModal .= "    </div>";
-            //
-            $contenidoModal .= "    <div class='col-12 col-lg-6'>";
-            $contenidoModal .= "        <div class='form-floating'>";
-            $contenidoModal .= "            <input  id='quincenasNomina' type='text' value='$quincenasNomina' class='form-control' placeholder='Quincenas nomina'>";
-            $contenidoModal .= "            <label for='quincenasNomina'>Quincenas nomina</label>";
             $contenidoModal .= "        </div>";
             $contenidoModal .= "    </div>";
             //
@@ -279,7 +291,7 @@ class IncapacidadesController extends Controller
             //
             $contenidoModal .= "    <div class='col-12 col-lg-6'>";
             $contenidoModal .= "        <div class='form-floating'>";
-            $contenidoModal .= "            <input id='valorPendiente' type='number' value='$valorPendiente' class='form-control' placeholder='Restante por recuperar'>";
+            $contenidoModal .= "            <input id='valorPendiente' type='text' value='$valorPendiente' class='form-control' placeholder='Restante por recuperar'>";
             $contenidoModal .= "            <label for='valorPendiente'>Restante por recuperar</label>";
             $contenidoModal .= "        </div>";
             $contenidoModal .= "    </div>";
@@ -292,11 +304,13 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "    <div class='col-12'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <select class='form-select' id='estado'>";
+        $contenidoModal .= "            <option value='$estado_id' selected>$estadoIncapacidad</option>";
         foreach ($listaEstado as $estado) {
             $idEstado = $estado['id'];
             $estado = $estado['estado'];
-
-            $contenidoModal .= "                <option value='$idEstado'>$estado</option>";
+            if ($idEstado != $estado_id) {
+                $contenidoModal .= "                <option value='$idEstado'>$estado</option>";
+            }
         }
         $contenidoModal .= "            </select>";
         $contenidoModal .= "            <label for=''>Estado <b class='text-danger'>*</b></label>";
@@ -334,6 +348,7 @@ class IncapacidadesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
+            'numeroIncapacidad' => 'required',
             'fechaInicio' => 'required',
             'fechaFin' => 'required',
             'totalDias' => 'required',
@@ -345,14 +360,33 @@ class IncapacidadesController extends Controller
             return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Los campos marcados con <b class="text-danger">*</b> son requeridos.');
         }
 
+        if ($request->estado == 1) {
+            $oberservacion = 1;
+        } else if ($request->estado == 4) {
+            $oberservacion = 1;
+        } else if ($request->estado == 7) {
+            $oberservacion = 2;
+        } else if ($request->estado == 8) {
+            $oberservacion = 1;
+        } else if ($request->estado == 9) {
+            $oberservacion = 1;
+        } else {
+            $oberservacion = 3;
+        }
+
+
         $incapacidad = Incapacidad::find($id);
         $incapacidad->fkTipo = $request->tipo;
+        $incapacidad->numero_incapacidad = $request->numeroIncapacidad;
         $incapacidad->fechaInicio = $request->fechaInicio;
         $incapacidad->fechaFin = $request->fechaFin;
         $incapacidad->totalDias = $request->totalDias;
         $incapacidad->diasEmpresa = $request->diasEmpresa;
         $incapacidad->diasEps = $request->diasEps;
+        $incapacidad->quincenas_nomina = $request->quincenas_nomina;
         $incapacidad->prorroga = $request->prorroga;
+        $incapacidad->incapacidad_prorroga = $request->incapacidad_prorroga;
+        $incapacidad->observacion_id = $oberservacion;
         $incapacidad->estado_id = $request->estado;
         if (!$incapacidad->update()) {
             return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
@@ -360,15 +394,12 @@ class IncapacidadesController extends Controller
 
         $incapacidadTranscrita = Incapacidad::where('id', $id)->get();
         if ($incapacidadTranscrita[0]['transcrita'] == "Si") {
-            
+
             $transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
             $transcripcion = Transcripcion::find($transcripcion[0]['id']);
-            $transcripcion->fechaTranscripcion = $request->fechaTranscripcion;
-            $transcripcion->numeroIncapacidad = $request->numeroIncapacidad;
             $transcripcion->fechaPago = $request->fechaPago;
-            $transcripcion->quincenasNomina = $request->quincenasNomina;
             $transcripcion->valorRecuperado = $request->valorRecuperado;
-            $transcripcion->valorPendiente = $request->valorPendiente;
+            $transcripcion->valorPendiente = intval(str_replace(',', '', $request->valorPendiente));
             if (!$transcripcion->update()) {
                 return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
             }

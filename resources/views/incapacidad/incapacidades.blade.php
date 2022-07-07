@@ -13,16 +13,18 @@
                         <table class="table table-bordered nowrap table-hover table-sm" style="width:100%"
                             id="tablaIncapacidad">
                             <thead>
-                                <tr class="bg-latinco">
-                                    <th class="text-white fw-light">Empleado</th>
-                                    <th class="text-center text-white fw-light">Cédula</th>
-                                    <th class="text-center text-white fw-light">Fecha Inicio</th>
-                                    <th class="text-center text-white fw-light">Fecha Fin</th>
-                                    <th class="text-center text-white fw-light">Total Días</th>
-                                    <th class="text-center text-white fw-light">Prorroga</th>
-                                    <th class="text-center text-white fw-light">Observación</th>
-                                    <th class="text-center text-white fw-light">Estado</th>
-                                    <th class="text-center text-white fw-light">Acción</th>
+                                <tr bg-latinco>
+                                    <th class="text-white fw-light"><b>Empleado</b></th>
+                                    <th class="text-center text-white fw-light"><b>Cedula</b></th>
+                                    <th class="text-center text-white fw-light"><b>EPS</b></th>
+                                    <th class="text-center text-white fw-light"><b>Fecha Inicio</b></th>
+                                    <th class="text-center text-white fw-light"><b>Fecha Fin</b></th>
+                                    <th class="text-center text-white fw-light"><b>Total Dias</b></th>
+                                    <th class="text-center text-white fw-light"><b>Prorroga</b></th>
+                                    <th class="text-center text-white fw-light"><b>Observacion</b></th>
+                                    <th class="text-center text-white fw-light"><b>Estado</b></th>
+                                    <th class="text-center text-white fw-light"><b>Accion</b></th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,21 +33,31 @@
                                         $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($item->fechaInicio)));
                                         $fechaActual = new DateTime(date('Y-m-d'));
                                         $intvl = $fechaActual->diff($fechaIncapacidad);
+                                        $backgroundColor = '';
                                         if ($intvl->days < 90 && $item->estado_id == 1) {
                                             $backgroundColor = '';
-                                            $textColor = '';
                                         } elseif ($intvl->days < 120 && $item->estado_id == 1) {
-                                            $backgroundColor = 'bg-warning';
-                                            $textColor = 'text-white';
-                                        } else {
-                                            $backgroundColor = 'bg-danger';
-                                            $textColor = 'text-white';
+                                            $backgroundColor = 'bg-amarillo';
                                         }
                                         
+                                        if ($item->estado_id == 1) {
+                                            $color = 'bg-danger';
+                                        } elseif ($item->estado_id == 4) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } elseif ($item->estado_id == 7) {
+                                            $color = 'bg-success';
+                                        } elseif ($item->estado_id == 8) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } elseif ($item->estado_id == 9) {
+                                            $color = 'bg-white text-dark border border-info';
+                                        } else {
+                                            $color = 'bg-white text-dark border border-info';
+                                        }
                                     @endphp
-                                    <tr class="<?php echo $backgroundColor; ?> <?php echo $textColor; ?> ">
+                                    <tr class="<?php echo $backgroundColor; ?>">
                                         <td>{{ $item->nombre }}</td>
                                         <td class="text-center">{{ $item->cedula }}</td>
+                                        <td class="text-center">{{ $item->eps }}</td>
                                         <td class="text-center">{{ $item->fechaInicio }}</td>
                                         <td class="text-center">{{ $item->fechaFin }}</td>
                                         <td class="text-center">{{ $item->totalDias }}</td>
@@ -56,14 +68,13 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <span
-                                                class="badge bg-white text-dark border border-info">{{ $item->estado }}</span>
+                                            <span class="badge <?php echo $color; ?>">{{ $item->estado }}</span>
                                         </td>
                                         <td class="text-center">
                                             <?php if($item->transcrita == "No"){ ?>
                                             <button class="btn btn-danger btn-sm" value="{{ $item->id }}"
                                                 onclick="modalTranscribir(this)">
-                                                <i class="fas fa-h-square"></i>
+                                                <i class="fas fa-dollar-sign"></i>
                                             </button>
                                             <?php } ?>
                                             <button class="btn btn-danger btn-sm" hidden>
