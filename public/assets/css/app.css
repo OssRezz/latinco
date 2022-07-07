@@ -6,38 +6,36 @@
 .bg-latinco {
     background-color: #601c14;
 }
+
 .bg-latinco-blue {
     background-color: #68b7ee;
 }
+
 .text-latinco {
     color: #601c14 !important;
 }
 
 .card-header {
     background: rgb(96, 28, 20);
-    background: linear-gradient(
-        90deg,
-        rgba(96, 28, 20, 1) 0%,
-        rgba(104, 183, 238, 1) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(96, 28, 20, 1) 0%,
+            rgba(104, 183, 238, 1) 100%);
     border: none;
 }
 
-.latinco-bg-gradient{
-  background: rgb(96, 28, 20);
-    background: linear-gradient(
-        90deg,
-        rgba(96, 28, 20, 1) 0%,
-        rgba(104, 183, 238, 1) 100%
-    );
+.latinco-bg-gradient {
+    background: rgb(96, 28, 20);
+    background: linear-gradient(90deg,
+            rgba(96, 28, 20, 1) 0%,
+            rgba(104, 183, 238, 1) 100%);
 }
 
 .triangulo {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 100px solid #f0ad4e;
     border-top: 50px solid transparent;
-    border-bottom: 50px solid transparent; 
+    border-bottom: 50px solid transparent;
 }
 
 .text-latinco-blue {
@@ -53,6 +51,7 @@ body {
     font-family: "Roboto", sans-serif;
     background: #fafafa;
 }
+
 /* ---------------------------------------------------
     Font
 ----------------------------------------------------- */
@@ -74,6 +73,7 @@ body {
     background-color: #343a40;
     border: black;
 }
+
 /* ---------------------------------------------------
   Scroll bar 
 ----------------------------------------------------- */
@@ -117,6 +117,7 @@ p {
     line-height: 1.7em;
     color: #999;
 }
+
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
@@ -195,8 +196,13 @@ a.active {
 }
 
 .bg-amarillo {
-  background-color: #ffe9a8!important;
-  color: #002229!important;
+    background-color: #ffe9a8 !important;
+    color: #002229 !important;
+}
+
+.bg-rojo {
+    background-color: #ffa9b1 !important;
+    color: #400000 !important;
 }
 
 /* ---------------------------------------------------
@@ -210,6 +216,7 @@ a.active {
     margin-bottom: 25px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .avatar {
     vertical-align: middle;
     width: 40px;
@@ -268,7 +275,7 @@ a.active {
     background: white;
 }
 
-#sidebar ul li.active > a,
+#sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: black;
     background: white;

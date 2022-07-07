@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-white fs-5">
-                    <i class="fas fa-list text-white"></i> 
+                    <i class="fas fa-list text-white"></i>
                     Lista incapacidades
                 </div>
                 <div class="card-body">
@@ -34,7 +34,9 @@
                                         $fechaActual = new DateTime(date('Y-m-d'));
                                         $intvl = $fechaActual->diff($fechaIncapacidad);
                                         $backgroundColor = '';
-                                        if ($intvl->days < 90 && $item->estado_id == 1) {
+                                        if ($item->acumulado_prorroga >= 120) {
+                                            $backgroundColor = 'bg-rojo';
+                                        } elseif ($intvl->days < 90 && $item->estado_id == 1) {
                                             $backgroundColor = '';
                                         } elseif ($intvl->days < 120 && $item->estado_id == 1) {
                                             $backgroundColor = 'bg-amarillo';

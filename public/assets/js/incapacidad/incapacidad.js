@@ -138,6 +138,7 @@ frmIncapacidad.addEventListener('submit', e => {
                 diasEmpresa.textContent = "N/A";
                 diasMedio.textContent = "N/A";
                 buttonIngresar.setAttribute('disabled', true);
+                colProrroga.setAttribute('hidden', true);
             }
             $("#respuesta").html(result.modal);
         },
