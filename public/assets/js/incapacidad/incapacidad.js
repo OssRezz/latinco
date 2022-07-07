@@ -99,7 +99,12 @@ function cargarEmpleado(cedula) {
                     $("#centroOperacion").html(centro_operaciones);
                     $("#eps").html(eps);
                     $("#co").html(codigo);
-                    $("#salario").html(salario);
+                    const formatterPeso = new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0
+                    })
+                    $("#salario").html(formatterPeso.format(salario));
                 });
                 buttonIngresar.removeAttribute('disabled');
             } else {

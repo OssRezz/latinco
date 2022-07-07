@@ -13,7 +13,7 @@
                         <table class="table table-bordered nowrap table-hover table-sm" style="width:100%"
                             id="tablaIncapacidad">
                             <thead>
-                                <tr bg-latinco>
+                                <tr class="bg-latinco">
                                     <th class="text-white fw-light"><b>Empleado</b></th>
                                     <th class="text-center text-white fw-light"><b>Cedula</b></th>
                                     <th class="text-center text-white fw-light"><b>EPS</b></th>

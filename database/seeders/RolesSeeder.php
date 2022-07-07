@@ -24,16 +24,20 @@ class RolesSeeder extends Seeder
         $usuarios->save();
 
         $sst = new Rol();
-        $sst->rol = 'sst';
+        $sst->rol = 'Gestion Humana';
         $sst->save();
 
         $flujoCaja = new Rol();
-        $flujoCaja->rol = 'Flujo caja';
+        $flujoCaja->rol = 'Seguimiento y control';
         $flujoCaja->save();
 
 
         $costoLaboral = new Rol();
-        $costoLaboral->rol = 'Costo laboral';
+        $costoLaboral->rol = 'Flujo de caja';
         $costoLaboral->save();
+
+        $contabilidad = new Rol();
+        $contabilidad->rol = 'Contabilidad';
+        $contabilidad->save();
     }
 }
