@@ -30,6 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('observacion_id');
             $table->unsignedBigInteger('estado_id');
             $table->string('transcrita');
+            $table->integer('valor_pendiente');
             $table->timestamps();
         });
     }

@@ -9,7 +9,11 @@
                     Lista incapacidades
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="spinner">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
+                    </div>
+                    <div class="table-responsive" style="display: none;" id="tableDiv">
                         <table class="table table-bordered nowrap table-hover table-sm" style="width:100%"
                             id="tablaIncapacidad">
                             <thead>
@@ -27,72 +31,8 @@
 
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($listaIncapacidades as $item)
-                                    @php
-                                        $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($item->fechaInicio)));
-                                        $fechaActual = new DateTime(date('Y-m-d'));
-                                        $intvl = $fechaActual->diff($fechaIncapacidad);
-                                        $backgroundColor = '';
-                                        if ($item->acumulado_prorroga >= 120) {
-                                            $backgroundColor = 'bg-rojo';
-                                        } elseif ($intvl->days < 90 && $item->estado_id == 1) {
-                                            $backgroundColor = '';
-                                        } elseif ($intvl->days < 120 && $item->estado_id == 1) {
-                                            $backgroundColor = 'bg-amarillo';
-                                        }
-                                        
-                                        if ($item->estado_id == 1) {
-                                            $color = 'bg-latinco';
-                                        } elseif ($item->estado_id == 4) {
-                                            $color = 'bg-info';
-                                        } elseif ($item->estado_id == 7) {
-                                            $color = 'bg-success';
-                                        } elseif ($item->estado_id == 8) {
-                                            $color = 'bg-info';
-                                        } elseif ($item->estado_id == 9) {
-                                            $color = 'bg-info';
-                                        } else {
-                                            $color = 'bg-warning';
-                                        }
-                                    @endphp
-                                    <tr class="<?php echo $backgroundColor; ?>">
-                                        <td>{{ $item->nombre }}</td>
-                                        <td class="text-center">{{ $item->cedula }}</td>
-                                        <td class="text-center">{{ $item->eps }}</td>
-                                        <td class="text-center">{{ $item->fechaInicio }}</td>
-                                        <td class="text-center">{{ $item->fechaFin }}</td>
-                                        <td class="text-center">{{ $item->totalDias }}</td>
-                                        <td class="text-center">{{ $item->prorroga }}</td>
-                                        <td class="text-center">
-                                            <span
-                                                class="badge bg-white text-dark border border-info border-2">{{ $item->observacion }}</span>
-                                        </td>
+                            <tbody id="tableBody">
 
-                                        <td class="text-center">
-                                            <span class="badge <?php echo $color; ?>">{{ $item->estado }}</span>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if($item->transcrita == "No"){ ?>
-                                            <button class="btn btn-danger btn-sm" value="{{ $item->id }}"
-                                                onclick="modalTranscribir(this)">
-                                                <i class="fas fa-dollar-sign"></i>
-                                            </button>
-                                            <?php } ?>
-                                            <button class="btn btn-danger btn-sm" hidden>
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" value="{{ $item->id }}"
-                                                onclick="modalEditar(this)">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" value="{{ $item->id }}"
-                                                onclick="elimiarIncapacidad(this)">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -100,6 +40,5 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('assets/js/incapacidad/tableIncapacidad.js') }}"></script>
     <script src="{{ asset('assets/js/incapacidad/incapacidades.js') }}"></script>
 @endsection

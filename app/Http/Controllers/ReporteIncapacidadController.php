@@ -2,83 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Incapacidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReporteIncapacidadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('reportesincapacidad.reportes');
-    }
+        $totalRecuperado = Incapacidad::join('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')
+            ->sum('valorRecuperado');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $totalPorRecuperar = Incapacidad::sum('valor_pendiente');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $totalPorRecuperadoARL = Incapacidad::leftjoin('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')
+            ->select(DB::raw('SUM(valorRecuperado) as total'))
+            ->where('fkTipo', '=', 2)
+            ->where('estado_id', '=', 7)->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $recuperadoPorEPS = Incapacidad::leftjoin('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')
+            ->select(DB::raw('SUM(valorRecuperado) as total'))
+            ->where('fkTipo', '<>', 2)
+            ->where('estado_id', '=', 7)->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('reportesincapacidad.reportes', compact('totalRecuperado', 'totalPorRecuperar', 'totalPorRecuperadoARL', 'recuperadoPorEPS'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function dona()
     {
-        //
+        $recuperadoPorEPS = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.fkEmpleado')
+            ->select('empleados.eps', DB::raw('SUM(valor_pendiente) as total'))
+            ->where('estado_id', '=', 1)
+            ->groupBy('empleados.eps')->get();
+
+        return $recuperadoPorEPS;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function linea()
     {
-        //
+        $recuperadoPorEPS = Incapacidad::leftjoin('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')
+            ->select(DB::raw('MONTH(incapacidades.created_at) as mes'), DB::raw('SUM(transcripciones.valorRecuperado) AS valorRecuperado'), DB::raw('SUM(incapacidades.valor_pendiente) AS valor_pendiente'))
+            ->groupBy('mes')->get();
+
+        return $recuperadoPorEPS;
     }
 }

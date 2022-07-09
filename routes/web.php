@@ -30,8 +30,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     //Incapacidad
     Route::resource('incapacidad', IncapacidadController::class);
+    Route::get('incapacidades/table', [IncapacidadesController::class, 'table']);
     Route::resource('incapacidades', IncapacidadesController::class);
-    Route::resource('ReportesIncapacidad', ReporteIncapacidadController::class);
+    Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
+    Route::get('reportesincapacidad/dona', [ReporteIncapacidadController::class, 'dona']);
+    Route::get('reportesincapacidad/linea', [ReporteIncapacidadController::class, 'linea']);
+    // Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
 
     //Compania
     Route::resource('compania', CompaniaController::class);
@@ -68,5 +72,3 @@ Route::get('conceptos', function () {
 Route::get('responsables', function () {
     return view('responsables.responsable');
 })->name('responsables');
-
-
