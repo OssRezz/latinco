@@ -71,6 +71,12 @@ class IncapacidadController extends Controller
             $prorrogaIncapacidad->update();
         }
 
+        if ($request->tipoIncapacidad == 1) {
+            $valorPorRecuperar = number_format((($empleado[0]['salario'] / 30) * $request->diasMedio) * 0.6667);
+        } else {
+            $valorPorRecuperar = number_format(($empleado[0]['salario'] / 30) * $request->diasMedio);
+        }
+
         //Id empleado
         $incapacidad->fkEmpleado = $empleado[0]['id'];
         $incapacidad->fkTipo = $request->tipoIncapacidad;
@@ -87,6 +93,7 @@ class IncapacidadController extends Controller
         $incapacidad->observacion_id = 1;
         $incapacidad->transcrita = "No";
         $incapacidad->estado_id = 1;
+        $incapacidad->valor_pendiente = intval(str_replace(',', '', $valorPorRecuperar));
         $incapacidad->save();
 
         return ["modal" => $modal->modalAlerta('vinotinto', 'Informacion', 'Incapacidad creada exitosamente.'), "status" => 201];

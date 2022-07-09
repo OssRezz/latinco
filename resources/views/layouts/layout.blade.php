@@ -28,7 +28,8 @@
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs5/dt-1.12.0/fc-4.1.0/fh-3.2.3/r-2.3.0/datatables.min.js"></script>
 
-
+    @yield('cdn')
+    
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" />
 </head>
@@ -48,23 +49,24 @@
                 @yield('content')
 
 
-                <footer class="bg-light text-latinco text-center text-lg-center d-flex justify-content-center" style="z-index: -10">
+                <footer class="bg-light text-latinco text-center text-lg-center d-flex justify-content-center"
+                    style="z-index: -10">
                     <!-- Copyright -->
-                    <div class="text-center p-3" >
-                        © 2022 Latinco  - Diseñado & Desarrollado por 
-                      <a class="fw-bold" href="https://clasedeexcel.com" target="_BLANK"> Clase De Excel S.A.S</a>
+                    <div class="text-center p-3">
+                        © 2022 Latinco - Diseñado & Desarrollado por
+                        <a class="fw-bold" href="https://clasedeexcel.com" target="_BLANK"> Clase De Excel S.A.S</a>
                     </div>
                     <!-- Copyright -->
-                  </footer>
-                
+                </footer>
+
             </div>
 
-            
+
         </div>
-        
+
     </div>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/hbMenu.js') }}"></script>
 </body>

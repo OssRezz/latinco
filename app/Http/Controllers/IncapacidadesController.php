@@ -8,6 +8,7 @@ use App\Models\EstadoIncapacidad;
 use App\Models\Incapacidad;
 use App\Models\TipoIncapacidad;
 use App\Models\Transcripcion;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,11 +23,64 @@ class IncapacidadesController extends Controller
      */
     public function index()
     {
+        return view('incapacidad.incapacidades');
+    }
+
+    public function table()
+    {
         $listaIncapacidades = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.fkEmpleado')
             ->join('observaciones', 'observaciones.id', '=', 'incapacidades.observacion_id')
             ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_id')
-            ->select('incapacidades.*', 'empleados.nombre', 'empleados.cedula', 'empleados.eps', 'observaciones.observacion', 'estado_incapacidades.estado')->get();
-        return view('incapacidad.incapacidades', compact('listaIncapacidades'));
+            ->select('incapacidades.*', 'empleados.nombre', 'empleados.cedula', 'empleados.eps', 'observaciones.observacion', 'estado_incapacidades.estado')
+            ->orderBy('incapacidades.created_at', 'DESC')->get();
+        $table = "";
+        foreach ($listaIncapacidades as $key => $value) {
+            $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($value['fechaInicio'])));
+            $fechaActual = new DateTime(date('Y-m-d'));
+            $intvl = $fechaActual->diff($fechaIncapacidad);
+            $backgroundColor = '';
+            if ($value['acumulado_prorroga'] >= 120) {
+                $backgroundColor = 'bg-rojo';
+            } elseif ($intvl->days < 90 && $value['estado_id'] == 1) {
+                $backgroundColor = '';
+            } elseif ($intvl->days < 120 && $value['estado_id'] == 1) {
+                $backgroundColor = 'bg-amarillo';
+            }
+
+            if ($value['estado_id'] == 1) {
+                $color = 'bg-latinco';
+            } elseif ($value['estado_id'] == 4) {
+                $color = 'bg-info';
+            } elseif ($value['estado_id'] == 7) {
+                $color = 'bg-success';
+            } elseif ($value['estado_id'] == 8) {
+                $color = 'bg-info';
+            } elseif ($value['estado_id'] == 9) {
+                $color = 'bg-info';
+            } else {
+                $color = 'bg-warning';
+            }
+
+
+            $table .= "<tr class='$backgroundColor'><td>{$value['nombre']}</td>";
+            $table .= "<td class='text-center'>{$value['cedula']}</td>";
+            $table .= "<td class='text-center'>{$value['eps']}</td>";
+            $table .= "<td class='text-center'>{$value['fechaInicio']}</td>";
+            $table .= "<td class='text-center'>{$value['fechaFin']}</td>";
+            $table .= "<td class='text-center'>{$value['totalDias']}</td>";
+            $table .= "<td class='text-center'>{$value['prorroga']}</td>";
+            $table .= "<td class='text-center'> <span class='badge bg-white text-dark border border-info border-2'>{$value['observacion']}</span></td>";
+            $table .= "<td class='text-center'> <span class='badge $color'>{$value['estado']}</span></td>";
+            $table .= "<td class='text-center'>";
+            if ($value['transcrita']  == "No") {
+                $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='modalTranscribir(this)'><i class='fas fa-dollar-sign'></i></button>";
+            }
+            $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='modalEditar(this)'><i class='fas fa-edit'></i></button>";
+            $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='elimiarIncapacidad(this)'><i class='fas fa-trash'></i></button>";
+            $table .= "</td></tr>";
+        }
+
+        return $table;
     }
 
     /**
@@ -63,7 +117,7 @@ class IncapacidadesController extends Controller
         //
         $contenidoModal .= "    <div class='col-12 col-lg-12'>";
         $contenidoModal .= "        <div class='form-floating'>";
-        $contenidoModal .= "            <input name='valorPendiente' value='$valorPorRecuperar' type='text' class='form-control' placeholder='Restante por recuperar'>";
+        $contenidoModal .= "            <input name='valorPendiente'  value='$valorPorRecuperar' type='text' class='form-control' placeholder='Restante por recuperar'>";
         $contenidoModal .= "            <label for='valorPendiente'>Restante por recuperar <b class='text-danger'>*</b></label>";
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
@@ -83,7 +137,7 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "    </div>";
         //
         $contenidoModal .= "    <div class='d-grid mt-3'>";
-        $contenidoModal .= "        <button class='btn btn-danger' id='btn-update-class' value='$request->id' onclick='ingresarTranscripcion(this)'>Recaudar</button>";
+        $contenidoModal .= "        <button class='btn btn-danger'  data-bs-dismiss='modal' aria-label='Close' id='btn-update-class' value='$request->id' onclick='ingresarTranscripcion(this)'>Recaudar</button>";
         $contenidoModal .= "    </div>";
         $contenidoModal .= "</div>";
         $contenidoModal .= "</form>";
@@ -112,23 +166,32 @@ class IncapacidadesController extends Controller
         } else {
             $oberservacion = 3;
         }
+        try {
 
-        $incapacidad = Incapacidad::find($request->id);
-        $incapacidad->transcrita = "Si";
-        $incapacidad->observacion_id = $oberservacion;
-        $incapacidad->estado_id = $request->estado;
-        if (!$incapacidad->update()) {
-            return  $modal->modalAlertaReaload('vinotinto', 'Informacion', 'No se puede transcribir esta incapacidad.');
-        }
-        $fechaActual = date('Y-m-d');
-        $transcripcion->incapacidad_id = $request->id;
-        $transcripcion->fechaActualizacion = $fechaActual;
-        $transcripcion->fechaPago = $request->fechaPago;
-        $transcripcion->valorRecuperado = $request->valorRecuperado;
-        $transcripcion->valorPendiente = intval(str_replace(',', '', $request->valorPendiente));
 
-        if ($transcripcion->save()) {
-            return  $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Incapacidad transcripta.');
+            $incapacidad = Incapacidad::find($request->id);
+            $incapacidad->transcrita = "Si";
+            $incapacidad->observacion_id = $oberservacion;
+            $incapacidad->estado_id = $request->estado;
+            if (!$incapacidad->update()) {
+                return  $modal->modalAlerta('vinotinto', 'Informacion', 'No se puede transcribir esta incapacidad.');
+            }
+            $fechaActual = date('Y-m-d');
+            $transcripcionEnIncapacidad = Transcripcion::where('incapacidad_id', $request->id)->take(1)->get();
+            if (count($transcripcionEnIncapacidad) > 0) {
+                return  $modal->modalAlerta('vinotinto', 'Informacion', 'Error ya existe una transcripcion de este registro.');
+            }
+            $transcripcion->incapacidad_id = $request->id;
+            $transcripcion->fechaActualizacion = $fechaActual;
+            $transcripcion->fechaPago = $request->fechaPago;
+            $transcripcion->valorRecuperado = $request->valorRecuperado;
+            $transcripcion->valorPendiente = intval(str_replace(',', '', $request->valorPendiente));
+
+            if ($transcripcion->save()) {
+                return  $modal->modalAlerta('vinotinto', 'Informacion', 'Incapacidad transcripta.');
+            }
+        } catch (Exception $e) {
+            return  $modal->modalAlerta('vinotinto', 'Informacion', 'Algo salio mal...');
         }
     }
 
@@ -169,6 +232,7 @@ class IncapacidadesController extends Controller
         } else {
             $medio = "EPS";
         }
+
 
         foreach ($Transcripcion as $recaudo) {
             $fechaPago = $recaudo['fechaPago'];
@@ -271,7 +335,7 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "        </div>";
         $contenidoModal .= "    </div>";
         //
-        if ($transcrita == "Si") {
+        if ($transcrita == "Si" && count($Transcripcion) > 0) {
             $contenidoModal .= "    <hr>";
             $contenidoModal .=  "<div class='mt-0 pt-0'><p class='m-0 p-0'><em>Recaudo</em></p></div>";
             //
@@ -319,22 +383,11 @@ class IncapacidadesController extends Controller
         //
 
         $contenidoModal .= "    <div class='d-grid mt-3'>";
-        $contenidoModal .= "        <button class='btn btn-danger' id='btn-update-class' value='$id' onclick='actualizarIncapacidad(this)'>Actualizar</button>";
+        $contenidoModal .= "        <button class='btn btn-danger' data-bs-dismiss='modal' aria-label='Close' id='btn-update-class' value='$id' onclick='actualizarIncapacidad(this)'>Actualizar</button>";
         $contenidoModal .= "    </div>";
         $contenidoModal .= "</div>";
 
         return $modal->modalAlerta("vinotinto", "Actualizar incapacidad", $contenidoModal);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -357,7 +410,7 @@ class IncapacidadesController extends Controller
             'estado' => 'required',
         ]);
         if ($validator->fails()) {
-            return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Los campos marcados con <b class="text-danger">*</b> son requeridos.');
+            return $modal->modalAlerta('vinotinto', 'Informacion', 'Los campos marcados con <b class="text-danger">*</b> son requeridos.');
         }
 
         if ($request->estado == 1) {
@@ -388,12 +441,14 @@ class IncapacidadesController extends Controller
         $incapacidad->incapacidad_prorroga = $request->incapacidad_prorroga;
         $incapacidad->observacion_id = $oberservacion;
         $incapacidad->estado_id = $request->estado;
+        $incapacidad->valor_pendiente = intval(str_replace(',', '', $request->valorPendiente));
         if (!$incapacidad->update()) {
-            return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
+            return $modal->modalAlerta('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
         }
 
         $incapacidadTranscrita = Incapacidad::where('id', $id)->get();
-        if ($incapacidadTranscrita[0]['transcrita'] == "Si") {
+        $Transcrita = Transcripcion::where('incapacidad_id', $id)->get();
+        if ($incapacidadTranscrita[0]['transcrita'] == "Si"  && count($Transcrita) > 0) {
 
             $transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
             $transcripcion = Transcripcion::find($transcripcion[0]['id']);
@@ -401,12 +456,12 @@ class IncapacidadesController extends Controller
             $transcripcion->valorRecuperado = $request->valorRecuperado;
             $transcripcion->valorPendiente = intval(str_replace(',', '', $request->valorPendiente));
             if (!$transcripcion->update()) {
-                return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
+                return $modal->modalAlerta('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
             }
         }
 
 
-        return $modal->modalAlertaReaload('vinotinto', 'Informacion', 'Incapacidad actualizada exitosamente.');
+        return $modal->modalAlerta('vinotinto', 'Informacion', 'Incapacidad actualizada exitosamente.');
     }
 
     /**
@@ -421,7 +476,7 @@ class IncapacidadesController extends Controller
 
         try {
             if ($incapacidad->delete()) {
-                return $modal->modalAlertaReaload("vinotinto", "Informaci&#243;n", "Incapacidad eliminada exitosamente.");
+                return $modal->modalAlerta("vinotinto", "Informaci&#243;n", "Incapacidad eliminada exitosamente.");
             }
         } catch (Exception $e) {
             return $modal->modalAlerta("vinotinto", "Informaci&#243;n", "La incapacidad no se puede eliminar por que tiene transcripciones asociados.");

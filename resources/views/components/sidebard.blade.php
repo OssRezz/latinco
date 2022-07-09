@@ -113,10 +113,10 @@
                         Incapacidades
                     </div>
                     <i
-                        class="fas fa-caret-{{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/ReportesIncapacidad') ? 'down' : 'left' }}  "></i>
+                        class="fas fa-caret-{{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/reportesincapacidad') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/ReportesIncapacidad') ? 'show' : '' }}"
+            <ul class="collapse list-unstyled {{ Request::is('admin/incapacidad') || Request::is('admin/incapacidades') || Request::is('admin/reportesincapacidad') ? 'show' : '' }}"
                 id="incapacidadesMenu">
                 <li class="py-1">
                     <a href="{{ url('admin/incapacidad') }}"
@@ -131,8 +131,8 @@
                     </a>
                 </li>
                 <li class="py-1">
-                    <a href="{{ url('admin/ReportesIncapacidad') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/ReportesIncapacidad') ? 'active' : '' }}">
+                    <a href="{{ url('admin/reportesincapacidad') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/reportesincapacidad') ? 'active' : '' }}">
                         <i class="fas fa-tachometer-alt fa-xl"></i> Reportes
                     </a>
                 </li>
