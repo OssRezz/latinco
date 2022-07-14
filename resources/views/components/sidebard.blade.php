@@ -166,8 +166,9 @@
         </li>
         <li class="py-1">
             <a href="{{ url('admin/soap') }}"
-                class="btn btn-outline-danger text-start border-0 rounded-0 {{  Request::is('admin/soap') ? 'active' : '' }}">
-                <i class="fas fa-database fa-xl"></i> SOAP
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ Request::is('admin/soap') ? 'active' : '' }}">
+                <i class="bi bi-hdd-network fa-xl" style="height: 26px !important;width: 26px !important;"></i>
+                SOAP
             </a>
         </li>
     </ul>
