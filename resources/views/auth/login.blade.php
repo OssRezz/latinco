@@ -19,7 +19,7 @@
 
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" placeholder="Email" name="email"
-                                    {{ $errors->has('email') ? 'is-invalid' : '' }} />
+                                    {{ $errors->has('email') ? 'is-invalid' : '' }} value="latinco@admin.com" />
                                 <label>Email <b class="text-rosado">*</b></label>
                                 @if ($errors->has('email'))
                                     <small class="text-danger">{{ $errors->first('email') }}</small>
@@ -27,7 +27,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" placeholder="Password" name="password"
+                                <input type="password" class="form-control" placeholder="Password" name="password" value="1234" 
                                     {{ $errors->has('password') ? 'is-invalid' : '' }} />
                                 <label>Password <b class="text-rosado">*</b></label>
                                 @if ($errors->has('password'))
