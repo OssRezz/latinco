@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('incapacidades', function (Blueprint $table) {
-            $table->foreign('estado_id')->references('id')->on('estado_incapacidades');
+            $table->foreign('estado_incapacidad_id')->references('id')->on('estado_incapacidades');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints('incapacidades', function (Blueprint $table) {
-            $table->dropForeign('estado_incapacidades_observacion_id_foreign');
+            $table->dropForeign('estado_incapacidad_id');
         });
     }
 };

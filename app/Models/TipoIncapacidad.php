@@ -13,4 +13,8 @@ class TipoIncapacidad extends Model
     ];
     protected $table = 'tipo_incapacidades';
 
+    public function Incapacidad()
+    {
+        return $this->hasMany(Incapacidad::class);
+    }
 }

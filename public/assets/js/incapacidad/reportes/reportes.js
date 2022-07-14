@@ -128,3 +128,32 @@ function cargarLinea() {
         },
     });
 }
+
+
+function tutela(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/tutela",
+        type: "GET",
+        success: function (result) {
+            $("#respuesta").html(result);
+
+        },
+    });
+}
+
+function prorroga(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/prorroga",
+        type: "GET",
+        success: function (result) {
+            $("#respuesta").html(result);
+
+        },
+    });
+}

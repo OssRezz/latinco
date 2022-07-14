@@ -164,5 +164,11 @@
                 <i class="far fa-dot-circle fa-xl"></i> Centro de operaciones
             </a>
         </li>
+        <li class="py-1">
+            <a href="{{ url('admin/soap') }}"
+                class="btn btn-outline-danger text-start border-0 rounded-0 {{ request()->is('admin.soap') || request()->is('admin.soap/*') ? 'active' : '' }}">
+                <i class="fas fa-database fa-xl"></i> SOAP
+            </a>
+        </li>
     </ul>
 </nav>

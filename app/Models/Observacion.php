@@ -12,4 +12,9 @@ class Observacion extends Model
         'observacion',
     ];
     protected $table = 'observaciones';
+
+    public function Incapacidad()
+    {
+        return $this->hasMany(Incapacidad::class);
+    }
 }

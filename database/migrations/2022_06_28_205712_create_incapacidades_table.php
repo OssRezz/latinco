@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('incapacidades', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fkEmpleado');
+            $table->unsignedBigInteger('empleado_id');
             $table->unsignedBigInteger('fkTipo');
             $table->date('fechaInicio');
             $table->date('fechaFin');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('numero_incapacidad');
             $table->string('quincenas_nomina');
             $table->unsignedBigInteger('observacion_id');
-            $table->unsignedBigInteger('estado_id');
+            $table->unsignedBigInteger('estado_incapacidad_id');
             $table->string('transcrita');
             $table->integer('valor_pendiente');
             $table->timestamps();

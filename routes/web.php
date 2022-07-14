@@ -35,6 +35,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
     Route::get('reportesincapacidad/dona', [ReporteIncapacidadController::class, 'dona']);
     Route::get('reportesincapacidad/linea', [ReporteIncapacidadController::class, 'linea']);
+    Route::get('reportesincapacidad/tutela', [ReporteIncapacidadController::class, 'tableTutela']);
+    Route::get('reportesincapacidad/prorroga', [ReporteIncapacidadController::class, 'tableProrroga']);
     // Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
 
     //Compania
@@ -45,6 +47,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Users
     Route::resource('usuario', UserController::class);
+
+    //Soap
+    Route::get('soap', [SoapController::class, 'index']);
+    Route::get('soap/modalConexion', [SoapController::class, 'modalConexion']);
+    Route::get('soap/modalConsulta', [SoapController::class, 'modalConsulta']);
+    Route::get('soap/modalSchema', [SoapController::class, 'modalSchema']);
+    Route::post('soap/conexion', [SoapController::class, 'conexion']);
+    Route::post('soap/consulta', [SoapController::class, 'consulta']);
+    Route::post('soap/schema', [SoapController::class, 'schema']);
 });
 
 
