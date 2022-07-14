@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('usuario', UserController::class);
 
     //Soap
-    Route::get('soap', [SoapController::class, 'index']);
+    Route::get('soap', [SoapController::class, 'index'])->name('soap');
     Route::get('soap/modalConexion', [SoapController::class, 'modalConexion']);
     Route::get('soap/modalConsulta', [SoapController::class, 'modalConsulta']);
     Route::get('soap/modalSchema', [SoapController::class, 'modalSchema']);
