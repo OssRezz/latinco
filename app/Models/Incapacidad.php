@@ -26,4 +26,25 @@ class Incapacidad extends Model
     ];
     use HasFactory;
     protected $table = 'incapacidades';
+
+    
+    public function TipoIncapacidad()
+    {
+        return $this->belongsTo(TipoIncapacidad::class);
+    }
+
+    public function EstadoIncapacidad()
+    {
+        return $this->belongsTo(EstadoIncapacidad::class);
+    }
+
+    public function Empleado()
+    {
+        return $this->belongsTo('App\Models\Empleado');
+    }
+    
+    public function Observacion()
+    {
+        return $this->belongsTo(Observacion::class);
+    }
 }

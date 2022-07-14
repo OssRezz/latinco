@@ -20,4 +20,9 @@ class Empleado extends Model
     ];
     use HasFactory;
     protected $table = 'empleados';
+
+    public function Incapacidad()
+    {
+        return $this->hasMany(Incapacidad::class);
+    }
 }

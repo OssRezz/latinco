@@ -57,7 +57,7 @@ class IncapacidadController extends Controller
         $acumulado = $request->totalDias;
         if ($request->prorroga == "Si") {
             $acumulado = 0;
-            $prorrogaIncapacidad = Incapacidad::where('fkEmpleado', $empleado[0]['id'])
+            $prorrogaIncapacidad = Incapacidad::where('empleado_id', $empleado[0]['id'])
                 ->where('numero_incapacidad', $request->incapacidad_prorroga)
                 ->where('prorroga', "No")->take(1)->get();
 
@@ -78,7 +78,7 @@ class IncapacidadController extends Controller
         }
 
         //Id empleado
-        $incapacidad->fkEmpleado = $empleado[0]['id'];
+        $incapacidad->empleado_id = $empleado[0]['id'];
         $incapacidad->fkTipo = $request->tipoIncapacidad;
         $incapacidad->fechaInicio = $request->fechaInicio;
         $incapacidad->fechaFin = $request->fechaFinal;
@@ -92,7 +92,7 @@ class IncapacidadController extends Controller
         $incapacidad->quincenas_nomina = $request->quincena_nominas;
         $incapacidad->observacion_id = 1;
         $incapacidad->transcrita = "No";
-        $incapacidad->estado_id = 1;
+        $incapacidad->estado_incapacidad_id = 1;
         $incapacidad->valor_pendiente = intval(str_replace(',', '', $valorPorRecuperar));
         $incapacidad->save();
 

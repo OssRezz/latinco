@@ -9,4 +9,9 @@ class EstadoIncapacidad extends Model
 {
     use HasFactory;
     protected $table = 'estado_incapacidades';
+
+    public function Incapacidad()
+    {
+        return $this->hasMany(Incapacidad::class);
+    }
 }

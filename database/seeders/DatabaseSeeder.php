@@ -2,13 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cargo;
 use App\Models\Empleado;
-use App\Models\EstadoIncapacidad;
 use App\Models\Incapacidad;
 use App\Models\Transcripcion;
-use Database\Factories\IncapacidadesFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ObservacionSeeder::class);
         $this->call(EstadoIncapacidadSeeder::class);
         Empleado::factory(1000)->create();
-        Incapacidad::factory(1000)->create();
-        Transcripcion::factory(500)->create();
+        Incapacidad::factory(100)->create();
+        Transcripcion::factory(50)->create();
     }
 }

@@ -137,19 +137,19 @@
                 <div class="card-body" style="height: 13.6em;">
                     <div class="row d-flex justify-content-center text-center mt-xl-4">
                         <div class="col border-end">
-                            <h1><b>2</b></h1>
+                            <h1><b>{{ $acumuladoTutelas }}</b></h1>
                             <h3>Tutelas</h3>
                             <br>
                             <div class="d-grid">
-                                <button class="btn btn-warning">Ver alerta</button>
+                                <button class="btn btn-warning" onclick="tutela(this);">Ver alerta</button>
                             </div>
                         </div>
                         <div class="col">
-                            <h1>0</h1>
+                            <h1>{{ $acumuladoProrrogas }}</h1>
                             <h3>Prorroga</h3>
                             <br>
                             <div class="d-grid">
-                                <button class="btn btn-danger">Ver alerta</button>
+                                <button class="btn btn-danger" onclick="prorroga(this);">Ver alerta</button>
                             </div>
                         </div>
                     </div>

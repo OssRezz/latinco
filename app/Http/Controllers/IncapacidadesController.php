@@ -11,6 +11,7 @@ use App\Models\Transcripcion;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use ReturnTypeWillChange;
 
@@ -28,56 +29,45 @@ class IncapacidadesController extends Controller
 
     public function table()
     {
-        $listaIncapacidades = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.fkEmpleado')
-            ->join('observaciones', 'observaciones.id', '=', 'incapacidades.observacion_id')
-            ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_id')
-            ->select('incapacidades.*', 'empleados.nombre', 'empleados.cedula', 'empleados.eps', 'observaciones.observacion', 'estado_incapacidades.estado')
-            ->orderBy('incapacidades.created_at', 'DESC')->get();
+        
+        $listaIncapacidades = Incapacidad::with('Empleado')->with('Observacion')->with('EstadoIncapacidad')->get();
         $table = "";
-        foreach ($listaIncapacidades as $key => $value) {
-            $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($value['fechaInicio'])));
-            $fechaActual = new DateTime(date('Y-m-d'));
-            $intvl = $fechaActual->diff($fechaIncapacidad);
-            $backgroundColor = '';
-            if ($value['acumulado_prorroga'] >= 120) {
-                $backgroundColor = 'bg-rojo';
-            } elseif ($intvl->days < 90 && $value['estado_id'] == 1) {
+        foreach ($listaIncapacidades->chunk(1000) as $chunk) {
+            foreach ($chunk as  $value) {
+                # code...
+                $fechaIncapacidad = new DateTime(date('Y-m-d', strtotime($value->fechaInicio)));
+                $fechaActual = new DateTime(date('Y-m-d'));
+                $intvl = $fechaActual->diff($fechaIncapacidad);
                 $backgroundColor = '';
-            } elseif ($intvl->days < 120 && $value['estado_id'] == 1) {
-                $backgroundColor = 'bg-amarillo';
-            }
 
-            if ($value['estado_id'] == 1) {
-                $color = 'bg-latinco';
-            } elseif ($value['estado_id'] == 4) {
-                $color = 'bg-info';
-            } elseif ($value['estado_id'] == 7) {
-                $color = 'bg-success';
-            } elseif ($value['estado_id'] == 8) {
-                $color = 'bg-info';
-            } elseif ($value['estado_id'] == 9) {
-                $color = 'bg-info';
-            } else {
-                $color = 'bg-warning';
-            }
+                if ($intvl->days >= 90 && $value->estado_incapacidad_id == 1) {
+                    $backgroundColor = 'bg-amarillo';
+                }
+
+                if ($value->acumulado_prorroga >= 120) {
+                    $backgroundColor = 'bg-rojo';
+                }
 
 
-            $table .= "<tr class='$backgroundColor'><td>{$value['nombre']}</td>";
-            $table .= "<td class='text-center'>{$value['cedula']}</td>";
-            $table .= "<td class='text-center'>{$value['eps']}</td>";
-            $table .= "<td class='text-center'>{$value['fechaInicio']}</td>";
-            $table .= "<td class='text-center'>{$value['fechaFin']}</td>";
-            $table .= "<td class='text-center'>{$value['totalDias']}</td>";
-            $table .= "<td class='text-center'>{$value['prorroga']}</td>";
-            $table .= "<td class='text-center'> <span class='badge bg-white text-dark border border-info border-2'>{$value['observacion']}</span></td>";
-            $table .= "<td class='text-center'> <span class='badge $color'>{$value['estado']}</span></td>";
-            $table .= "<td class='text-center'>";
-            if ($value['transcrita']  == "No") {
-                $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='modalTranscribir(this)'><i class='fas fa-dollar-sign'></i></button>";
+                $table .= "<tr class='$backgroundColor'>";
+                $table .= "<td>{$value->empleado->nombre}</td>";
+                $table .= "<td class='text-center'>{$value->empleado->cedula}</td>";
+                $table .= "<td class='text-center'>{$value->empleado->eps}</td>";
+                $table .= "<td class='text-center'>{$value->fechaInicio}</td>";
+                $table .= "<td class='text-center'>{$value->fechaFin}</td>";
+                $table .= "<td class='text-center'>{$value->totalDias}</td>";
+                $table .= "<td class='text-center'>{$value->prorroga}</td>";
+                $table .= "<td class='text-center'> <span class='badge bg-white text-dark border border-info border-2'>{$value->observacion->observacion}</span></td>";
+                $table .= "<td class='text-center'> <span class='badge bg-{$value->EstadoIncapacidad->color}'>{$value->EstadoIncapacidad->estado}</span></td>";
+                $table .= "<td class='text-center'>";
+                if ($value->transcrita  == "No") {
+                    $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value->id}' onclick='modalTranscribir(this)'><i class='fas fa-dollar-sign'></i></button>";
+                }
+                $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value->id}' onclick='modalEditar(this)'><i class='fas fa-edit'></i></button>";
+                $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value->id}' onclick='elimiarIncapacidad(this)'><i class='fas fa-trash'></i></button>";
+                $table .= "</td>";
+                $table .= "</tr>";
             }
-            $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='modalEditar(this)'><i class='fas fa-edit'></i></button>";
-            $table .= "<button class='btn btn-danger btn-sm mx-1' value='{$value['id']}' onclick='elimiarIncapacidad(this)'><i class='fas fa-trash'></i></button>";
-            $table .= "</td></tr>";
         }
 
         return $table;
@@ -91,7 +81,7 @@ class IncapacidadesController extends Controller
     public function create(Modal $modal, Request $request)
     {
         $incapacidad = Incapacidad::where('id', $request->id)->get();
-        $empleado = Empleado::where('id', $incapacidad[0]['fkEmpleado'])->get();
+        $empleado = Empleado::where('id', $incapacidad[0]['empleado_id'])->get();
         if ($incapacidad[0]['fkTipo'] == 1) {
             $valorPorRecuperar = number_format((($empleado[0]['salario'] / 30) * $incapacidad[0]['diasEps']) * 0.6667);
         } else {
@@ -172,7 +162,7 @@ class IncapacidadesController extends Controller
             $incapacidad = Incapacidad::find($request->id);
             $incapacidad->transcrita = "Si";
             $incapacidad->observacion_id = $oberservacion;
-            $incapacidad->estado_id = $request->estado;
+            $incapacidad->estado_incapacidad_id = $request->estado;
             if (!$incapacidad->update()) {
                 return  $modal->modalAlerta('vinotinto', 'Informacion', 'No se puede transcribir esta incapacidad.');
             }
@@ -207,7 +197,7 @@ class IncapacidadesController extends Controller
         $listaEstado = EstadoIncapacidad::all();
         $Transcripcion = Transcripcion::where('incapacidad_id', $id)->get();
         $Incapacidad = Incapacidad::join('tipo_incapacidades', 'tipo_incapacidades.id', '=', 'incapacidades.fkTipo')
-            ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_id')
+            ->join('estado_incapacidades', 'estado_incapacidades.id', '=', 'incapacidades.estado_incapacidad_id')
             ->select('incapacidades.*', 'tipo_incapacidades.tipo', 'estado_incapacidades.estado')
             ->where('incapacidades.id', $id)->get();
 
@@ -224,7 +214,7 @@ class IncapacidadesController extends Controller
             $fkTipo = $Incapacidad['fkTipo'];
             $tipo = $Incapacidad['tipo'];
             $incapacidad_prorroga = $Incapacidad['incapacidad_prorroga'];
-            $estado_id = $Incapacidad['estado_id'];
+            $estado_incapacidad_id = $Incapacidad['estado_incapacidad_id'];
             $estadoIncapacidad = $Incapacidad['estado'];
         }
         if ($fkTipo == 2) {
@@ -368,11 +358,11 @@ class IncapacidadesController extends Controller
         $contenidoModal .= "    <div class='col-12'>";
         $contenidoModal .= "        <div class='form-floating'>";
         $contenidoModal .= "            <select class='form-select' id='estado'>";
-        $contenidoModal .= "            <option value='$estado_id' selected>$estadoIncapacidad</option>";
+        $contenidoModal .= "            <option value='$estado_incapacidad_id' selected>$estadoIncapacidad</option>";
         foreach ($listaEstado as $estado) {
             $idEstado = $estado['id'];
             $estado = $estado['estado'];
-            if ($idEstado != $estado_id) {
+            if ($idEstado != $estado_incapacidad_id) {
                 $contenidoModal .= "                <option value='$idEstado'>$estado</option>";
             }
         }
@@ -440,7 +430,7 @@ class IncapacidadesController extends Controller
         $incapacidad->prorroga = $request->prorroga;
         $incapacidad->incapacidad_prorroga = $request->incapacidad_prorroga;
         $incapacidad->observacion_id = $oberservacion;
-        $incapacidad->estado_id = $request->estado;
+        $incapacidad->estado_incapacidad_id = $request->estado;
         $incapacidad->valor_pendiente = intval(str_replace(',', '', $request->valorPendiente));
         if (!$incapacidad->update()) {
             return $modal->modalAlerta('vinotinto', 'Informacion', 'La incapacidad no se puede actualizar.');
