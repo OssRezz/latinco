@@ -25,4 +25,10 @@ class Empleado extends Model
     {
         return $this->hasMany(Incapacidad::class);
     }
+
+    public function Co()
+    {
+        return $this->belongsTo(Co::class);
+    }
+
 }

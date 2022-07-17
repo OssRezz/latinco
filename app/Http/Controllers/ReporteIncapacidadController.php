@@ -42,6 +42,17 @@ class ReporteIncapacidadController extends Controller
 
         return $reporteDona;
     }
+
+    public function donaCo()
+    {
+        $reporteDonaCo = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.empleado_id')
+            ->join('co', 'co.id', '=', 'empleados.fkCo')
+            ->select('co.nombre', DB::raw('count(empleados.fkCo) as total'))
+            ->where('estado_incapacidad_id', '=', 1)
+            ->groupBy('co.nombre')->get();
+
+        return $reporteDonaCo;
+    }
     public function linea()
     {
         $reporteLineaChart = Incapacidad::leftjoin('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')

@@ -9,7 +9,7 @@ class Co extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre', 
+        'nombre',
         'codigo',
         'compania_id',
     ];
@@ -20,4 +20,8 @@ class Co extends Model
         return $this->belongsTo(Compania::class, 'compania_id');
     }
 
+    public function Empleado()
+    {
+        return $this->hasMany(Empleado::class);
+    }
 }

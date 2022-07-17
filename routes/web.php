@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('incapacidades', IncapacidadesController::class);
     Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
     Route::get('reportesincapacidad/dona', [ReporteIncapacidadController::class, 'dona']);
+    Route::get('reportesincapacidad/donaCo', [ReporteIncapacidadController::class, 'donaCo']);
     Route::get('reportesincapacidad/linea', [ReporteIncapacidadController::class, 'linea']);
     Route::get('reportesincapacidad/tutela', [ReporteIncapacidadController::class, 'tableTutela']);
     Route::get('reportesincapacidad/prorroga', [ReporteIncapacidadController::class, 'tableProrroga']);

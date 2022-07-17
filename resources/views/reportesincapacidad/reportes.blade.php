@@ -78,10 +78,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-xl-6 mb-4">
-            <div class="card">
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
                 <div class="card-body chart  d-flex justify-content-center">
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="myChart2" height="400px"></canvas>
                 </div>
                 <div class="card-footer bg-white"><b>Dinero recuperado y por recuperar</b></div>
             </div>
@@ -94,66 +94,76 @@
                 <div class="card-footer bg-white"><b>Valor a recuperar por entidad</b> </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6 col-xl-6 mb-4">
-            <div class="card">
-                <div class="card-footer bg-white border border-bottom border-top-0"><i
-                        class="fas fa-download text-latinco"></i> <b>Descargar reportes</b></div>
-                <div class="card-body">
-                    <form action="">
-                        <div class="row">
-                            <div class="col-12 col-md-6 mb-3">
-                                <div class="form-floating">
-                                    <input type="date" class="form-control">
-                                    <label for="fecha">Fecha inicio<b class="text-danger">*</b></label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 mb-3">
-                                <div class="form-floating">
-                                    <input type="date" class="form-control">
-                                    <label for="fecha">Fecha fin<b class="text-danger">*</b></label>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-3">
-                                <div class="form-floating">
-                                    <select name="" id="" class="form-select">
-                                        <option value="">asd</option>
-                                        <option value="">asd</option>
-                                    </select>
-                                    <label for="">Reportes</label>
-                                </div>
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn btn-danger">Descargar</button>
-                            </div>
-                        </div>
-                    </form>
+
+        <div class="col-12 col-xl-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body chart d-flex justify-content-center">
+                    <canvas id="chartCo" class="d-flex justify-content-center"></canvas>
                 </div>
+                <div class="card-footer bg-white"><b>Incapacidades por centro de operaciones</b> </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6 col-xl-6 mb-4">
-            <div class="card">
-                <div class="card-footer bg-white border border-bottom border-top-0"><i
-                        class="fas fa-exclamation-triangle text-latinco"></i> <b>Alertas</b></div>
-                <div class="card-body" style="height: 13.6em;">
-                    <div class="row d-flex justify-content-center text-center mt-xl-4">
-                        <div class="col border-end">
-                            <h1><b>{{ $acumuladoTutelas }}</b></h1>
-                            <h3>Tutelas</h3>
-                            <br>
-                            <div class="d-grid">
-                                <button class="btn btn-warning" onclick="tutela(this);">Ver alerta</button>
+        <div class="col-12  col-xl-4 mb-4">
+            <div class="card bg-secondary text-white shadow-sm">
+                <a onclick="tutela(this);">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <div class="col d-flex justify-content-center">
+                                <i class="fas fa-gavel fa-3x"></i>
                             </div>
-                        </div>
-                        <div class="col">
-                            <h1>{{ $acumuladoProrrogas }}</h1>
-                            <h3>Prorroga</h3>
-                            <br>
-                            <div class="d-grid">
-                                <button class="btn btn-danger" onclick="prorroga(this);">Ver alerta</button>
+                            <div class="col ">
+                                <div class="col-12 text-center py-0">
+                                    <h3 class="my-0"><b>{{ $acumuladoTutelas }}</b></h3>
+                                </div>
+                                <div class="col-12 text-center py-0">
+                                    <small>Tutelas</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-12  col-xl-4 mb-4">
+            <div class="card bg-secondary text-white shadow-sm">
+                <a onclick="prorroga(this);">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <div class="col d-flex justify-content-center">
+                                <i class="fas fa-envelope-open-text fa-3x"></i>
+                            </div>
+                            <div class="col ">
+                                <div class="col-12 text-center py-0">
+                                    <h3 class="my-0"><b>{{ $acumuladoProrrogas }}</b></h3>
+                                </div>
+                                <div class="col-12 text-center py-0">
+                                    <small>Prorrogas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-12  col-xl-4 mb-4">
+            <div class="card bg-secondary text-white shadow-sm">
+                <a onclick="prorroga(this);">
+                    <div class="card-body">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <div class="col d-flex justify-content-center">
+                                <i class="fas fa-money-check-alt fa-3x"></i>
+                            </div>
+                            <div class="col ">
+                                <div class="col-12 text-center py-0">
+                                    <h3 class="my-0"><b>{{ $acumuladoProrrogas }}</b></h3>
+                                </div>
+                                <div class="col-12 text-center py-0">
+                                    <small>Fondo de pensiones</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
 
