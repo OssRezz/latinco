@@ -166,8 +166,54 @@
             </div>
         </div>
 
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-footer bg-light border-bottom">
+                    <i class="fa-solid fa-file-excel text-latinco"></i> <b> Descargar reportes</b>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url('admin/reportesincapacidad/export') }}" method="GET">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12 col-lg-3">
+                                <div class="form-floating">
+                                    <input type="date" name="fechaInicio" id="fechaInicio" class="form-control"
+                                        placeholder="fecha de inicio">
+                                    <label for="">Fecha Inicio</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-floating">
+                                    <input type="date" name="fechaFin" id="fechaFin" class="form-control"
+                                        placeholder="fecha de inicio">
+                                    <label for="">Fecha Inicio</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-floating">
+                                    <select name="compania" id="reporteSelect" class="form-select">
+                                        <option value="" disabled selected>Seleccione una opcion</option>
+                                        @foreach ($compania as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <label for="">Compañía</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3 d-flex align-items-center">
+                                <div class="col">
+                                    <div class="d-grid">
+                                        <button class="btn btn-danger" id="btn-descargar">Descargar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="{{ asset('assets/js/incapacidad/reportes/reportes.js') }}"></script>
-    <script src="{{ asset('assets/js/incapacidad/reportes/pagination.min.js') }}"></script>
 
 @endsection
