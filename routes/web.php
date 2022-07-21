@@ -32,13 +32,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('incapacidad', IncapacidadController::class);
     Route::get('incapacidades/table', [IncapacidadesController::class, 'table']);
     Route::resource('incapacidades', IncapacidadesController::class);
+    //Reportes
     Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
     Route::get('reportesincapacidad/dona', [ReporteIncapacidadController::class, 'dona']);
     Route::get('reportesincapacidad/donaCo', [ReporteIncapacidadController::class, 'donaCo']);
     Route::get('reportesincapacidad/linea', [ReporteIncapacidadController::class, 'linea']);
     Route::get('reportesincapacidad/tutela', [ReporteIncapacidadController::class, 'tableTutela']);
     Route::get('reportesincapacidad/prorroga', [ReporteIncapacidadController::class, 'tableProrroga']);
-    // Route::get('reportesincapacidad', [ReporteIncapacidadController::class, 'index']);
+    Route::get('reportesincapacidad/pensiones', [ReporteIncapacidadController::class, 'tablePensiones']);
+    Route::post('reportesincapacidad/tutela/actualizarTutela', [ReporteIncapacidadController::class, 'actualizarTutela']);
+    Route::post('reportesincapacidad/tutela/actualizarProrroga', [ReporteIncapacidadController::class, 'actualizarProrroga']);
+    Route::post('reportesincapacidad/tutela/actualizarFondo', [ReporteIncapacidadController::class, 'actualizarFondo']);
 
     //Compania
     Route::resource('compania', CompaniaController::class);

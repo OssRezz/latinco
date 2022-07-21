@@ -92,6 +92,8 @@ class IncapacidadController extends Controller
         $incapacidad->quincenas_nomina = $request->quincena_nominas;
         $incapacidad->observacion_id = 1;
         $incapacidad->transcrita = "No";
+        $incapacidad->tutela = 0;
+        $incapacidad->cartaProrroga = 0;
         $incapacidad->estado_incapacidad_id = 1;
         $incapacidad->valor_pendiente = intval(str_replace(',', '', $valorPorRecuperar));
         $incapacidad->save();

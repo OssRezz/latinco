@@ -209,3 +209,57 @@ function prorroga(e) {
         },
     });
 }
+function pensiones(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/pensiones",
+        type: "GET",
+        success: function (result) {
+            $("#respuesta").html(result);
+        },
+    });
+}
+function actualizarTutela(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/tutela/actualizarTutela",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            $("#respuesta").html(result);
+        },
+    });
+}
+
+function actualizarProrroga(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/tutela/actualizarProrroga",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            $("#respuesta").html(result);
+        },
+    });
+}
+
+
+function actualizarFondo(e) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/tutela/actualizarFondo",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            $("#respuesta").html(result);
+        },
+    });
+}

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('observacion_id');
             $table->unsignedBigInteger('estado_incapacidad_id');
             $table->string('transcrita');
+            $table->integer('tutela');
+            $table->integer('cartaProrroga');
             $table->integer('valor_pendiente');
             $table->timestamps();
         });

@@ -17,21 +17,17 @@
 
 .card-header {
     background: rgb(96, 28, 20);
-    background: linear-gradient(
-        90deg,
-        rgba(96, 28, 20, 1) 0%,
-        rgba(104, 183, 238, 1) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(96, 28, 20, 1) 0%,
+            rgba(104, 183, 238, 1) 100%);
     border: none;
 }
 
 .latinco-bg-gradient {
     background: rgb(96, 28, 20);
-    background: linear-gradient(
-        90deg,
-        rgba(96, 28, 20, 1) 0%,
-        rgba(104, 183, 238, 1) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(96, 28, 20, 1) 0%,
+            rgba(104, 183, 238, 1) 100%);
 }
 
 .triangulo {
@@ -209,6 +205,18 @@ a.active {
     color: #400000 !important;
 }
 
+
+.card.hand {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.card.hand:hover {
+    box-shadow: 5px 6px 6px 2px #0f0f0f;
+    transform: scale(1.05);
+}
+
+
 /* ---------------------------------------------------
     NAVBAR
 ----------------------------------------------------- */
@@ -279,7 +287,7 @@ a.active {
     background: white;
 }
 
-#sidebar ul li.active > a,
+#sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: black;
     background: white;
@@ -325,6 +333,9 @@ ul ul a {
     color: black;
 }
 
+.modal-open {
+    overflow: hidden;
+}
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -341,6 +352,7 @@ ul ul a {
 
     #myChart2 {
         max-height: 100%;
+        max-width: 100%;
     }
 
     #myChart {
@@ -386,6 +398,7 @@ ul ul a {
 }
 
 @-webkit-keyframes sk-bounce {
+
     0%,
     100% {
         -webkit-transform: scale(0);
@@ -397,6 +410,7 @@ ul ul a {
 }
 
 @keyframes sk-bounce {
+
     0%,
     100% {
         transform: scale(0);
