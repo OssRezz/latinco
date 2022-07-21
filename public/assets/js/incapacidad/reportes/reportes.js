@@ -1,6 +1,11 @@
 const chartDonaEps = document.getElementById("myChart").getContext("2d");
 const chartLine = document.getElementById("myChart2");
 const chartDonaCo = document.getElementById("chartCo");
+const fechaInicio = document.querySelector('#fechaInicio');
+const fechaFin = document.querySelector('#fechaFin');
+const reporte = document.querySelector('#reporteSelect');
+const descargar = document.querySelector('#btn-descargar');
+
 let labelDona = [];
 let dataInfoDona = [];
 let labelDonaCo = [];
@@ -11,6 +16,19 @@ let dataLinePorRecuperar = [];
 
 cargarDona();
 cargarLinea();
+permitirDescarga();
+
+fechaInicio.addEventListener('change', permitirDescarga);
+fechaFin.addEventListener('change', permitirDescarga);
+reporte.addEventListener('change', permitirDescarga);
+
+function permitirDescarga() {
+    descargar.setAttribute('disabled', 'disabled');
+    if (fechaInicio.value != "" && fechaFin.value != "" && reporte.value != "") {
+        descargar.removeAttribute('disabled');
+    }
+}
+
 
 const dataDona = {
     labels: labelDona,
@@ -226,7 +244,7 @@ function actualizarTutela(e) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        url: "reportesincapacidad/tutela/actualizarTutela",
+        url: "reportesincapacidad/tutela/actualizar",
         type: "POST",
         data: { id: e.value },
         success: function (result) {
@@ -240,7 +258,7 @@ function actualizarProrroga(e) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        url: "reportesincapacidad/tutela/actualizarProrroga",
+        url: "reportesincapacidad/prorroga/actualizar",
         type: "POST",
         data: { id: e.value },
         success: function (result) {
@@ -255,7 +273,7 @@ function actualizarFondo(e) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        url: "reportesincapacidad/tutela/actualizarFondo",
+        url: "reportesincapacidad/fondo/actualizar",
         type: "POST",
         data: { id: e.value },
         success: function (result) {

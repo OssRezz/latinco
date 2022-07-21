@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Custom\Modal;
+use App\Exports\IncapacidadExport;
+use App\Models\Compania;
 use App\Models\Incapacidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteIncapacidadController extends Controller
 {
     public function index()
     {
+        $compania = Compania::all();
         $totalRecuperado = Incapacidad::join('transcripciones', 'transcripciones.incapacidad_id', '=', 'incapacidades.id')
             ->sum('valorRecuperado');
 
@@ -32,7 +36,7 @@ class ReporteIncapacidadController extends Controller
         $acumuladoTutelas = Incapacidad::whereRaw('TIMESTAMPDIFF(DAY, fechaInicio, CURDATE()) >= 90  AND tutela <> 1')->count();
 
 
-        return view('reportesincapacidad.reportes', compact('totalRecuperado', 'totalPorRecuperar', 'totalPorRecuperadoARL', 'recuperadoPorEPS', 'acumuladoProrrogas', 'acumuladoTutelas', 'acumuladoPensiones'));
+        return view('reportesincapacidad.reportes', compact('compania', 'totalRecuperado', 'totalPorRecuperar', 'totalPorRecuperadoARL', 'recuperadoPorEPS', 'acumuladoProrrogas', 'acumuladoTutelas', 'acumuladoPensiones'));
     }
     public function dona()
     {
@@ -69,7 +73,7 @@ class ReporteIncapacidadController extends Controller
             ->join('co', 'co.id', '=', 'empleados.fkCo')
             ->join('companias', 'companias.id', '=', 'co.compania_id')
             ->select('incapacidades.*', 'empleados.nombre as empleado', 'empleados.eps', 'empleados.cedula', 'co.nombre as co', 'companias.nombre as compania')
-            ->whereRaw('TIMESTAMPDIFF(DAY, fechaInicio, CURDATE()) >= 90 AND tutela <> 1')->take(10)->get();
+            ->whereRaw('TIMESTAMPDIFF(DAY, fechaInicio, CURDATE()) >= 90 AND tutela <> 1')->get();
 
         $contador = count($acumuladoTutelas->toArray());
 
@@ -212,5 +216,29 @@ class ReporteIncapacidadController extends Controller
         $incapacidad->estado_incapacidad_id = 8;
         $incapacidad->update();
         return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
+    }
+
+    public function export(Request $request)
+    {
+        $validated = $request->validate([
+            'fechaInicio' => 'required||date',
+            'fechaFin' => 'required|date',
+            'compania' => 'required',
+        ]);
+        DB::statement("SET SQL_MODE=''");
+        $export = new IncapacidadExport([
+
+            Incapacidad::leftjoin('transcripciones', 'transcripciones.incapacidad_id', 'incapacidades.id')
+                ->join('estado_incapacidades', 'estado_incapacidades.id', 'incapacidades.estado_incapacidad_id')
+                ->join('empleados', 'empleados.id', 'incapacidades.empleado_id')
+                ->join('co', 'co.id', 'empleados.fkCo')
+                ->join('companias', 'companias.id', 'co.compania_id')
+                ->select('companias.nombre', 'estado_incapacidades.estado', 'incapacidades.valor_pendiente', 'transcripciones.valorRecuperado')
+                ->groupBy('nombre', 'estado')
+                ->whereBetween('incapacidades.fechaInicio', [$request->fechaInicio, $request->fechaFin])
+                ->where('companias.id', $request->compania)->get()
+        ]);
+
+        return Excel::download($export, 'incapacidad.xlsx');
     }
 }
