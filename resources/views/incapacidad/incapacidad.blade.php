@@ -7,8 +7,9 @@
                 <img src="{{ asset('assets/images/trabajador.png') }}" alt=""
                     class="bg-white rounded-pill mb-1 shadow-sm" height="230px">
             </div>
-            <div class="col d-flex  justify-content-center">
-                <span class="badge bg-dark" id="cargo"></span>
+            <div class="col d-flex  justify-content-center align-items-center">
+                <button class="btn btn-outline-dark border-0" id="cedulaSpan" onclick="cargarHistorial(this);"><span class="badge bg-dark"
+                        id="nombre"></span></button>
             </div>
         </div>
         <div class="col px-4">
@@ -18,8 +19,8 @@
                         <div class="col-12 col-lg-6">
                             <ul class="list-group list-group-flush bg-light">
                                 <li class="list-group-item  bg-light d-flex justify-content-start">
-                                    <b class="text-vinotinto">Nombre: </b>
-                                    <div id="nombre" class="mx-1"></div>
+                                    <b class="text-vinotinto">Cargo: </b>
+                                    <div id="cargo" class="mx-1"></div>
                                 </li>
                                 <li class="list-group-item  bg-light d-flex justify-content-start">
                                     <b class="text-vinotinto">Empresa: </b>
@@ -67,7 +68,7 @@
                     <div class="card-body">
                         <form id="frm-incapacidad">
                             <div class="row g-3">
-                                <div class="col-12">
+                                <div class="col-12 col-lg-6">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Cedula" name="cedula"
                                             id="cedulaInput">
@@ -88,15 +89,26 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" placeholder="#"
+                                        <select name="diagnostico" id="diagnosticoSelect" class="form-select">
+                                            <option value="" disabled selected>Seleccione una opcion</option>
+                                            @foreach ($diagnosticos as $item)
+                                                <option value="{{ $item->id }}">{{ $item->diagnostico }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="">Diagnóstico <b class="text-danger">*</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="#"
                                             name="numero_incapacidad">
-                                        <label for="">Numero de incapacidad <b class="text-danger">*</b></label>
+                                        <label for=""># de incapacidad Medio </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-floating">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" placeholder="Cedula"
+                                            <input type="text" class="form-control" placeholder="Quicenas"
                                                 name="quincena_nominas">
                                             <label for="">Quincena <b class="text-danger">*</b></label>
                                         </div>
@@ -114,7 +126,7 @@
                                 </div>
                                 <div class="col-12" id="colProrroga" hidden>
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" placeholder="#"
+                                        <input type="text" class="form-control" placeholder="#"
                                             name="incapacidad_prorroga">
                                         <label for=""># de la incapacidad que prorroga <b
                                                 class="text-danger">*</b></label>

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('incapacidades', function (Blueprint $table) {
             $table->id();
+            $table->string('numero_incapacidad');
             $table->unsignedBigInteger('empleado_id');
             $table->unsignedBigInteger('fkTipo');
             $table->date('fechaInicio');
@@ -25,14 +26,18 @@ return new class extends Migration
             $table->string('prorroga');
             $table->string('incapacidad_prorroga')->nullable();
             $table->integer('acumulado_prorroga');
-            $table->string('numero_incapacidad');
-            $table->string('quincenas_nomina');
+            $table->string('numero_incapacidadEntidad')->nullable();
+            $table->string('quincenas_nomina')->nullable();
             $table->unsignedBigInteger('observacion_id');
             $table->unsignedBigInteger('estado_incapacidad_id');
             $table->string('transcrita');
-            $table->integer('tutela');
-            $table->integer('cartaProrroga');
+            $table->integer('tutela')->nullable();
+            $table->integer('estadoTutela')->nullable();
+            $table->integer('cartaProrroga')->nullable();
+            $table->integer('estadoCartaProrroga')->nullable();
+            $table->integer('estadoFondoPension')->nullable();
             $table->integer('valor_pendiente');
+            $table->unsignedBigInteger('diagnostico_id');
             $table->timestamps();
         });
     }

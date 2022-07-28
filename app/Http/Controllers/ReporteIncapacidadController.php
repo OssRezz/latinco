@@ -67,6 +67,7 @@ class ReporteIncapacidadController extends Controller
         return $reporteLineaChart;
     }
 
+    //-> Inicio tutela
     public function tableTutela(Modal $modal)
     {
         $acumuladoTutelas = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.empleado_id')
@@ -75,40 +76,60 @@ class ReporteIncapacidadController extends Controller
             ->select('incapacidades.*', 'empleados.nombre as empleado', 'empleados.eps', 'empleados.cedula', 'co.nombre as co', 'companias.nombre as compania')
             ->whereRaw('TIMESTAMPDIFF(DAY, fechaInicio, CURDATE()) >= 90 AND tutela <> 1')->get();
 
-        $contador = count($acumuladoTutelas->toArray());
-
-        if ($contador == 0) {
-            $mensaje = "<small class='m-3'><em>No hay alertas disponibles</em></small>";
-            return $modal->modalReporte('latinco', 'fa-solid fa-gavel', 'Tutelas', $mensaje, 0);
+        $headersArray = ['Nombre', 'Cedula', 'EPS', 'Compañía', 'Co', 'Estado', 'Acción'];
+        $header = '';
+        $body = '';
+        //Header table
+        foreach ($headersArray as $key => $headerItem) {
+            $header .=                "<th class='text-center'>$headerItem</th>";
+        }
+        foreach ($acumuladoTutelas as $key => $tutela) {
+            $body .=            '<tr>';
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->empleado}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->cedula}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->eps}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->compania}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-primary'>{$tutela->co}</span></td>";
+            $body .=                "<td class='text-center'>";
+            if ($tutela->estadoTutela == 1) {
+                $check = 'checked';
+            } else {
+                $check = '';
+            }
+            $body .=                    "<div class='form-check form-switch d-md-flex justify-content-md-center'><input class='form-check-input' type='checkbox' onclick='actualizarEstadoTutela(this)' value='$tutela->id' $check></div>";
+            $body .=                "</td>";
+            $body .=                "<td class='text-center'><button class='btn btn-danger btn-sm' value='$tutela->id' onclick='actualizarTutela(this)'>Eliminar</button></td>";
+            $body .=            '</tr>';
         }
 
-        $accordion = "<div class='accordion accordion-flush' id='accordionFlushExample'>";
-        foreach ($acumuladoTutelas as  $tutela) {
-            $accordion .= "     <div class='accordion-item'>";
-            $accordion .= "         <h2 class='accordion-header' id='flush-heading$tutela->id'>";
-            $accordion .= "             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#flush-collapse-$tutela->id' aria-expanded='false' aria-controls='flush-collapse-$tutela->id'>";
-            $accordion .= "             {$tutela->empleado}";
-            $accordion .= "             </button>";
-            $accordion .= "         </h2>";
-            $accordion .= "         <div id='flush-collapse-$tutela->id' class='accordion-collapse collapse' aria-labelledby='flush-heading$tutela->id' data-bs-parent='#accordionFlushExample'>";
-            $accordion .= "             <div class='accordion-body'>";
-            $accordion .= "                 <ul class='list-group list-group-flush'>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Cedula</b>: {$tutela->cedula}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>EPS</b>: {$tutela->eps}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Compañía</b>: {$tutela->compania}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Co</b>: {$tutela->co}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Acción</b>:";
-            $accordion .= "                     <button class='btn btn-danger btn-sm' value='$tutela->id' onclick='actualizarTutela(this)'>Eliminar</button>";
-            $accordion .= "                     </li>";
-            $accordion .= "                 </ul>";
-            $accordion .= "             </div>";
-            $accordion .= "         </div>";
-            $accordion .= "     </div>";
-        }
-        $accordion .= "</div>";
-
-        return $modal->modalReporte('latinco', 'fa-solid fa-gavel', 'Tutelas', $accordion, $contador);
+        return $modal->modalTable('fa-solid fa-gavel', 'Tutelas', $header, $body);
     }
+
+    public function actualizarTutela(Request $request, Modal $modal, Incapacidad $incapacidad)
+    {
+        $incapacidad = Incapacidad::find($request->id);
+        $incapacidad->tutela = 1;
+        $incapacidad->update();
+        return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
+    }
+
+    public function actualizarEstadoTutela(Request $request, Modal $modal, Incapacidad $incapacidad)
+    {
+        $estadoActual = Incapacidad::where('id', $request->id)->get();
+        if ($estadoActual[0]['estadoTutela'] == 1) {
+            $estado = 0;
+        } else {
+            $estado = 1;
+        }
+        $incapacidad = Incapacidad::find($request->id);
+        $incapacidad->estadoTutela = $estado;
+        $incapacidad->update();
+    }
+    //->Fin tutela
+
+
+
+    //-> Inicio Prorroga
     public function tableProrroga(Modal $modal)
     {
         $acumuladoProrrogas = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.empleado_id')
@@ -119,40 +140,60 @@ class ReporteIncapacidadController extends Controller
             ->where('acumulado_prorroga', '<', 180)
             ->where('cartaProrroga', '<>', 1)->get();
 
-        $contador = count($acumuladoProrrogas->toArray());
-
-        if ($contador == 0) {
-            $mensaje = "<small class='m-3'><em>No hay alertas disponibles</em></small>";
-            return $modal->modalReporte('latinco', 'fa-solid fa-triangle-exclamation', 'Alerta', $mensaje, 0);
+        $headersArray = ['Nombre', 'Cedula', 'EPS', 'Compañía', 'Co', 'Estado', 'Acción'];
+        $header = '';
+        $body = '';
+        //Header table
+        foreach ($headersArray as $key => $headerItem) {
+            $header .=                "<th class='text-center'>$headerItem</th>";
+        }
+        foreach ($acumuladoProrrogas as $key => $tutela) {
+            $body .=            '<tr>';
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->empleado}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->cedula}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->eps}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->compania}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->co}</span></td>";
+            $body .=                "<td class='text-center'>";
+            if ($tutela->estadoCartaProrroga == 1) {
+                $check = 'checked';
+            } else {
+                $check = '';
+            }
+            $body .=                    "<div class='form-check form-switch d-md-flex justify-content-md-center'><input class='form-check-input' type='checkbox' onclick='actualizarEstadoProrroga(this)' value='$tutela->id' $check></div>";
+            $body .=                "</td>";
+            $body .=                "<td class='text-center'><button class='btn btn-danger btn-sm' value='$tutela->id' onclick='actualizarTutela(this)'>Eliminar</button></td>";
+            $body .=            '</tr>';
         }
 
-        $accordion = "<div class='accordion accordion-flush' id='accordionFlushExample'>";
-        foreach ($acumuladoProrrogas as  $incapacidad) {
-            $accordion .= "     <div class='accordion-item'>";
-            $accordion .= "         <h2 class='accordion-header' id='flush-heading$incapacidad->id'>";
-            $accordion .= "             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#flush-collapse-$incapacidad->id' aria-expanded='false' aria-controls='flush-collapse-$incapacidad->id'>";
-            $accordion .= "             {$incapacidad->empleado}";
-            $accordion .= "             </button>";
-            $accordion .= "         </h2>";
-            $accordion .= "         <div id='flush-collapse-$incapacidad->id' class='accordion-collapse collapse' aria-labelledby='flush-heading$incapacidad->id' data-bs-parent='#accordionFlushExample'>";
-            $accordion .= "             <div class='accordion-body'>";
-            $accordion .= "                 <ul class='list-group list-group-flush'>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Cedula</b>: {$incapacidad->cedula}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>EPS</b>: {$incapacidad->eps}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Compañía</b>: {$incapacidad->compania}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Co</b>: {$incapacidad->co}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Acción</b>:";
-            $accordion .= "                     <button class='btn btn-danger btn-sm' value='$incapacidad->id' onclick='actualizarProrroga(this)'>Eliminar</button>";
-            $accordion .= "                     </li>";
-            $accordion .= "                 </ul>";
-            $accordion .= "             </div>";
-            $accordion .= "         </div>";
-            $accordion .= "     </div>";
-        }
-        $accordion .= "</div>";
-        return $modal->modalReporte('latinco', 'fa-solid fa-triangle-exclamation', 'Alerta', $accordion, $contador);
+        return $modal->modalTable('fa-solid fa-triangle-exclamation', 'Alerta carta prorroga', $header, $body);
     }
 
+    public function actualizarProrroga(Request $request, Modal $modal, Incapacidad $incapacidad)
+    {
+        $incapacidad = Incapacidad::find($request->id);
+        $incapacidad->cartaProrroga = 1;
+        $incapacidad->update();
+        return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
+    }
+
+    public function actualizarEstadoProrroga(Request $request, Modal $modal, Incapacidad $incapacidad)
+    {
+        $estadoActual = Incapacidad::where('id', $request->id)->get();
+        if ($estadoActual[0]['estadoCartaProrroga'] == 1) {
+            $estado = 0;
+        } else {
+            $estado = 1;
+        }
+        $incapacidad = Incapacidad::find($request->id);
+        $incapacidad->estadoCartaProrroga = $estado;
+        $incapacidad->update();
+    }
+    //-> Fin Prorroga
+
+
+
+    //->Inicio Fondo pensiones
     public function tablePensiones(Modal $modal)
     {
         $acumuladoProrrogas = Incapacidad::join('empleados', 'empleados.id', '=', 'incapacidades.empleado_id')
@@ -162,54 +203,34 @@ class ReporteIncapacidadController extends Controller
             ->where('acumulado_prorroga', '>=', 180)
             ->where('estado_incapacidad_id', '<>', 8)->get();
 
-        $contador = count($acumuladoProrrogas->toArray());
-
-        if ($contador == 0) {
-            $mensaje = "<small class='m-3'><em>No hay alertas disponibles</em></small>";
-            return $modal->modalReporte('latinco', 'fa-solid fa-triangle-exclamation', 'Alerta', $mensaje, 0);
+        $headersArray = ['Nombre', 'Cedula', 'EPS', 'Compañía', 'Co', 'Estado', 'Acción'];
+        $header = '';
+        $body = '';
+        //Header table
+        foreach ($headersArray as $key => $headerItem) {
+            $header .=                "<th class='text-center'>$headerItem</th>";
         }
-
-        $accordion = "<div class='accordion accordion-flush' id='accordionFlushExample'>";
-        foreach ($acumuladoProrrogas as  $incapacidad) {
-            $accordion .= "     <div class='accordion-item'>";
-            $accordion .= "         <h2 class='accordion-header' id='flush-heading$incapacidad->id'>";
-            $accordion .= "             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#flush-collapse-$incapacidad->id' aria-expanded='false' aria-controls='flush-collapse-$incapacidad->id'>";
-            $accordion .= "             {$incapacidad->empleado}";
-            $accordion .= "             </button>";
-            $accordion .= "         </h2>";
-            $accordion .= "         <div id='flush-collapse-$incapacidad->id' class='accordion-collapse collapse' aria-labelledby='flush-heading$incapacidad->id' data-bs-parent='#accordionFlushExample'>";
-            $accordion .= "             <div class='accordion-body'>";
-            $accordion .= "                 <ul class='list-group list-group-flush'>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Cedula</b>: {$incapacidad->cedula}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>EPS</b>: {$incapacidad->eps}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Compañía</b>: {$incapacidad->compania}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Co</b>: {$incapacidad->co}</li>";
-            $accordion .= "                     <li class='list-group-item'><b class='text-latinco'>Acción</b>:";
-            $accordion .= "                     <button class='btn btn-danger btn-sm' value='$incapacidad->id' onclick='actualizarFondo(this)'>Eliminar</button>";
-            $accordion .= "                     </li>";
-            $accordion .= "                 </ul>";
-            $accordion .= "             </div>";
-            $accordion .= "         </div>";
-            $accordion .= "     </div>";
+        foreach ($acumuladoProrrogas as $key => $tutela) {
+            $body .=            '<tr>';
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->empleado}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->cedula}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->eps}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-white text-dark'>{$tutela->compania}</span></td>";
+            $body .=                "<td class='text-center'><span class='badge bg-primary'>{$tutela->co}</span></td>";
+            $body .=                "<td class='text-center'>";
+            if ($tutela->estadoFondoPension == 1) {
+                $check = 'checked';
+            } else {
+                $check = '';
+            }
+            $body .=                    "<div class='form-check form-switch d-md-flex justify-content-md-center'><input class='form-check-input' type='checkbox' onclick='actualizarEstadoFondo(this)' value='$tutela->id' $check></div>";
+            $body .=                "</td>";
+            $body .=                "<td class='text-center'><button class='btn btn-danger btn-sm' value='$tutela->id' onclick='actualizarTutela(this)'>Eliminar</button></td>";
+            $body .=            '</tr>';
         }
-        $accordion .= "</div>";
-        return $modal->modalReporte('latinco', 'fa-solid fa-triangle-exclamation', 'Alerta', $accordion, $contador);
+        return $modal->modalTable('fa-solid fa-triangle-exclamation', 'Alerta fondo pensiones', $header, $body);
     }
 
-    public function actualizarTutela(Request $request, Modal $modal, Incapacidad $incapacidad)
-    {
-        $incapacidad = Incapacidad::find($request->id);
-        $incapacidad->tutela = 1;
-        $incapacidad->update();
-        return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
-    }
-    public function actualizarProrroga(Request $request, Modal $modal, Incapacidad $incapacidad)
-    {
-        $incapacidad = Incapacidad::find($request->id);
-        $incapacidad->cartaProrroga = 1;
-        $incapacidad->update();
-        return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
-    }
     public function actualizarFondo(Request $request, Modal $modal, Incapacidad $incapacidad)
     {
         $incapacidad = Incapacidad::find($request->id);
@@ -217,7 +238,23 @@ class ReporteIncapacidadController extends Controller
         $incapacidad->update();
         return $modal->modalAlertaReaload('latinco', 'Informacion', "Incapacidad actualizada");
     }
+    public function actualizarFondoPension(Request $request, Modal $modal, Incapacidad $incapacidad)
+    {
+        $estadoActual = Incapacidad::where('id', $request->id)->get();
+        if ($estadoActual[0]['estadoFondoPension'] == 1) {
+            $estado = 0;
+        } else {
+            $estado = 1;
+        }
+        $incapacidad = Incapacidad::find($request->id);
+        $incapacidad->estadoFondoPension = $estado;
+        $incapacidad->update();
+    }
+    //->Inicio Fondo pensiones
 
+
+
+    // Reporte excel
     public function export(Request $request)
     {
         $validated = $request->validate([

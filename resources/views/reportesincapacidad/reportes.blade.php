@@ -80,7 +80,7 @@
         </div>
         <div class="col-12  col-xl-4 mb-4">
             <div class="card hand  shadow-sm">
-                <a onclick="tutela(this);">
+                <button class="border-0 bg-white" onclick="tutela(this);">
                     <div class="card-body  d-flex align-items-center justify-content-around" style="height: 7em;">
                         <div class="col d-flex justify-content-center">
                             <i class="fas fa-gavel fa-3x text-latinco"></i>
@@ -94,12 +94,12 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
         </div>
         <div class="col-12 col-xl-4 mb-4">
             <div class="card hand shadow-sm">
-                <a onclick="prorroga(this);">
+                <button class="border-0 bg-white" onclick="prorroga(this);">
                     <div class="card-body d-flex align-items-center justify-content-around" style="height: 7em;">
                         <div class="col text-center">
                             <i class="fas fa-envelope-open-text fa-3x text-latinco"></i>
@@ -113,12 +113,12 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                    </a>
             </div>
         </div>
         <div class="col-12  col-xl-4 mb-4">
             <div class="card hand  shadow-sm">
-                <a onclick="pensiones(this);">
+                <button class="border-0 bg-white" onclick="pensiones(this);">
                     <div class="card-body  d-flex align-items-center justify-content-around" style="height: 7em;">
                         <div class="col d-flex justify-content-center">
                             <i class="fas fa-money-check-alt fa-3x text-latinco"></i>
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                    </a>
             </div>
         </div>
         <div class="col-12 mb-4">
