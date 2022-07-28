@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoIncapacidadSeeder::class);
         $this->call(ObservacionSeeder::class);
         $this->call(EstadoIncapacidadSeeder::class);
+        $this->call(DiagnosticoSeeder::class);
         Empleado::factory(1000)->create();
         Incapacidad::factory(100)->create();
         Transcripcion::factory(50)->create();

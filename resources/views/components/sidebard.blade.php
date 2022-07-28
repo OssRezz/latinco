@@ -84,14 +84,14 @@
                         Costo laboral
                     </div>
                     <i
-                        class="fas fa-caret-{{ Request::is('conceptos') || Request::is('responsables') ? 'down' : 'left' }}  "></i>
+                        class="fas fa-caret-{{ Request::is('admin/conceptos') || Request::is('responsables') ? 'down' : 'left' }}  "></i>
                 </div>
             </a>
-            <ul class="collapse list-unstyled {{ Request::is('conceptos') || Request::is('responsables') ? 'show' : '' }}"
+            <ul class="collapse list-unstyled {{ Request::is('admin/conceptos') || Request::is('responsables') ? 'show' : '' }}"
                 id="costoLaboralMenu">
                 <li class="py-1">
-                    <a href="{{ url('conceptos') }}"
-                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('conceptos') ? 'active' : '' }}">
+                    <a href="{{ url('admin/conceptos') }}"
+                        class="btn btn-outline-danger rounded-0 text-start border-0 {{ Request::is('admin/conceptos') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list fa-xl"></i> Conceptos
                     </a>
                 </li>

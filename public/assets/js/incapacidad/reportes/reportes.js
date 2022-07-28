@@ -1,10 +1,10 @@
 const chartDonaEps = document.getElementById("myChart").getContext("2d");
 const chartLine = document.getElementById("myChart2");
 const chartDonaCo = document.getElementById("chartCo");
-const fechaInicio = document.querySelector('#fechaInicio');
-const fechaFin = document.querySelector('#fechaFin');
-const reporte = document.querySelector('#reporteSelect');
-const descargar = document.querySelector('#btn-descargar');
+const fechaInicio = document.querySelector("#fechaInicio");
+const fechaFin = document.querySelector("#fechaFin");
+const reporte = document.querySelector("#reporteSelect");
+const descargar = document.querySelector("#btn-descargar");
 
 let labelDona = [];
 let dataInfoDona = [];
@@ -17,18 +17,22 @@ let dataLinePorRecuperar = [];
 cargarDona();
 cargarLinea();
 permitirDescarga();
+cargarDonaCo();
 
-fechaInicio.addEventListener('change', permitirDescarga);
-fechaFin.addEventListener('change', permitirDescarga);
-reporte.addEventListener('change', permitirDescarga);
+fechaInicio.addEventListener("change", permitirDescarga);
+fechaFin.addEventListener("change", permitirDescarga);
+reporte.addEventListener("change", permitirDescarga);
 
 function permitirDescarga() {
-    descargar.setAttribute('disabled', 'disabled');
-    if (fechaInicio.value != "" && fechaFin.value != "" && reporte.value != "") {
-        descargar.removeAttribute('disabled');
+    descargar.setAttribute("disabled", "disabled");
+    if (
+        fechaInicio.value != "" &&
+        fechaFin.value != "" &&
+        reporte.value != ""
+    ) {
+        descargar.removeAttribute("disabled");
     }
 }
-
 
 const dataDona = {
     labels: labelDona,
@@ -164,7 +168,7 @@ function cargarDona() {
         },
     });
 }
-cargarDonaCo();
+
 function cargarDonaCo() {
     $.ajax({
         headers: {
@@ -203,6 +207,7 @@ function cargarLinea() {
 }
 
 function tutela(e) {
+    e.setAttribute("disabled", "disabled");
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -210,12 +215,14 @@ function tutela(e) {
         url: "reportesincapacidad/tutela",
         type: "GET",
         success: function (result) {
+            e.removeAttribute("disabled");
             $("#respuesta").html(result);
         },
     });
 }
 
 function prorroga(e) {
+    e.setAttribute("disabled", "disabled");
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -223,11 +230,14 @@ function prorroga(e) {
         url: "reportesincapacidad/prorroga",
         type: "GET",
         success: function (result) {
+            e.removeAttribute("disabled");
             $("#respuesta").html(result);
         },
     });
 }
+
 function pensiones(e) {
+    e.setAttribute("disabled", "disabled");
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -235,10 +245,12 @@ function pensiones(e) {
         url: "reportesincapacidad/pensiones",
         type: "GET",
         success: function (result) {
+            e.removeAttribute("disabled");
             $("#respuesta").html(result);
         },
     });
 }
+
 function actualizarTutela(e) {
     $.ajax({
         headers: {
@@ -249,6 +261,21 @@ function actualizarTutela(e) {
         data: { id: e.value },
         success: function (result) {
             $("#respuesta").html(result);
+        },
+    });
+}
+function actualizarEstadoTutela(e) {
+    e.setAttribute("disabled", "disabled");
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/tutela/actualizarEstadoTutela",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            e.removeAttribute("disabled");
+            // $("#respuesta").html(result);
         },
     });
 }
@@ -266,7 +293,20 @@ function actualizarProrroga(e) {
         },
     });
 }
-
+function actualizarEstadoProrroga(e) {
+    e.setAttribute("disabled", "disabled");
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/prorroga/actualizarEstadoProrroga",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            e.removeAttribute("disabled");
+        },
+    });
+}
 
 function actualizarFondo(e) {
     $.ajax({
@@ -278,6 +318,20 @@ function actualizarFondo(e) {
         data: { id: e.value },
         success: function (result) {
             $("#respuesta").html(result);
+        },
+    });
+}
+function actualizarEstadoFondo(e) {
+    e.setAttribute("disabled", "disabled");
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: "reportesincapacidad/fondo/actualizarFondoPension",
+        type: "POST",
+        data: { id: e.value },
+        success: function (result) {
+            e.removeAttribute("disabled");
         },
     });
 }

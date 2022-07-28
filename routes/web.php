@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('dashboard',  [HomeController::class, 'index'])->name('dashboard');
 
     //Incapacidad
+    Route::get('incapacidad/modalHistorial', [IncapacidadController::class, 'modalHistorial']);
     Route::resource('incapacidad', IncapacidadController::class);
     Route::get('incapacidades/table', [IncapacidadesController::class, 'table']);
     Route::resource('incapacidades', IncapacidadesController::class);
@@ -44,8 +45,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('reportesincapacidad/prorroga', [ReporteIncapacidadController::class, 'tableProrroga']);
     Route::get('reportesincapacidad/pensiones', [ReporteIncapacidadController::class, 'tablePensiones']);
     //Actualizar Alerta
+    Route::post('reportesincapacidad/tutela/actualizarEstadoTutela', [ReporteIncapacidadController::class, 'actualizarEstadoTutela']);
     Route::post('reportesincapacidad/tutela/actualizar', [ReporteIncapacidadController::class, 'actualizarTutela']);
+    Route::post('reportesincapacidad/prorroga/actualizarEstadoProrroga', [ReporteIncapacidadController::class, 'actualizarEstadoProrroga']);
     Route::post('reportesincapacidad/prorroga/actualizar', [ReporteIncapacidadController::class, 'actualizarProrroga']);
+    Route::post('reportesincapacidad/fondo/actualizarFondoPension', [ReporteIncapacidadController::class, 'actualizarFondoPension']);
     Route::post('reportesincapacidad/fondo/actualizar', [ReporteIncapacidadController::class, 'actualizarFondo']);
     //Reporte excel
     Route::get('reportesincapacidad/export', [ReporteIncapacidadController::class, 'export']);
@@ -59,6 +63,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Users
     Route::resource('usuario', UserController::class);
+
+    // Users
+    Route::resource('conceptos', ConceptosController::class);
 
     //Soap
     Route::get('soap', [SoapController::class, 'index'])->name('soap');
@@ -88,9 +95,6 @@ Route::get('conceptocaja', function () {
     return view('conceptocaja.conceptocaja');
 })->name('conceptocaja');
 
-Route::get('conceptos', function () {
-    return view('conceptos.concepto');
-})->name('conceptos');
 
 Route::get('responsables', function () {
     return view('responsables.responsable');
